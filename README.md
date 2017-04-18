@@ -1,7 +1,7 @@
 # Sweeper Bot
-[![Dependencies Status](https://david-dm.org/katagatame/Sweeper-Bot.svg?maxAge=3600)](https://david-dm.org/katagatame/Sweeper-Bot)
-[![devDependencies Status](https://david-dm.org/katagatame/Sweeper-Bot/dev-status.svg)](https://david-dm.org/katagatame/Sweeper-Bot?type=dev)
-[![Travis](https://travis-ci.org/katagatame/Sweeper-Bot.svg?branch=master)](https://travis-ci.org/katagatame/Sweeper-Bot)
+[![Dependencies Status](https://david-dm.org/r-DestinyTheGame/Sweeper-Bot.svg?maxAge=3600)](https://david-dm.org/r-DestinyTheGame/Sweeper-Bot)
+[![devDependencies Status](https://david-dm.org/r-DestinyTheGame/Sweeper-Bot/dev-status.svg)](https://david-dm.org/r-DestinyTheGame/Sweeper-Bot?type=dev)
+[![Travis](https://travis-ci.org/r-DestinyTheGame/Sweeper-Bot.svg?branch=master)](https://travis-ci.org/r-DestinyTheGame/Sweeper-Bot)
 
 General purpose bot for the official r/DTG Discord server.
 
@@ -38,7 +38,7 @@ Alternatively, you can build the bot in docker.
 
 # Links
 #### Sweeper Bot
-- [Sweeper Bot Wiki](https://github.com/katagatame/Sweeper-Bot/wiki) - soon:tm:
+- [Sweeper Bot Wiki](https://github.com/r-DestinyTheGame/Sweeper-Bot/wiki) - soon:tm:
 
 #### YAMDBF
 - [YAMDBF GitHub](https://github.com/zajrik/yamdbf)
