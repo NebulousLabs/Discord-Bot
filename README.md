@@ -1,6 +1,11 @@
 # Sweeper Bot
+[![Dependencies Status](https://david-dm.org/katagatame/Sweeper-Bot.svg?maxAge=3600)](https://david-dm.org/katagatame/Sweeper-Bot)
+[![devDependencies Status](https://david-dm.org/katagatame/Sweeper-Bot/dev-status.svg)](https://david-dm.org/katagatame/Sweeper-Bot?type=dev)
+[![Travis](https://travis-ci.org/katagatame/Sweeper-Bot.svg?branch=master)](https://travis-ci.org/katagatame/Sweeper-Bot)
 
-Installation and running instructions
+General purpose bot for the official r/DTG Discord server.
+
+# Installation and running instructions
 ## Step 1
 `npm install`
 
@@ -29,3 +34,12 @@ Alternatively, you can build the bot in docker.
 
 ## Step 3
 ```docker run -t sweeper```
+
+
+# Links
+#### Sweeper Bot
+- [Sweeper Bot Wiki](https://github.com/katagatame/Sweeper-Bot/wiki) - soon:tm:
+
+#### YAMDBF
+- [YAMDBF GitHub](https://github.com/zajrik/yamdbf)
+- [YAMDBF Documentation](https://yamdbf.js.org/)
