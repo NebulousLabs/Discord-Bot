@@ -1,0 +1,7 @@
+.vscode
+/bin/*
+/node_modules/*
+
+config.json
+config.dev.json
+config.prod.json
