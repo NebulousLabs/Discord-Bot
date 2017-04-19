@@ -1,6 +1,9 @@
+.vagrant/
 .vscode
+
 /bin/*
 /node_modules/*
+storage/
 
 config.json
 config.dev.json

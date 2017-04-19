@@ -37,6 +37,16 @@ Alternatively, you can build the bot in docker.
 ```docker run -t sweeper```
 
 
+Alternatively, you can use vagrant.
+-----------------------------------
+## Step 1:
+- Set up your config file.
+
+## Step 2:
+`vagrant up default`
+
+
+
 # Links
 #### Sweeper Bot
 - [Sweeper Bot Wiki](https://github.com/r-DestinyTheGame/Sweeper-Bot/wiki) - soon:tm:
@@ -44,3 +54,4 @@ Alternatively, you can build the bot in docker.
 #### YAMDBF
 - [YAMDBF GitHub](https://github.com/zajrik/yamdbf)
 - [YAMDBF Documentation](https://yamdbf.js.org/)
+
