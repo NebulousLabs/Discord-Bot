@@ -1,4 +1,5 @@
 # Sweeper Bot
+[![Discord](https://discordapp.com/api/guilds/157728722999443456/embed.png)](https://discord.gg/DestinyReddit)
 [![Dependencies Status](https://david-dm.org/r-DestinyTheGame/Sweeper-Bot.svg?maxAge=3600)](https://david-dm.org/r-DestinyTheGame/Sweeper-Bot)
 [![devDependencies Status](https://david-dm.org/r-DestinyTheGame/Sweeper-Bot/dev-status.svg)](https://david-dm.org/r-DestinyTheGame/Sweeper-Bot?type=dev)
 [![Travis](https://travis-ci.org/r-DestinyTheGame/Sweeper-Bot.svg?branch=master)](https://travis-ci.org/r-DestinyTheGame/Sweeper-Bot)
