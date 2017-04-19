@@ -1,7 +1,7 @@
 {
   "name": "sweeper-bot",
   "version": "0.0.1",
-  "description": "General purpose bot for The official r/DTG server.",
+  "description": "General purpose bot for The official r/DTG Discord server.",
   "main": "sweeper.js",
   "author": "katagatame_ <nathan18T@gmail.com>",
   "license": "MIT",
@@ -19,7 +19,6 @@
     "discordapp"
   ],
   "dependencies": {
-    "discord.js": "^11.0.0",
     "fuzzy": "^0.1.3",
     "moment": "^2.18.1",
     "request": "^2.81.0",
