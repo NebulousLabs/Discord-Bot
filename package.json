@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "description": "General purpose bot for The official r/DTG Discord server.",
   "main": "sweeper.js",
-  "author": "katagatame_ <nathan18T@gmail.com>",
+  "author": "katagatame_ <katagatame@users.noreply.github.com>",
+  "contributors": [{
+    "name": "Weylin",
+    "email": "weylin@users.noreply.github.com"
+  }],
   "license": "MIT",
   "homepage": "https://github.com/r-DestinyTheGame/Sweeper-Bot#readme",
   "repository": {

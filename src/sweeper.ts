@@ -31,4 +31,9 @@ client.on('waiting', async () => {
 	client.emit('finished');
 });
 
+client.once('clientReady', () => {
+	// this command has a rate limit
+	// client.user.setAvatar('./img/avatar.jpeg');
+});
+
 client.on('disconnect', () => process.exit());
