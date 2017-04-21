@@ -6,7 +6,7 @@
 
 General purpose bot for the official r/DTG Discord server.
 
-# Installation and running instructions
+# NPM Install
 ## Step 1
 `npm install`
 
@@ -25,26 +25,23 @@ Move compiled .js project to hosting instance
 `node sweeper.js`
 
 
-Alternatively, you can build the bot in docker.
------------------------------------------------
+# Docker Install
 ## Step 1
 - Add your config.json file to the base directory
 
 ## Step 2
-```docker build -t sweeper:latest .```
+`docker build -t sweeper:latest .`
 
 ## Step 3
-```docker run -t sweeper```
+`docker run -t sweeper`
 
 
-Alternatively, you can use vagrant.
------------------------------------
+# Vagrant Install
 ## Step 1:
 - Set up your config file.
 
 ## Step 2:
 `vagrant up default`
-
 
 
 # Links
@@ -54,4 +51,3 @@ Alternatively, you can use vagrant.
 #### YAMDBF
 - [YAMDBF GitHub](https://github.com/zajrik/yamdbf)
 - [YAMDBF Documentation](https://yamdbf.js.org/)
-
