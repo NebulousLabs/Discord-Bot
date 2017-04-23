@@ -4,10 +4,12 @@
   "description": "General purpose bot for The official r/DTG Discord server.",
   "main": "sweeper.js",
   "author": "katagatame_ <katagatame@users.noreply.github.com>",
-  "contributors": [{
-    "name": "Weylin",
-    "email": "weylin@users.noreply.github.com"
-  }],
+  "contributors": [
+    {
+      "name": "Weylin",
+      "email": "weylin@users.noreply.github.com"
+    }
+  ],
   "license": "MIT",
   "homepage": "https://github.com/r-DestinyTheGame/Sweeper-Bot#readme",
   "repository": {
@@ -23,6 +25,7 @@
     "discordapp"
   ],
   "dependencies": {
+    "cheerio": "^0.22.0",
     "fuzzy": "^0.1.3",
     "moment": "^2.18.1",
     "request": "^2.81.0",
@@ -30,6 +33,7 @@
     "yamdbf": "github:zajrik/yamdbf"
   },
   "devDependencies": {
+    "@types/cheerio": "^0.22.1",
     "@types/node": "^7.0.13",
     "@types/request": "^0.0.42",
     "@types/request-promise": "^4.1.33",

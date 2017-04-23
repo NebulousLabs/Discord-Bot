@@ -14,7 +14,7 @@ export default class UserStats extends Command<Client>
 			description: 'User Stats',
 			usage: '<prefix>us\u000d	   <prefix>stats',
 			extraHelp: 'Display your Discord stats.',
-			group: 'stats',
+			group: 'misc',
 			guildOnly: true
 		});
 	}
