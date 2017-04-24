@@ -27,7 +27,7 @@ export default class UserStats extends Command<Client>
 		// make sure user is logged in
 		if (message.member === null)
 		{
-			message.channel.sendMessage('Please login in order to check your Discord stats.');
+			message.channel.send('Please login in order to check your Discord stats.');
 			return message.channel.stopTyping();
 		}
 
@@ -67,7 +67,7 @@ export default class UserStats extends Command<Client>
 			.setTimestamp();
 
 		// display stats
-		message.channel.sendEmbed(embed, '', { disableEveryone: true });
+		message.channel.send({ embed: embed });
 		return message.channel.stopTyping();
 	}
 }

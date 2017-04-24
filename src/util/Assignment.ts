@@ -61,6 +61,6 @@ export default class Assignment
 				count++;
 			}
 		});
-		return message.channel.sendMessage(`\`${role.name}\` successfully disallowed and removed from \`${count}\` users.`);
+		return message.channel.send(`\`${role.name}\` successfully disallowed and removed from \`${count}\` users.`);
 	}
 }

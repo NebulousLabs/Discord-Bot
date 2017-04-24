@@ -42,7 +42,7 @@ export default class SyncRoles extends Command<Client>
 		// make sure there are allowed roles
 		if (availableRoles === undefined)
 		{
-			message.channel.sendEmbed(noRoles, '', { disableEveryone: true });
+			message.channel.send({ embed: noRoles });
 			return message.channel.stopTyping();
 		}
 
@@ -63,7 +63,7 @@ export default class SyncRoles extends Command<Client>
 		// make sure there are current roles
 		if (currentRoles === '')
 		{
-			message.channel.sendEmbed(noRoles, '', { disableEveryone: true });
+			message.channel.send({ embed: noRoles });
 			return message.channel.stopTyping();
 		}
 
@@ -79,7 +79,7 @@ export default class SyncRoles extends Command<Client>
 			.addField('Roles Cleaned from Allowed List', removedRoles);
 
 		// display the list
-		message.channel.sendEmbed(embed, '', { disableEveryone: true });
+		message.channel.send({ embed: embed });
 		return message.channel.stopTyping();
 	}
 }

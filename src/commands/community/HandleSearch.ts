@@ -28,14 +28,14 @@ export default class HandleSearch extends Command<Client>
 		// no user specified
 		if (!args[0])
 		{
-			message.channel.sendMessage('Please provide a user to search for.');
+			message.channel.send('Please provide a user to search for.');
 			return message.channel.stopTyping();
 		}
 
 		// if there was an attempt, args[0] was too short
 		if (args[0] && args[0].length < 3)
 		{
-			message.channel.sendMessage('Please provide more letters for your search.');
+			message.channel.send('Please provide more letters for your search.');
 			return message.channel.stopTyping();
 		}
 
@@ -75,7 +75,7 @@ export default class HandleSearch extends Command<Client>
 				.addField('\u200b', `${message.mentions.users.first().username}'s current main Handle is **${profile.handles[index].tag}**.`, false);
 
 			// display output
-			message.channel.sendEmbed(embed, '', { disableEveryone: true });
+			message.channel.send({ embed: embed });
 			return message.channel.stopTyping();
 		}
 
@@ -100,7 +100,7 @@ export default class HandleSearch extends Command<Client>
 				// null checking
 				if (!profile)
 				{
-					message.channel.sendMessage(`**${user.username}** is not registered with me.`);
+					message.channel.send(`**${user.username}** is not registered with me.`);
 					return message.channel.stopTyping();
 				}
 
@@ -125,13 +125,13 @@ export default class HandleSearch extends Command<Client>
 					.addField('\u200b', `${user.username}'s current main Handle is **${profile.handles[index].tag}**.`, false);
 
 				// display output
-				message.channel.sendEmbed(embed, '', { disableEveryone: true });
+				message.channel.send({ embed: embed });
 				return message.channel.stopTyping();
 			}
 			else
 			{
 				// be more specfic
-				message.channel.sendMessage(`**${results.length}** users found.  Please be more specific.`);
+				message.channel.send(`**${results.length}** users found.  Please be more specific.`);
 				return message.channel.stopTyping();
 			}
 		}

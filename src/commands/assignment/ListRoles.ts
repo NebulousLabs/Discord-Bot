@@ -49,7 +49,7 @@ export default class ListRoles extends Command<Client>
 			// make sure admin role isn't the lowest in the list
 			if (adminCommandRole.position === 1 || altAdminCommandRole.position === 1)
 			{
-				message.channel.sendMessage('Please make sure your admin role isn\'t the lowest in the list.');
+				message.channel.send('Please make sure your admin role isn\'t the lowest in the list.');
 				return message.channel.stopTyping();
 			}
 
@@ -70,14 +70,14 @@ export default class ListRoles extends Command<Client>
 				.addField('Status', rightCol, true);
 
 			// display the list
-			message.channel.sendEmbed(modEmbed, '', { disableEveryone: true });
+			message.channel.send({ embed: modEmbed });
 			return message.channel.stopTyping();
 		}
 		else
 		{
 			if (availableRoles === undefined)
 			{
-				message.channel.sendEmbed(noRoles, '', { disableEveryone: true });
+				message.channel.send({ embed: noRoles });
 				return message.channel.stopTyping();
 			}
 
@@ -92,7 +92,7 @@ export default class ListRoles extends Command<Client>
 				.addField('Roles', leftCol, true);
 
 			// display the list
-			message.channel.sendEmbed(userEmbed, '', { disableEveryone: true });
+			message.channel.send({ embed: userEmbed });
 			return message.channel.stopTyping();
 		}
 	}

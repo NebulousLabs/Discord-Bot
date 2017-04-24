@@ -51,13 +51,13 @@ export default class Me extends Command<Client>
 					guildStorage.remove(message.author.id.toString());
 
 					// display output
-					message.channel.sendMessage('Flushed profile settings.');
+					message.channel.send('Flushed profile settings.');
 					return message.channel.stopTyping();
 				}
 				else
 				{
 					// display output
-					message.channel.sendMessage('No profile attributes set, nothing to flush.');
+					message.channel.send('No profile attributes set, nothing to flush.');
 					return message.channel.stopTyping();
 				}
 
@@ -83,7 +83,7 @@ export default class Me extends Command<Client>
 
 				if (error)
 				{
-					message.channel.sendMessage(errorMessage);
+					message.channel.send(errorMessage);
 					return message.channel.stopTyping();
 				}
 
@@ -117,7 +117,7 @@ export default class Me extends Command<Client>
 
 				if (error)
 				{
-					message.channel.sendMessage(errorMessage);
+					message.channel.send(errorMessage);
 					return message.channel.stopTyping();
 				}
 
@@ -132,7 +132,7 @@ export default class Me extends Command<Client>
 					};
 
 					// send confirmation message
-					message.channel.sendMessage(`You appear to have an active Handle already.\n\n[\`R\`]eplace account?\n[\`A\`]dd account?`).then(() =>
+					message.channel.send(`You appear to have an active Handle already.\n\n[\`R\`]eplace account?\n[\`A\`]dd account?`).then(() =>
 					{
 						// send awaitMessage
 						message.channel.awaitMessages(setFilter,
@@ -148,7 +148,7 @@ export default class Me extends Command<Client>
 							{
 								// check if Handle already exists
 								if (profile.handles.find((a: Handle) => a.tag === handle && a.platform === platform))
-									return message.channel.sendMessage('You already have an alt account with that Handle.');
+									return message.channel.send('You already have an alt account with that Handle.');
 
 								// deactivate all Handles
 								profile.handles.forEach((el: Handle) => { el.active = false; });
@@ -169,7 +169,7 @@ export default class Me extends Command<Client>
 									.setFooter('This Handle is now your active Handle.');
 
 								// display output
-								return message.channel.sendEmbed(embed, '', { disableEveryone: true });
+								return message.channel.send({ embed: embed });
 							}
 
 							// replace existing account
@@ -200,14 +200,14 @@ export default class Me extends Command<Client>
 									.setFooter('This Handle is now your active Handle.');
 
 								// display output
-								return message.channel.sendEmbed(embed, '', { disableEveryone: true });
+								return message.channel.send({ embed: embed });
 							}
 						})
 						// user did not respond
 						.catch(() =>
 						{
 							// display output
-							return message.channel.sendMessage('There was no collected message that passed the filter within the time limit!');
+							return message.channel.send('There was no collected message that passed the filter within the time limit!');
 						});
 					});
 
@@ -235,7 +235,7 @@ export default class Me extends Command<Client>
 						.setFooter('This Handle is now your active Handle.');
 
 					// display output
-					message.channel.sendEmbed(embed, '', { disableEveryone: true });
+					message.channel.send({ embed: embed });
 					return message.channel.stopTyping();
 				}
 
@@ -270,7 +270,7 @@ export default class Me extends Command<Client>
 						.setFooter(`Which of the above would you like to activate?`);
 
 					// display prompt
-					message.channel.sendEmbed(embed, '', { disableEveryone: true }).then(() =>
+					message.channel.send({ embed: embed }).then(() =>
 					{
 						// send awaitMessage
 						message.channel.awaitMessages(toggleFilter,
@@ -286,7 +286,7 @@ export default class Me extends Command<Client>
 
 							// make sure it's within range
 							if (index > profile.handles.length - 1)
-								return message.channel.sendMessage('That is not a valid selection.');
+								return message.channel.send('That is not a valid selection.');
 
 							// deactivate all Handles
 							profile.handles.forEach((el: Handle) => { el.active = false; });
@@ -298,13 +298,13 @@ export default class Me extends Command<Client>
 							guildStorage.set(message.author.id.toString(), profile);
 
 							// display output
-							return message.channel.sendMessage(`Main account updated to **${profile.handles[index].tag}** on ${profile.handles[index].platform.toUpperCase()}.`);
+							return message.channel.send(`Main account updated to **${profile.handles[index].tag}** on ${profile.handles[index].platform.toUpperCase()}.`);
 						})
 						// user did not respond
 						.catch(() =>
 						{
 							// display output
-							return message.channel.sendMessage('There was no collected message that passed the filter within the time limit!');
+							return message.channel.send('There was no collected message that passed the filter within the time limit!');
 						});
 					});
 
@@ -314,7 +314,7 @@ export default class Me extends Command<Client>
 				else
 				{
 					// display output
-					message.channel.sendMessage('No profile attributes set.');
+					message.channel.send('No profile attributes set.');
 					return message.channel.stopTyping();
 				}
 
@@ -347,13 +347,13 @@ export default class Me extends Command<Client>
 						.setFooter(`Your current main Handle is ${profile.handles[index].tag} on ${profile.handles[index].platform.toUpperCase()}.`);
 
 					// display output
-					message.channel.sendEmbed(embed, '', { disableEveryone: true });
+					message.channel.send({ embed: embed });
 					return message.channel.stopTyping();
 				}
 				else
 				{
 					// display output
-					message.channel.sendMessage('No profile attributes set.');
+					message.channel.send('No profile attributes set.');
 					return message.channel.stopTyping();
 				}
 

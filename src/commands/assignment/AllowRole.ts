@@ -26,7 +26,7 @@ export default class AllowRole extends Command<Client>
 	{
 		// make sure a role was specified
 		if (args.length === 0)
-			return message.channel.sendMessage('Please specify a role to allow.');
+			return message.channel.send('Please specify a role to allow.');
 
 		// start typing
 		message.channel.startTyping();
@@ -118,7 +118,7 @@ export default class AllowRole extends Command<Client>
 			.setDescription('Invalid Roles are either already allowed, incorrectly typed, too similar to another role, or not a server role.');
 
 		// display output embed
-		message.channel.sendEmbed(embed, '', { disableEveryone: true });
+		message.channel.send({ embed: embed });
 		return message.channel.stopTyping();
 	}
 }

@@ -58,8 +58,8 @@ export default class APoD extends Command<Client>
 					.setDescription(comic.alt);
 
 				// display the embesd
-				await message.channel.sendEmbed(panelEmbed, '', { disableEveryone: true });
-				message.channel.sendEmbed(altEmbed, '', { disableEveryone: true });
+				await message.channel.send({ embed: panelEmbed });
+				message.channel.send({ embed: altEmbed });
 
 				// stop working
 				return message.channel.stopTyping();

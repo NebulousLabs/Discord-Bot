@@ -102,8 +102,8 @@ export default class APoD extends Command<Client>
 				.setAuthor('Explanation' + dateString);
 
 			// output the two embeds
-			await message.channel.sendEmbed(mediaEmbed, '', { disableEveryone: true });
-			message.channel.sendEmbed(embed, '', { disableEveryone: true });
+			await message.channel.send({ embed: mediaEmbed });
+			message.channel.send({ embed: embed });
 
 			// we're done working
 			return message.channel.stopTyping();
@@ -111,7 +111,7 @@ export default class APoD extends Command<Client>
 		.catch(function (err: any)
 		{
 			// output error message
-			message.channel.sendMessage('There was an error retrieving the title and/or the description for this content.');
+			message.channel.send('There was an error retrieving the title and/or the description for this content.');
 
 			// we're done working
 			return message.channel.stopTyping();
