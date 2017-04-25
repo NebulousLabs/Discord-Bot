@@ -6,24 +6,27 @@ import * as fuzzy from 'fuzzy';
 import Assignment from '../../util/Assignment';
 import Constants from '../../util/Constants';
 
-export default class AllowRole extends Command<Client>
-{
-	public constructor(bot: Client)
-	{
+export default class AllowRole extends Command<Client> {
+	public constructor(bot: Client) {
 		super(bot, {
 			name: 'allow',
 			aliases: ['a'],
 			description: 'Allow Role',
-			usage: '<prefix>allow <Argument>\u000d	   <prefix>allow <Argument>, <Argument>, ...\u000d	   <prefix>a <Argument>\u000d	   <prefix>a <Argument>, <Argument>, ...\u000d',
-			extraHelp: 'This command will allow a specific role to be self-assignable, via the Get Role command.\u000d\u000dArgument information below...\u000d\u000dRole Name : The name of the role to be allowed.\u000d\u000d*If Sweeper Bot tells you to be more specific, type the role as if it were case-sensitive. Sweeper Bot will then find your specific role.',
+			usage: '<prefix>allow <Argument>\u000d' +
+			'	   <prefix>allow <Argument>, <Argument>, ...\u000d' +
+			'	   <prefix>a <Argument>\u000d' +
+			'	   <prefix>a <Argument>, <Argument>, ...\u000d',
+			extraHelp: 'This command will allow a specific role to be self-assignable, via the Get Role command.\u000d\u000d' +
+			'Argument information below...\u000d\u000d' +
+			'Role Name : The name of the role to be allowed.\u000d\u000d' +
+			'*If Sweeper Bot tells you to be more specific, type the role as if it were case-sensitive. Sweeper Bot will then find your specific role.',
 			group: 'assignment',
 			roles: ['The Vanguard', 'Moderators'],
 			guildOnly: true
 		});
 	}
 
-	public async action(message: Message, args: string[]): Promise<any>
-	{
+	public async action(message: Message, args: string[]): Promise<any> {
 		// make sure a role was specified
 		if (args.length === 0)
 			return message.channel.send('Please specify a role to allow.');
@@ -48,6 +51,7 @@ export default class AllowRole extends Command<Client>
 		// create display vars
 		let invalidRoles: Array<string> = new Array();
 		let validRoles: Array<Role> = new Array();
+		let inspecificRoles: Array<string> = new Array();
 		const embed: RichEmbed = new RichEmbed();
 
 		// create array from user input
@@ -70,8 +74,7 @@ export default class AllowRole extends Command<Client>
 				invalidRoles.push(el);
 
 			// if one role found
-			if (results.length === 1)
-			{
+			if (results.length === 1) {
 				// role from result
 				role = results[0].original[1];
 
@@ -85,11 +88,9 @@ export default class AllowRole extends Command<Client>
 			}
 
 			// if more than one role found
-			if (results.length > 1)
-			{
+			if (results.length > 1) {
 				// check if roleArg is specifically typed
-				if (Assignment.isSpecificResult(results, el))
-				{
+				if (Assignment.isSpecificResult(results, el)) {
 					// role from roleArg
 					role = Assignment.getSpecificRole(results, el);
 
@@ -99,8 +100,7 @@ export default class AllowRole extends Command<Client>
 
 					// add role to valid array
 					validRoles.push(role);
-				}
-				else
+				} else
 					// add inspecific results to invalid array
 					results.forEach((r: any) => { invalidRoles.push(r.string); });
 			}
@@ -109,16 +109,50 @@ export default class AllowRole extends Command<Client>
 		// update roles
 		validRoles.forEach((el: Role) => { Assignment.updateRoles(availableRoles, guildStorage, el); });
 
-		// build output embed
-		embed
-			.setColor(0x206694)
-			.setTitle(message.guild.name + ': Roles Update')
-			.addField('Allowed Roles', validRoles.join('\n') ? validRoles.join('\n') : '\u200b', true)
-			.addField('Invalid Roles', invalidRoles.join('\n') ? invalidRoles.join('\n') : '\u200b', true)
-			.setDescription('Invalid Roles are either already allowed, incorrectly typed, too similar to another role, or not a server role.');
+		// there are no invalid roles or inspecific roles
+		if (validRoles.length > 0 && invalidRoles.length === 0 && inspecificRoles.length === 0) {
+			message.channel.send(`Successfully allowed ${validRoles.join(', ')}.`);
+			return message.channel.stopTyping();
+		}
 
-		// display output embed
-		message.channel.send({ embed: embed });
-		return message.channel.stopTyping();
+		// there are only invalid roles
+		if (validRoles.length === 0 && invalidRoles.length > 0 && inspecificRoles.length === 0) {
+			message.channel.send(`The following role(s) are invalid: \`${invalidRoles.join('`, `')}\`.`);
+			return message.channel.stopTyping();
+		}
+
+		// there are only inspecific roles
+		if (validRoles.length === 0 && invalidRoles.length === 0 && inspecificRoles.length > 0) {
+			message.channel.send(`The following role(s) are inspecific: \`${inspecificRoles.join('`, `')}\`.`);
+			return message.channel.stopTyping();
+		}
+
+		// there are a mixture of inspecifc and invlaid roles
+		if (validRoles.length === 0 && invalidRoles.length > 0 && inspecificRoles.length > 0) {
+			// build output embed
+			embed
+				.setColor(0x206694)
+				.setTitle(message.guild.name + ': Roles Update')
+				.addField('Inspecific Roles', inspecificRoles.join('\n') ? inspecificRoles.join('\n') : '\u200b', true)
+				.addField('Invalid Roles', invalidRoles.join('\n') ? invalidRoles.join('\n') : '\u200b', true);
+
+			// display output embed
+			message.channel.send({ embed: embed });
+			return message.channel.stopTyping();
+		}
+
+		// there are a mixture of valid and invlaid roles
+		if (validRoles.length > 0 && invalidRoles.length > 0 && inspecificRoles.length === 0) {
+			// build output embed
+			embed
+				.setColor(0x206694)
+				.setTitle(message.guild.name + ': Roles Update')
+				.addField('Allowed Roles', validRoles.join('\n') ? validRoles.join('\n') : '\u200b', true)
+				.addField('Invalid Roles', invalidRoles.join('\n') ? invalidRoles.join('\n') : '\u200b', true);
+
+			// display output embed
+			message.channel.send({ embed: embed });
+			return message.channel.stopTyping();
+		}
 	}
 }

@@ -7,21 +7,21 @@ import Misc from '../../util/Misc';
 import * as moment from 'moment';
 import * as request from 'request-promise';
 
-export default class APoD extends Command<Client>
-{
-	public constructor(bot: Client)
-	{
+export default class APoD extends Command<Client> {
+	public constructor(bot: Client) {
 		super(bot, {
 			name: 'xkcd',
 			description: 'XKCD Comics',
 			usage: '<prefix>xkcd <Argument>?',
-			extraHelp: 'Argument information below...\u000d\u000dr	   : Random XKCD Comic\u000d1-1800+ : Specific XKCD Comic\u000d\u000d*Running the command without an argument returns the most recent XKCD comic.',
+			extraHelp: 'Argument information below...\u000d\u000d' +
+			'r	   : Random XKCD Comic\u000d' +
+			'1-1800+ : Specific XKCD Comic\u000d\u000d' +
+			'*Running the command without an argument returns the most recent XKCD comic.',
 			group: 'misc'
 		});
 	}
 
-	public async action(message: Message, args: string[]): Promise<any>
-	{
+	public async action(message: Message, args: string[]): Promise<any> {
 		// variable declaration
 		const baseURL: string = 'http://xkcd.com/';
 		const xkcdJSON: string = 'info.0.json';
@@ -32,6 +32,11 @@ export default class APoD extends Command<Client>
 
 		// max amount of comics
 		let max: any = await request({ uri: baseURL + xkcdJSON, json: true });
+
+		if (parseInt(args[0]) > max.num) {
+			message.channel.send(`Selection outside of range, please select a number below \`${max.num}\`.`);
+			return message.channel.stopTyping();
+		}
 
 		// random comic
 		let rComic: number = Math.floor((Math.random() * parseInt(max.num)) + 1);
