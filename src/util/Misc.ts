@@ -2,10 +2,8 @@
 
 import * as moment from 'moment';
 
-export default class Misc
-{
-	public static generateRandomURL(): Array<string>
-	{
+export default class Misc {
+	public static generateRandomURL(): Array<string> {
 		// variable declaration
 		const now: Date = new Date();
 		const min: number = new Date(1995, 5, 16).getTime();
@@ -33,8 +31,7 @@ export default class Misc
 		return ['http://apod.nasa.gov/apod/ap' + rY.slice(-2) + rM + rD + '.html', dateString];
 	}
 
-	public static pad(n: string): string
-	{
+	public static pad(n: string): string {
 		return (parseInt(n) < 10) ? ('0' + n) : n;
 	}
 }

@@ -68,7 +68,7 @@ export default class HandleSearch extends Command<Client> {
 				.setAuthor(message.mentions.users.first().username, message.mentions.users.first().avatarURL)
 				.addField('Handle', tags, true)
 				.addField('Account Info', info, true)
-				.addField('\u200b', `${message.mentions.users.first().username}'s current main Handle is **${profile.handles[index].tag}**.`, false);
+				.setFooter(`${message.mentions.users.first().username}'s current main handle is ${profile.handles[index].tag} on ${profile.handles[index].platform.toUpperCase()}.`);
 
 			// display output
 			message.channel.send({ embed: embed });
@@ -120,7 +120,7 @@ export default class HandleSearch extends Command<Client> {
 					.setAuthor(user.username, user.avatarURL)
 					.addField('Handle', tags, true)
 					.addField('Account Info', info, true)
-					.addField('\u200b', `${user.username}'s current main Handle is **${profile.handles[index].tag}**.`, false);
+					.setFooter(`${message.mentions.users.first().username}'s current main handle is ${profile.handles[index].tag} on ${profile.handles[index].platform.toUpperCase()}.`);
 
 				// display output
 				message.channel.send({ embed: embed });

@@ -3,10 +3,8 @@
 import { Client, Command, GuildStorage } from 'yamdbf';
 import { Collection, Message, RichEmbed, Role } from 'discord.js';
 
-export default class SyncRoles extends Command<Client>
-{
-	public constructor(bot: Client)
-	{
+export default class SyncRoles extends Command<Client> {
+	public constructor(bot: Client) {
 		super(bot, {
 			name: 'sync',
 			description: 'Sync Roles',
@@ -18,8 +16,7 @@ export default class SyncRoles extends Command<Client>
 		});
 	}
 
-	public async action(message: Message, args: string[]): Promise<any>
-	{
+	public async action(message: Message, args: string[]): Promise<any> {
 		// start typing
 		message.channel.startTyping();
 
@@ -40,16 +37,14 @@ export default class SyncRoles extends Command<Client>
 		let removedRoles: string = '';
 
 		// make sure there are allowed roles
-		if (availableRoles === undefined)
-		{
+		if (availableRoles === undefined) {
 			message.channel.send({ embed: noRoles });
 			return message.channel.stopTyping();
 		}
 
 		// iterate through availableRoles, create updated list
 		availableRoles.forEach((el: any) => {
-			if (serverRoles.find('name', el.name))
-			{
+			if (serverRoles.find('name', el.name)) {
 				updatedRoles.push(el);
 				currentRoles += '\n' + el.name;
 			}
@@ -61,8 +56,7 @@ export default class SyncRoles extends Command<Client>
 		guildStorage.set('Server Roles', updatedRoles);
 
 		// make sure there are current roles
-		if (currentRoles === '')
-		{
+		if (currentRoles === '') {
 			message.channel.send({ embed: noRoles });
 			return message.channel.stopTyping();
 		}

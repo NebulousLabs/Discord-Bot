@@ -4,29 +4,26 @@ import { Client, Command } from 'yamdbf';
 import { Collection, GuildMember, Message, RichEmbed, Role } from 'discord.js';
 import * as moment from 'moment';
 
-export default class UserStats extends Command<Client>
-{
-	public constructor(bot: Client)
-	{
+export default class UserStats extends Command<Client> {
+	public constructor(bot: Client) {
 		super(bot, {
 			name: 'us',
 			aliases: ['stats'],
 			description: 'User Stats',
-			usage: '<prefix>us\u000d	   <prefix>stats',
+			usage: '<prefix>us\u000d' +
+			'	   <prefix>stats',
 			extraHelp: 'Display your Discord stats.',
 			group: 'misc',
 			guildOnly: true
 		});
 	}
 
-	public async action(message: Message, args: string[]): Promise<any>
-	{
+	public async action(message: Message, args: string[]): Promise<any> {
 		// start typing
 		message.channel.startTyping();
 
 		// make sure user is logged in
-		if (message.member === null)
-		{
+		if (message.member === null) {
 			message.channel.send('Please login in order to check your Discord stats.');
 			return message.channel.stopTyping();
 		}

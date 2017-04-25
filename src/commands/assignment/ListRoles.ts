@@ -4,23 +4,21 @@ import { Client, Command, GuildStorage } from 'yamdbf';
 import { Collection, Message, RichEmbed, Role } from 'discord.js';
 import Assignment from '../../util/Assignment';
 
-export default class ListRoles extends Command<Client>
-{
-	public constructor(bot: Client)
-	{
+export default class ListRoles extends Command<Client> {
+	public constructor(bot: Client) {
 		super(bot, {
 			name: 'list',
 			aliases: ['l'],
 			description: 'List Roles',
-			usage: '<prefix>list\u000d	   <prefix>l',
+			usage: '<prefix>list\u000d' +
+			'	   <prefix>l',
 			extraHelp: 'Use this command to display a list of roles.',
 			group: 'assignment',
 			guildOnly: true
 		});
 	}
 
-	public async action(message: Message, args: string[]): Promise<any>
-	{
+	public async action(message: Message, args: string[]): Promise<any> {
 		// start typing
 		message.channel.startTyping();
 
@@ -44,19 +42,16 @@ export default class ListRoles extends Command<Client>
 		let rightCol: string = '';
 
 		// make sure both admin roles are present and that the user has one of them
-		if ((adminCommandRole !== null && altAdminCommandRole !== null) && (message.member.roles.find('name', adminCommandRole.name) || message.member.roles.find('name', altAdminCommandRole.name)))
-		{
+		if ((adminCommandRole !== null && altAdminCommandRole !== null) && (message.member.roles.find('name', adminCommandRole.name) || message.member.roles.find('name', altAdminCommandRole.name))) {
 			// make sure admin role isn't the lowest in the list
-			if (adminCommandRole.position === 1 || altAdminCommandRole.position === 1)
-			{
+			if (adminCommandRole.position === 1 || altAdminCommandRole.position === 1) {
 				message.channel.send('Please make sure your admin role isn\'t the lowest in the list.');
 				return message.channel.stopTyping();
 			}
 
 			serverRoles.forEach((el: Role) => {
 				// grab all roles below Admin Role, exclude @everyone and bots
-				if (el.position < altAdminCommandRole.position && el.name !== '@everyone' && el.managed === false)
-				{
+				if (el.position < altAdminCommandRole.position && el.name !== '@everyone' && el.managed === false) {
 					leftCol += '\n' + el.name;
 					rightCol += (Assignment.existsInArray(availableRoles, el.name)) ? '\n**Allowed**' : '\nNot Allowed';
 				}
@@ -72,11 +67,8 @@ export default class ListRoles extends Command<Client>
 			// display the list
 			message.channel.send({ embed: modEmbed });
 			return message.channel.stopTyping();
-		}
-		else
-		{
-			if (availableRoles === undefined)
-			{
+		} else {
+			if (availableRoles === undefined) {
 				message.channel.send({ embed: noRoles });
 				return message.channel.stopTyping();
 			}

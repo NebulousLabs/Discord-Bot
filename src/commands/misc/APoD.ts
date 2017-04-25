@@ -6,10 +6,8 @@ import Misc from '../../util/Misc';
 import * as request from 'request-promise';
 import * as cheerio from 'cheerio';
 
-export default class APoD extends Command<Client>
-{
-	public constructor(bot: Client)
-	{
+export default class APoD extends Command<Client> {
+	public constructor(bot: Client) {
 		super(bot, {
 			name: 'apod',
 			description: 'NASA\'s Astronomy Picture of the Day',
@@ -19,8 +17,7 @@ export default class APoD extends Command<Client>
 		});
 	}
 
-	public async action(message: Message, args: string[]): Promise<any>
-	{
+	public async action(message: Message, args: string[]): Promise<any> {
 		// start typing
 		message.channel.startTyping();
 
@@ -30,8 +27,7 @@ export default class APoD extends Command<Client>
 		let dateString: string = '';
 
 		// if random
-		if (args[0] === 'r')
-		{
+		if (args[0] === 'r') {
 			// get random date information
 			const randomDetails: Array<string> = Misc.generateRandomURL();
 			uri = randomDetails[0];
@@ -43,8 +39,7 @@ export default class APoD extends Command<Client>
 
 		// make the request
 		request(options)
-			.then(async ($: any) =>
-			{
+			.then(async ($: any) => {
 				// variable declaration
 				let noImg: boolean = false;
 				let noVideo: boolean = true;
@@ -62,18 +57,14 @@ export default class APoD extends Command<Client>
 					.replace(/(Explanation:)/, '');
 
 			// check for video content
-			if (img === undefined)
-			{
+			if (img === undefined) {
 				noImg = true;
-				if (iFrame !== undefined)
-				{
+				if (iFrame !== undefined) {
 					noVideo = false;
-					if (/https\:\/\/www\.youtube\.com\/embed\/([\w-]{11})/i.test(iFrame))
-					{
+					if (/https\:\/\/www\.youtube\.com\/embed\/([\w-]{11})/i.test(iFrame)) {
 						const id: string = iFrame.match(/https\:\/\/www\.youtube\.com\/embed\/([\w-]{11})/i)[1];
 						content = `https://www.youtube.com/embed/${id}`;
-					}
-					else
+					} else
 						content = uri;
 				}
 			}
@@ -108,8 +99,7 @@ export default class APoD extends Command<Client>
 			// we're done working
 			return message.channel.stopTyping();
 		})
-		.catch(function (err: any)
-		{
+		.catch(function (err: any) {
 			// output error message
 			message.channel.send('There was an error retrieving the title and/or the description for this content.');
 
