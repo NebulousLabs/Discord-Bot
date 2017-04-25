@@ -22,9 +22,9 @@ Constants.cslRegExp = new RegExp('[^\,\\s][^\,]*[^\,\\s]*', 'ig');
 Constants.destroyRegExp = new RegExp('\.dr\\s', 'i');
 Constants.disallowRegExp = new RegExp('\.disallow\\s|\.d\\s', 'i');
 Constants.getRegExp = new RegExp('\.gr\\s', 'i');
-Constants.platformRegExp = new RegExp('(\\bpc\\b)|(\\bpsn\\b)|(\\bxbl\\b)', 'i');
+Constants.platformRegExp = new RegExp('(\\bpc\\b)|(\\bpsn\\b)|(\\bps\\b)|(\\bxbl\\b)|(\\bxbox\\b)', 'i');
 Constants.psRegExp = new RegExp('([A-Za-z0-9\-\_]{3,16})', 'i');
 Constants.scrubRegExp = new RegExp('(?:-s)', 'ig');
-Constants.xbRegExp = new RegExp('(?:.me set xbl)\\s([A-Za-z0-9\-\_\\s]{1,15})', 'i');
+Constants.xbRegExp = new RegExp('(?:.me set xbl|.me set xbox)\\s([A-Za-z0-9\-\_\\s]{1,15})', 'i');
 
 export default Constants;

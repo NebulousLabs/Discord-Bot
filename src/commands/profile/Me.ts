@@ -17,7 +17,7 @@ export default class Me extends Command<Client> {
 			'set <Platform> <Handle> : Profile Registration\u000d' +
 			'toggle                  : Toggle Main Account\u000d' +
 			'flush                   : Flush Profile\u000d\u000d' +
-			'*Running the command without an argument returns current profile information.\u000d' +
+			'*Running the command without an argument returns current profile information.\u000d\u000d' +
 			'*Current platforms: xbl, psn.',
 			group: 'profile',
 			guildOnly: true
@@ -78,7 +78,7 @@ export default class Me extends Command<Client> {
 					message.channel.send(errorMessage);
 					return message.channel.stopTyping();
 				}
-				if (/psn|pc/i.test(args[1])) {
+				if (/pc|ps|psn/i.test(args[1])) {
 					if (Constants.psRegExp.test(args[2])) {
 						handle = args[2];
 						platform = args[1].toLowerCase();
@@ -87,7 +87,7 @@ export default class Me extends Command<Client> {
 						errorMessage += 'Please specify a valid PSN handle. ';
 					}
 				}
-				if (/xbl/i.test(args[1])) {
+				if (/xbl|xbox/i.test(args[1])) {
 					if (Constants.xbRegExp.test(message.content)) {
 						handle = message.content.match(Constants.xbRegExp)[1];
 						platform = args[1].toLowerCase();
@@ -135,8 +135,8 @@ export default class Me extends Command<Client> {
 									.setColor(Profile.getEmbedColor(platform))
 									.setAuthor('Profile Registration', message.guild.iconURL)
 									.setDescription('Added an alt account with the following information...')
-									.addField('Handle', handle, true)
-									.addField('Platform', platform.toUpperCase(), true)
+									.addField('Handle', `\`${handle}\``, true)
+									.addField('Platform', `\`${platform.toUpperCase()}\``, true)
 									.setFooter('This handle is now your active handle.');
 
 								// display output
@@ -165,8 +165,8 @@ export default class Me extends Command<Client> {
 									.setColor(Profile.getEmbedColor(platform))
 									.setAuthor('Profile Registration', message.guild.iconURL)
 									.setDescription('Replaced existing account with the following information...')
-									.addField('Handle', handle, true)
-									.addField('Platform', platform.toUpperCase(), true)
+									.addField('Handle', `\`${handle}\``, true)
+									.addField('Platform', `\`${platform.toUpperCase()}\``, true)
 									.setFooter('This handle is now your active handle.');
 
 								// display output
@@ -196,8 +196,8 @@ export default class Me extends Command<Client> {
 						.setColor(Profile.getEmbedColor(platform))
 						.setAuthor('Profile Registration', message.guild.iconURL)
 						.setDescription('Creating account with the following information...')
-						.addField('Handle', handle, true)
-						.addField('Platform', platform.toUpperCase(), true)
+						.addField('Handle', `\`${handle}\``, true)
+						.addField('Platform', `\`${platform.toUpperCase()}\``, true)
 						.setFooter('This handle is now your active handle.');
 
 					// display output
@@ -210,6 +210,7 @@ export default class Me extends Command<Client> {
 				if (profile) {
 					let index: number = 0;
 					let handles: string = '';
+					let info: string = '';
 
 					// create confirmation filter
 					const toggleFilter: any = (m: Message) => {
@@ -222,7 +223,8 @@ export default class Me extends Command<Client> {
 
 					// create list of handles for display
 					for (let x: number = 0; x < profile.handles.length; x++) {
-						handles += (x + 1) + `⃣  \`${profile.handles[x].tag}\` \`${profile.handles[x].platform.toUpperCase()}\`\n`;
+						handles += (x + 1) + `⃣  \`${profile.handles[x].tag}\`\n`;
+						info += `\`${profile.handles[x].platform.toUpperCase()}\`\n`;
 					}
 
 					// build display output
@@ -230,6 +232,7 @@ export default class Me extends Command<Client> {
 						.setColor(Profile.getEmbedColor(profile.handles[index].platform))
 						.setAuthor(message.author.username, message.author.avatarURL)
 						.addField('Handle', handles, true)
+						.addField('Platform', info, true)
 						.setFooter(`Which number above would you like to activate?`);
 
 					// display prompt
@@ -276,8 +279,9 @@ export default class Me extends Command<Client> {
 
 			default:
 				// check if valid profile
-				if(args[0]) {
-					message.channel.send('Invalid argument. See help for this command.')
+				if (args[0]) {
+					message.channel.send('Invalid argument. See help for this command.');
+					return message.channel.stopTyping();
 				} else if (profile) {
 					// variable declaration
 					let tags: string = '';
@@ -291,7 +295,7 @@ export default class Me extends Command<Client> {
 
 					// build output for tags and info
 					profile.handles.forEach((el: Handle) => {
-						tags += `\`${el.tag}\` \n`;
+						tags += `\`${el.tag}\`\n`;
 						info += `\`${el.platform.toUpperCase()}\`\n`;
 					});
 
