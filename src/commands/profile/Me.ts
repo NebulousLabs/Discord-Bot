@@ -102,15 +102,20 @@ export default class Me extends Command<Client> {
 				}
 
 				// does the user have an active Handle?
-				if (profile && profile.handles.find((a: Handle) => a.active === true)) {
+				let activeHandle: Handle = Profile.getActiveHandle(profile);
+				if (activeHandle) {
 					// create confirmation filter
 					const setFilter: any = (m: Message) => {
-						if (m.author.id === message.author.id && m.content.match(/r|a/i))
+						if (m.author.id === message.author.id && m.content.match(/r|a|c/i))
 							return true;
 					};
 
 					// send confirmation message
-					message.channel.send(`You appear to have an active handle already.\n\n[\`R\`]eplace account?\n[\`A\`]dd account?`).then(() => {
+					message.channel.send(`You appear to have an active handle already: ` +
+						`${activeHandle.tag} on ${activeHandle.platform.toUpperCase()}.\n\n` +
+						`[\`R\`]eplace account?\n` +
+						`[\`A\`]dd account?\n` +
+						`[\`C\`]ancel?`).then(() => {
 						// send awaitMessage
 						message.channel.awaitMessages(setFilter, {max: 1, time: 20000})
 						// user responded
@@ -171,6 +176,11 @@ export default class Me extends Command<Client> {
 
 								// display output
 								return message.channel.send({ embed: embed });
+							}
+
+							// cancel the action
+							if (collected.first().content.toLowerCase() === 'c') {
+								return message.channel.send('Cancelling action.');
 							}
 						})
 						// user did not respond

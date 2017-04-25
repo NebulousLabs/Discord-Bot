@@ -9,7 +9,9 @@ export default class Profile {
 
 	// methods
 	public static getActiveHandle(profile: Profile): Handle {
-		return profile.handles.find(a => a.active === true);
+		if (profile) {
+			return profile.handles.find(a => a.active === true);
+		}
 	}
 
 	public static getEmbedColor(platform: string): number {
