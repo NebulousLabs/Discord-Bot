@@ -3,6 +3,7 @@
 import { Client, Command } from 'yamdbf';
 import { Message, RichEmbed } from 'discord.js';
 import Comic from '../../util/Comic';
+import Constants from '../../util/Constants';
 import Misc from '../../util/Misc';
 import * as moment from 'moment';
 import * as request from 'request-promise';
@@ -52,13 +53,13 @@ export default class APoD extends Command<Client> {
 			.then(async (comic: Comic) => {
 				// build the panel embed
 				const panelEmbed: RichEmbed = new RichEmbed()
-					.setColor(0x206694)
+					.setColor(Constants.embedColor)
 					.setAuthor(comic.title)
 					.setImage(comic.img);
 
 				// build the alt embed
 				const altEmbed: RichEmbed = new RichEmbed()
-					.setColor(0x206694)
+					.setColor(Constants.embedColor)
 					.setAuthor(moment(`${comic.year}-${Misc.pad(comic.month)}-${Misc.pad(comic.day)}`).format('LL') + ' #' + comic.num)
 					.setDescription(comic.alt);
 

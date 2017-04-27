@@ -2,6 +2,7 @@
 
 import { Client, Command } from 'yamdbf';
 import { Message, RichEmbed } from 'discord.js';
+import Constants from '../../util/Constants';
 import Misc from '../../util/Misc';
 import * as request from 'request-promise';
 import * as cheerio from 'cheerio';
@@ -44,7 +45,7 @@ export default class APoD extends Command<Client> {
 				let noImg: boolean = false;
 				let noVideo: boolean = true;
 				let mediaEmbed: RichEmbed = new RichEmbed()
-					.setColor(0x206694);
+					.setColor(Constants.embedColor);
 
 				// grab the important stuff
 				const img: string = $('img').attr('src');
@@ -88,7 +89,7 @@ export default class APoD extends Command<Client> {
 			// explanation embed
 			desc = (desc === '') ? '*There is no explanation for this content.*' : desc;
 			let embed: RichEmbed = new RichEmbed()
-				.setColor(0x206694)
+				.setColor(Constants.embedColor)
 				.setDescription(desc)
 				.setAuthor('Explanation' + dateString);
 

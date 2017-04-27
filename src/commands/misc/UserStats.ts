@@ -2,6 +2,7 @@
 
 import { Client, Command } from 'yamdbf';
 import { Collection, GuildMember, Message, RichEmbed, Role } from 'discord.js';
+import Constants from '../../util/Constants';
 import * as moment from 'moment';
 
 export default class UserStats extends Command<Client> {
@@ -55,7 +56,7 @@ export default class UserStats extends Command<Client> {
 
 		// build the embed
 		const embed: RichEmbed = new RichEmbed()
-			.setColor(0x274E13)
+			.setColor(Constants.embedColor)
 			.setAuthor(guildMember.user.username + '#' + guildMember.user.discriminator, guildMember.user.avatarURL)
 			.setDescription(status)
 			.addField('Joined Server', joinServer, true)

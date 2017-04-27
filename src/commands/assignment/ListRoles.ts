@@ -3,6 +3,7 @@
 import { Client, Command, GuildStorage } from 'yamdbf';
 import { Collection, Message, RichEmbed, Role } from 'discord.js';
 import Assignment from '../../util/Assignment';
+import Constants from '../../util/Constants';
 
 export default class ListRoles extends Command<Client> {
 	public constructor(bot: Client) {
@@ -33,7 +34,7 @@ export default class ListRoles extends Command<Client> {
 
 		// create no role error message embed
 		const noRoles: RichEmbed = new RichEmbed()
-			.setColor(0x206694)
+			.setColor(Constants.embedColor)
 			.setTitle(message.guild.name + ': Role Synchronization')
 			.addField('Current Allowed Roles', '\nNo roles currently allowed.');
 
@@ -59,7 +60,7 @@ export default class ListRoles extends Command<Client> {
 
 			// build the output embed
 			const modEmbed: RichEmbed = new RichEmbed()
-				.setColor(0x274E13)
+				.setColor(Constants.embedColor)
 				.setAuthor(message.guild.name + ': List of Roles', message.guild.iconURL)
 				.addField('Roles', leftCol, true)
 				.addField('Status', rightCol, true);
@@ -78,7 +79,7 @@ export default class ListRoles extends Command<Client> {
 
 			// build the output embed
 			const userEmbed: RichEmbed = new RichEmbed()
-				.setColor(0x274E13)
+				.setColor(Constants.embedColor)
 				.setAuthor(message.guild.name + ': List of Roles', message.guild.iconURL)
 				.setDescription('Run `.gr *.` to get all available roles.')
 				.addField('Roles', leftCol, true);

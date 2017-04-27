@@ -10,7 +10,10 @@ export type BotConstants = {
 	platformRegExp: RegExp,
 	psRegExp: RegExp,
 	scrubRegExp: RegExp,
-	xbRegExp: RegExp
+	xbRegExp: RegExp,
+
+	// embed color
+	embedColor: string
 };
 
 // tslint:disable-next-line:variable-name
@@ -26,5 +29,8 @@ Constants.platformRegExp = new RegExp('(\\bpc\\b)|(\\bpsn\\b)|(\\bps\\b)|(\\bxbl
 Constants.psRegExp = new RegExp('([A-Za-z0-9\-\_]{3,16})', 'i');
 Constants.scrubRegExp = new RegExp('(?:-s)', 'ig');
 Constants.xbRegExp = new RegExp('(?:.me set xbl|.me set xbox)\\s([A-Za-z0-9\-\_\\s]{1,15})', 'i');
+
+// embed color
+Constants.embedColor = '0xff8c00';
 
 export default Constants;

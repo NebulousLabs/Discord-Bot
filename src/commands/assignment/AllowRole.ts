@@ -131,7 +131,7 @@ export default class AllowRole extends Command<Client> {
 		if (validRoles.length === 0 && invalidRoles.length > 0 && inspecificRoles.length > 0) {
 			// build output embed
 			embed
-				.setColor(0x206694)
+				.setColor(Constants.embedColor)
 				.setTitle(message.guild.name + ': Roles Update')
 				.addField('Inspecific Roles', inspecificRoles.join('\n') ? inspecificRoles.join('\n') : '\u200b', true)
 				.addField('Invalid Roles', invalidRoles.join('\n') ? invalidRoles.join('\n') : '\u200b', true);
@@ -145,7 +145,7 @@ export default class AllowRole extends Command<Client> {
 		if (validRoles.length > 0 && invalidRoles.length > 0 && inspecificRoles.length === 0) {
 			// build output embed
 			embed
-				.setColor(0x206694)
+				.setColor(Constants.embedColor)
 				.setTitle(message.guild.name + ': Roles Update')
 				.addField('Allowed Roles', validRoles.join('\n') ? validRoles.join('\n') : '\u200b', true)
 				.addField('Invalid Roles', invalidRoles.join('\n') ? invalidRoles.join('\n') : '\u200b', true);
