@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.1",
-    "@types/node": "^7.0.13",
+    "@types/node": "^7.0.15",
     "@types/request": "^0.0.42",
     "@types/request-promise": "^4.1.33",
     "del": "^2.2.2",
@@ -46,6 +46,6 @@
     "gulp-tslint": "^8.0.0",
     "gulp-typescript": "^3.1.6",
     "tslint": "^5.1.0",
-    "typescript": "^2.3.1"
+    "typescript": "^2.3.2"
   }
 }

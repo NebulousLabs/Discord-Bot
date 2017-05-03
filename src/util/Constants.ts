@@ -13,7 +13,10 @@ export type BotConstants = {
 	xbRegExp: RegExp,
 
 	// embed color
-	embedColor: string
+	embedColor: string,
+
+	// spacer
+	spacer: string
 };
 
 // tslint:disable-next-line:variable-name
@@ -32,5 +35,8 @@ Constants.xbRegExp = new RegExp('(?:.me set xbl|.me set xbox)\\s([A-Za-z0-9\-\_\
 
 // embed color
 Constants.embedColor = '0xff8c00';
+
+// spacer
+Constants.spacer = '<:spacer:309335739882274827>';
 
 export default Constants;

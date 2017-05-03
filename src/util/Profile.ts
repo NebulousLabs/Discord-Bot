@@ -18,10 +18,25 @@ export default class Profile {
 		switch (platform.toLowerCase()) {
 			case 'pc':
 				return 0xEF3333;
+
 			case 'psn':
 				return 0x003791;
+
 			case 'xbl':
 				return 0x107C10;
+		}
+	}
+
+	public static getplatformEmoji(platform: string): string {
+		switch (platform.toLowerCase()) {
+			case 'pc':
+				return '<:pc:308996881508466688>';
+
+			case 'psn':
+				return '<:ps:308996881328111616>';
+
+			case 'xbl':
+				return '<:xb:308996882204721152>';
 		}
 	}
 }

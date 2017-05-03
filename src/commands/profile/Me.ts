@@ -140,8 +140,8 @@ export default class Me extends Command<Client> {
 									.setColor(Profile.getEmbedColor(platform))
 									.setAuthor('Profile Registration', message.guild.iconURL)
 									.setDescription('Added an alt account with the following information...')
-									.addField('Handle', `\`${handle}\``, true)
-									.addField('Platform', `\`${platform.toUpperCase()}\``, true)
+									.addField('Handle', `\`${handle}\`${Constants.spacer}`, true)
+									.addField('Platform', `${Profile.getplatformEmoji(platform)}`, true)
 									.setFooter('This handle is now your active handle.');
 
 								// display output
@@ -170,8 +170,8 @@ export default class Me extends Command<Client> {
 									.setColor(Profile.getEmbedColor(platform))
 									.setAuthor('Profile Registration', message.guild.iconURL)
 									.setDescription('Replaced existing account with the following information...')
-									.addField('Handle', `\`${handle}\``, true)
-									.addField('Platform', `\`${platform.toUpperCase()}\``, true)
+									.addField('Handle', `\`${handle}\`${Constants.spacer}`, true)
+									.addField('Platform', `${Profile.getplatformEmoji(platform)}`, true)
 									.setFooter('This handle is now your active handle.');
 
 								// display output
@@ -206,8 +206,8 @@ export default class Me extends Command<Client> {
 						.setColor(Profile.getEmbedColor(platform))
 						.setAuthor('Profile Registration', message.guild.iconURL)
 						.setDescription('Creating account with the following information...')
-						.addField('Handle', `\`${handle}\``, true)
-						.addField('Platform', `\`${platform.toUpperCase()}\``, true)
+						.addField('Handle', `\`${handle}\`${Constants.spacer}`, true)
+						.addField('Platform', `${Profile.getplatformEmoji(platform)}`, true)
 						.setFooter('This handle is now your active handle.');
 
 					// display output
@@ -233,8 +233,8 @@ export default class Me extends Command<Client> {
 
 					// create list of handles for display
 					for (let x: number = 0; x < profile.handles.length; x++) {
-						handles += (x + 1) + `⃣  \`${profile.handles[x].tag}\`\n`;
-						info += `\`${profile.handles[x].platform.toUpperCase()}\`\n`;
+						handles += (x + 1) + `⃣  \`${profile.handles[x].tag}\`${Constants.spacer}\n`;
+						info += `\`${Profile.getplatformEmoji(profile.handles[x].platform)}\`\n`;
 					}
 
 					// build display output
@@ -305,8 +305,8 @@ export default class Me extends Command<Client> {
 
 					// build output for tags and info
 					profile.handles.forEach((el: Handle) => {
-						tags += `\`${el.tag}\`\n`;
-						info += `\`${el.platform.toUpperCase()}\`\n`;
+						tags += `\`${el.tag}\`${Constants.spacer}\n`;
+						info += `${Profile.getplatformEmoji(el.platform)}\n`;
 					});
 
 					// build display output
