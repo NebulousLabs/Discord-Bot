@@ -1,9 +1,8 @@
 'use strict';
 
-const Client: any = require('yamdbf').Client;
-const LogLevel: any = require('yamdbf').LogLevel;
+const { Client } = require('yamdbf');
+const { LogLevel } = require('yamdbf');
 const config: any = require('./config.json');
-const path: any = require('path');
 const client: any = new Client({
 	name: config.name,
 	token: config.token,
@@ -12,7 +11,7 @@ const client: any = new Client({
 	version: config.version,
 	logLevel: LogLevel.INFO,
 	statusText: config.status,
-	commandsDir: path.join(__dirname, 'commands'),
+	commandsDir: './commands',
 	disableBase: [
 		'clearlimit',
 		'disablegroup',
@@ -37,3 +36,4 @@ client.once('clientReady', () => {
 });
 
 client.on('disconnect', () => process.exit());
+
