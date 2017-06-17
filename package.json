@@ -38,14 +38,14 @@
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.1",
-    "@types/node": "^7.0.18",
+    "@types/node": "^7.0.31",
     "@types/request": "^0.0.43",
     "@types/request-promise": "^4.1.33",
-    "del": "^2.2.2",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-tslint": "^8.0.0",
-    "gulp-typescript": "^3.1.6",
-    "tslint": "^5.2.0",
-    "typescript": "^2.3.2"
+    "gulp-tslint": "^8.1.1",
+    "gulp-typescript": "^3.1.7",
+    "tslint": "^5.4.3",
+    "typescript": "^2.3.4"
   }
 }

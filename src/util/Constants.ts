@@ -1,5 +1,3 @@
-'use strict';
-
 export type BotConstants = {
 	// RegExp
 	allowRegExp: RegExp,

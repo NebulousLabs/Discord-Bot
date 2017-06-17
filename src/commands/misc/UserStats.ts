@@ -1,19 +1,17 @@
-'use strict';
-
-import { Client, Command } from 'yamdbf';
+import { Command } from 'yamdbf';
 import { Collection, GuildMember, Message, RichEmbed, Role } from 'discord.js';
 import Constants from '../../util/Constants';
 import * as moment from 'moment';
 
-export default class UserStats extends Command<Client> {
-	public constructor(bot: Client) {
-		super(bot, {
+export default class UserStats extends Command {
+	public constructor() {
+		super({
 			name: 'us',
 			aliases: ['stats'],
-			description: 'User Stats',
+			desc: 'User Stats',
 			usage: '<prefix>us\u000d' +
 			'	   <prefix>stats',
-			extraHelp: 'Display your Discord stats.',
+			info: 'Display your Discord stats.',
 			group: 'misc',
 			guildOnly: true
 		});

@@ -1,18 +1,16 @@
-'use strict';
-
-import { Client, Command, GuildStorage } from 'yamdbf';
+import { Command, GuildStorage } from 'yamdbf';
 import { GuildMember, Message, RichEmbed, User } from 'discord.js';
 import Handle from '../../util/Handle';
 import Profile from '../../util/Profile';
 import * as fuzzy from 'fuzzy';
 
-export default class HandleSearch extends Command<Client> {
-	public constructor(bot: Client)	{
-		super(bot, {
+export default class HandleSearch extends Command {
+	public constructor()	{
+		super({
 			name: 'hs',
-			description: 'Handle Search',
+			desc: 'Handle Search',
 			usage: '<prefix>hs <Argument>',
-			extraHelp: 'Argument information below...\u000d\u000d' +
+			info: 'Argument information below...\u000d\u000d' +
 			'@mention : Find a user\'s Handle via Discord @mention\u000d' +
 			'username : Find a user\'s Handle via Discord username',
 			group: 'search',

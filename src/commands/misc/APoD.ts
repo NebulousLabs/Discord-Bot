@@ -1,19 +1,17 @@
-'use strict';
-
-import { Client, Command } from 'yamdbf';
+import { Command } from 'yamdbf';
 import { Message, RichEmbed } from 'discord.js';
 import Constants from '../../util/Constants';
 import Misc from '../../util/Misc';
 import * as request from 'request-promise';
 import * as cheerio from 'cheerio';
 
-export default class APoD extends Command<Client> {
-	public constructor(bot: Client) {
-		super(bot, {
+export default class APoD extends Command {
+	public constructor() {
+		super({
 			name: 'apod',
-			description: 'NASA\'s Astronomy Picture of the Day',
+			desc: 'NASA\'s Astronomy Picture of the Day',
 			usage: '<prefix>apod <Argument>?',
-			extraHelp: 'Argument information below...\u000d\u000dr : Random APoD\u000d\u000d*Running the command without an argument returns the most recent APoD.',
+			info: 'Argument information below...\u000d\u000dr : Random APoD\u000d\u000d*Running the command without an argument returns the most recent APoD.',
 			group: 'misc'
 		});
 	}

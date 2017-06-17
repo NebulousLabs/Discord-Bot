@@ -1,6 +1,4 @@
-'use strict';
-
-import { Client, Command } from 'yamdbf';
+import { Command } from 'yamdbf';
 import { Message, RichEmbed } from 'discord.js';
 import Comic from '../../util/Comic';
 import Constants from '../../util/Constants';
@@ -8,13 +6,13 @@ import Misc from '../../util/Misc';
 import * as moment from 'moment';
 import * as request from 'request-promise';
 
-export default class APoD extends Command<Client> {
-	public constructor(bot: Client) {
-		super(bot, {
+export default class APoD extends Command {
+	public constructor() {
+		super({
 			name: 'xkcd',
-			description: 'XKCD Comics',
+			desc: 'XKCD Comics',
 			usage: '<prefix>xkcd <Argument>?',
-			extraHelp: 'Argument information below...\u000d\u000d' +
+			info: 'Argument information below...\u000d\u000d' +
 			'r	   : Random XKCD Comic\u000d' +
 			'1-1800+ : Specific XKCD Comic\u000d\u000d' +
 			'*Running the command without an argument returns the most recent XKCD comic.',

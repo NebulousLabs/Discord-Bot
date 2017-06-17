@@ -1,5 +1,3 @@
-'use strict';
-
 import Constants from '../util/constants';
 import Handle from './Handle';
 

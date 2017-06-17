@@ -1,19 +1,17 @@
-'use strict';
-
-import { Client, Command, GuildStorage } from 'yamdbf';
+import { Command, GuildStorage } from 'yamdbf';
 import { Collection, Message, MessageReaction, RichEmbed, User } from 'discord.js';
 import Constants from '../../util/Constants';
 import Handle from '../../util/Handle';
 import Profile from '../../util/Profile';
 import * as request from 'request-promise';
 
-export default class Me extends Command<Client> {
-	public constructor(bot: Client) {
-		super(bot, {
+export default class Me extends Command {
+	public constructor() {
+		super({
 			name: 'me',
-			description: 'Profile Registration',
+			desc: 'Profile Registration',
 			usage: '<prefix>me <Argument>?',
-			extraHelp: 'Argument information below...\u000d\u000d' +
+			info: 'Argument information below...\u000d\u000d' +
 			'set <Platform> <Handle> : Profile Registration\u000d' +
 			'toggle                  : Toggle Main Account\u000d' +
 			'flush                   : Flush Profile\u000d\u000d' +
