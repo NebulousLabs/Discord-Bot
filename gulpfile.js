@@ -10,17 +10,14 @@ const linter = tslint.Linter.createProgram('tsconfig.json');
 gulp.task('tslint', () => {
     gulp.src(['./src/**/*.ts'])
       .pipe(gulp_tslint({
-			configuration: 'tslint.json',
-			formatter: 'prose',
-			program: linter
-		}))
-		.pipe(gulp_tslint.report());
+            configuration: 'tslint.json',
+            formatter: 'prose',
+            program: linter
+        }))
+        .pipe(gulp_tslint.report());
 });
 
-gulp.task('default', () =>
-{
-    del.sync(['./bin/**/*.*']);
-
+gulp.task('compile', () => {
     gulp.src('./src/**/*.ts')
         .pipe(project())
         .pipe(gulp.dest('bin/'));
@@ -30,4 +27,13 @@ gulp.task('default', () =>
 
     gulp.src('./src/img/*.*')
         .pipe(gulp.dest('bin/img/'));
+});
+
+gulp.task('watch', ['compile'], () => {
+    del.sync(['./bin/**/*.*']);
+    gulp.watch(['./src/**/*.ts', './src/config.json', './src/img/*.*'], ['compile']);
+})
+
+gulp.task('default', ['compile'], () => {
+    del.sync(['./bin/**/*.*']);
 });
