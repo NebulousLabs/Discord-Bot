@@ -19,7 +19,7 @@ export class SweeperClient extends Client {
 			version: config.version,
 			statusText: config.status,
 			unknownCommandError: false,
-			commandsDir: './commands',
+			commandsDir: __dirname + '/../../commands',
 			disableBase: [
 				'clearlimit',
 				'disablegroup',
