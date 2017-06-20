@@ -37,10 +37,6 @@ export default class HandleSearch extends Command {
 		// grab the storage
 		const guildStorage: GuildStorage = this.client.storage.guilds.get(message.guild.id);
 
-		// create error variables
-		let error: Boolean = false;
-		let errorMessage: string = '';
-
 		// if @mention was used
 		if (message.mentions.users.size === 1) {
 			// variable declaration

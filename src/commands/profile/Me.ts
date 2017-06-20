@@ -1,9 +1,8 @@
 import { Command, GuildStorage } from 'yamdbf';
-import { Collection, Message, MessageReaction, RichEmbed, User } from 'discord.js';
+import { Collection, Message, RichEmbed } from 'discord.js';
 import Constants from '../../util/Constants';
 import Handle from '../../util/Handle';
 import Profile from '../../util/Profile';
-import * as request from 'request-promise';
 
 export default class Me extends Command {
 	public constructor() {

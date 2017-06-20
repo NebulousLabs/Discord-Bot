@@ -21,7 +21,6 @@ export default class APoD extends Command {
 		message.channel.startTyping();
 
 		// create apod variables
-		const now: Date = new Date();
 		let uri: string = 'https://apod.nasa.gov/apod/astropix.html';
 		let dateString: string = '';
 

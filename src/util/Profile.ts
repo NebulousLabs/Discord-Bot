@@ -1,4 +1,3 @@
-import Constants from '../util/constants';
 import Handle from './Handle';
 
 export default class Profile {

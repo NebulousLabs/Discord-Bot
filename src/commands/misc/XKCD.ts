@@ -24,7 +24,6 @@ export default class APoD extends Command {
 		// variable declaration
 		const baseURL: string = 'http://xkcd.com/';
 		const xkcdJSON: string = 'info.0.json';
-		const errMessage: string = 'Comic not found.';
 
 		// show the user we're working
 		message.channel.startTyping();
