@@ -1,5 +1,5 @@
 import * as Sequelize from 'sequelize';
-import Commands from './commands';
+import Commands from './Commands';
 import Observer from '../util/Observer';
 
 let instance: Database = undefined;
