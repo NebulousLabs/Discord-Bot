@@ -4,50 +4,18 @@
 [![devDependencies Status](https://david-dm.org/r-DestinyTheGame/Sweeper-Bot/dev-status.svg)](https://david-dm.org/r-DestinyTheGame/Sweeper-Bot?type=dev)
 [![Travis](https://travis-ci.org/r-DestinyTheGame/Sweeper-Bot.svg?branch=master)](https://travis-ci.org/r-DestinyTheGame/Sweeper-Bot)
 
-General purpose bot for the official r/DTG Discord server.
+<img align="left" src="http://i.imgur.com/EqHGgej.png">Sweeper Bot is alive and well, while he may not be kicking around in the Tower anymore he *is* putting his talents to good use on our Discord server.
 
-# NPM Install
-## Step 1
-`npm install`
+He handles **role assignments**, **stat pulls**, **community leaderboards**, **community tools**, **giveaways**, **automatic voice channel creation**, and various other server and mod tools.
 
-## Step 2
-Setup the config file
-- add your bot token
-- add your discord ID in owner
-
-## Step 3
-Compile the project using gulp
-
-## Step 4
-Move compiled .js project to hosting instance
-
-## Step 5
-`node sweeper.js`
+*If you happen to run accross an error, or something just doesn't seem right, please report this incident to our [Issue Tracker](https://github.com/r-DestinyTheGame/Sweeper-Bot/issues/).*
 
 
-# Docker Install
-## Step 1
-- Add your config.json file to the base directory
+<br /><br /><br /><br /><br /><br />
 
-## Step 2
-`docker build -t sweeper:latest .`
-
-## Step 3
-`docker run -t sweeper`
-
-
-# Vagrant Install
-## Step 1:
-- Set up your config file.
-
-## Step 2:
-`vagrant up default`
-
-
-# Links
-#### Sweeper Bot
-- [Sweeper Bot Wiki](https://github.com/r-DestinyTheGame/Sweeper-Bot/wiki) - soon:tm:
-
-#### YAMDBF
+# Useful Links
+- [Sweeper Bot Wiki](https://github.com/r-DestinyTheGame/Sweeper-Bot/wiki)
+- [Sweeper Bot RoadMap](https://github.com/r-DestinyTheGame/Sweeper-Bot/projects/1)
+- [Sweeper Bot Issue Tracker](https://github.com/r-DestinyTheGame/Sweeper-Bot/issues/)
 - [YAMDBF GitHub](https://github.com/zajrik/yamdbf)
 - [YAMDBF Documentation](https://yamdbf.js.org/)
