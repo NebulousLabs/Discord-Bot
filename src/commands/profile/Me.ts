@@ -137,7 +137,7 @@ export default class Me extends Command {
 									.setColor(Profile.getEmbedColor(platform))
 									.setAuthor('Profile Registration', message.guild.iconURL)
 									.setDescription('Added an alt account with the following information...')
-									.addField('Handle', `\`${handle}\`${Constants.spacer}`, true)
+									.addField('Handle', `\`${handle}\`${Constants.spacerEmoji}`, true)
 									.addField('Platform', `${Profile.getplatformEmoji(platform)}`, true)
 									.setFooter('This handle is now your active handle.');
 
@@ -167,7 +167,7 @@ export default class Me extends Command {
 									.setColor(Profile.getEmbedColor(platform))
 									.setAuthor('Profile Registration', message.guild.iconURL)
 									.setDescription('Replaced existing account with the following information...')
-									.addField('Handle', `\`${handle}\`${Constants.spacer}`, true)
+									.addField('Handle', `\`${handle}\`${Constants.spacerEmoji}`, true)
 									.addField('Platform', `${Profile.getplatformEmoji(platform)}`, true)
 									.setFooter('This handle is now your active handle.');
 
@@ -203,7 +203,7 @@ export default class Me extends Command {
 						.setColor(Profile.getEmbedColor(platform))
 						.setAuthor('Profile Registration', message.guild.iconURL)
 						.setDescription('Creating account with the following information...')
-						.addField('Handle', `\`${handle}\`${Constants.spacer}`, true)
+						.addField('Handle', `\`${handle}\`${Constants.spacerEmoji}`, true)
 						.addField('Platform', `${Profile.getplatformEmoji(platform)}`, true)
 						.setFooter('This handle is now your active handle.');
 
@@ -230,7 +230,7 @@ export default class Me extends Command {
 
 					// create list of handles for display
 					for (let x: number = 0; x < profile.handles.length; x++) {
-						handles += (x + 1) + `⃣  \`${profile.handles[x].tag}\`${Constants.spacer}\n`;
+						handles += (x + 1) + `⃣  \`${profile.handles[x].tag}\`${Constants.spacerEmoji}\n`;
 						info += `\`${Profile.getplatformEmoji(profile.handles[x].platform)}\`\n`;
 					}
 
@@ -302,7 +302,7 @@ export default class Me extends Command {
 
 					// build output for tags and info
 					profile.handles.forEach((el: Handle) => {
-						tags += `\`${el.tag}\`${Constants.spacer}\n`;
+						tags += `\`${el.tag}\`${Constants.spacerEmoji}\n`;
 						info += `${Profile.getplatformEmoji(el.platform)}\n`;
 					});
 

@@ -1,4 +1,7 @@
 export type BotConstants = {
+	// id
+	id: string,
+
 	// RegExp
 	allowRegExp: RegExp,
 	cslRegExp: RegExp,
@@ -13,12 +16,19 @@ export type BotConstants = {
 	// embed color
 	embedColor: string,
 
-	// spacer
-	spacer: string
+	// misc emoji
+	spacerEmoji: string,
+	blizzEmjoi: string,
+	psEmoji: string,
+	xbEmoji: string,
+	removeEmoji: string
 };
 
 // tslint:disable-next-line:variable-name
 const Constants: BotConstants = <any> {};
+
+// id
+Constants.id = '282146039824121858';
 
 // RegExp
 Constants.allowRegExp = new RegExp('\.allow\\s|\.a\\s', 'i');
@@ -34,7 +44,10 @@ Constants.xbRegExp = new RegExp('(?:.me set xbl|.me set xbox)\\s([A-Za-z0-9\-\_\
 // embed color
 Constants.embedColor = '0xff8c00';
 
-// spacer
-Constants.spacer = '<:spacer:309335739882274827>';
+// misc emoji
+Constants.spacerEmoji = ':spacer:328352361569583105';
+Constants.blizzEmjoi = ':blizz:328322843227979778';
+Constants.psEmoji = ':ps:328322843198881792';
+Constants.xbEmoji = ':xb:328322843798405133';
 
 export default Constants;

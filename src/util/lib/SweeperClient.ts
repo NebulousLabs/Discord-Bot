@@ -28,16 +28,16 @@ export class SweeperClient extends Client {
 				'disablegroup',
 				'enablegroup',
 				'eval',
+				'eval:ts',
 				'limit',
 				'listgroups',
 				'ping',
-				'reload',
-				'version'
+				'reload'
 			],
 			readyText: 'Ready\u0007',
 			ratelimit: '10/1m',
 			pause: true,
-			logLevel: LogLevel.INFO,
+			logLevel: LogLevel.INFO
 		});
 
 		this.config = config;
