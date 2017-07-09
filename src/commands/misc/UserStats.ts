@@ -12,7 +12,8 @@ export default class UserStats extends Command {
 			usage: '<prefix>us <Argument>?',
 			info: 'Argument information below...\u000d\u000d' +
 			'@mention : Display user information via @mention\u000d' +
-			'username : Display user information via display name',
+			'username : Display user information via display name\u000d\u000d' +
+			'*Running the command without an argument returns your information.',
 			group: 'misc',
 			guildOnly: true
 		});

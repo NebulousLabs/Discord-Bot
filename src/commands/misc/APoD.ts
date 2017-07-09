@@ -11,7 +11,9 @@ export default class APoD extends Command {
 			name: 'apod',
 			desc: 'NASA\'s Astronomy Picture of the Day',
 			usage: '<prefix>apod <Argument>?',
-			info: 'Argument information below...\u000d\u000dr : Random APoD\u000d\u000d*Running the command without an argument returns the most recent APoD.',
+			info: 'Argument information below...\u000d\u000d' +
+			'r : Random APoD\u000d\u000d' +
+			'*Running the command without an argument returns the most recent APoD.',
 			group: 'misc'
 		});
 	}

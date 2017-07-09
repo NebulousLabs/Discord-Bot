@@ -15,16 +15,18 @@ export default class Me extends Command {
 			'toggle                  : Toggle Main Account\u000d' +
 			'flush                   : Flush Profile\u000d\u000d' +
 			'*Running the command without an argument returns current profile information.\u000d\u000d' +
-			'*Current platforms: xbl, psn.',
+			'*In order to set an alternate account, run an additional set command and Sweeper will ' +
+			'prompt you to either add an account, replace an existing account, or cancel the current action.\u000d\u000d' +
+			'*Current avilable platforms:\u000d\u000d' +
+			'For PC                  : PC\u000d' +
+			'For Playstation         : PS or PSN\u000d' +
+			'For Xbox                : XB or XBL\u000d',
 			group: 'profile',
 			guildOnly: true
 		});
 	}
 
 	public async action(message: Message, args: Array<string>): Promise<any> {
-		// start typing
-		message.channel.startTyping();
-
 		// grab profile
 		const guildStorage: GuildStorage = this.client.storage.guilds.get(message.guild.id);
 		let profile: Profile = await guildStorage.get(message.author.id.toString());
@@ -47,17 +49,11 @@ export default class Me extends Command {
 					// flush profile
 					guildStorage.remove(message.author.id.toString());
 
-					// display output
-					message.channel.send('Flushed profile settings.');
-					return message.channel.stopTyping();
-				} else {
-					// display output
-					message.channel.send('No profile attributes set, nothing to flush.');
-					return message.channel.stopTyping();
-				}
+					return message.channel.send('Flushed profile settings.');
+				} else
+					return message.channel.send('No profile attributes set, nothing to flush.');
 
 			case 'set':
-				// handle arg
 				if (!args[1]) {
 					error = true;
 					errorMessage += 'Please specify a `Platform`. ';
@@ -71,10 +67,9 @@ export default class Me extends Command {
 					errorMessage += 'Please specify a valid `Platform`.';
 				}
 
-				if (error) {
-					message.channel.send(errorMessage);
-					return message.channel.stopTyping();
-				}
+				if (error)
+					return message.channel.send(errorMessage);
+
 				if (/pc|ps|psn/i.test(args[1])) {
 					if (Constants.psRegExp.test(args[2])) {
 						handle = args[2];
@@ -93,10 +88,11 @@ export default class Me extends Command {
 						errorMessage += 'Please specify a valid XBL handle. ';
 					}
 				}
-				if (error) {
-					message.channel.send(errorMessage);
-					return message.channel.stopTyping();
-				}
+				if (error)
+					return message.channel.send(errorMessage);
+
+				// let the user know we're working
+				message.channel.startTyping();
 
 				// does the user have an active Handle?
 				let activeHandle: Handle = Profile.getActiveHandle(profile);
@@ -121,13 +117,10 @@ export default class Me extends Command {
 							if (collected.first().content.toLowerCase() === 'a') {
 								// check if Handle already exists
 								if (profile.handles.find((a: Handle) => a.tag === handle && a.platform === platform))
-									return message.channel.send('You already have an alt account with that Handle.');
-
-								// deactivate all Handles
-								profile.handles.forEach((el: Handle) => { el.active = false; });
+									message.channel.send(`You already have an alt account with that handle on that platform.`);
 
 								// add new Handle
-								profile.handles.push(new Handle(handle, platform.toLowerCase(), true));
+								profile.handles.push(new Handle(handle, platform.toLowerCase(), false));
 
 								// save user profile
 								guildStorage.set(message.author.id.toString(), profile);
@@ -138,11 +131,10 @@ export default class Me extends Command {
 									.setAuthor('Profile Registration', message.guild.iconURL)
 									.setDescription('Added an alt account with the following information...')
 									.addField('Handle', `\`${handle}\`${Constants.spacerEmoji}`, true)
-									.addField('Platform', `${Profile.getplatformEmoji(platform)}`, true)
-									.setFooter('This handle is now your active handle.');
+									.addField('Platform', `${Profile.getplatformEmoji(platform)}`, true);
 
 								// display output
-								return message.channel.send({ embed: embed });
+								message.channel.send({ embed: embed });
 							}
 
 							// replace existing account
@@ -168,27 +160,28 @@ export default class Me extends Command {
 									.setAuthor('Profile Registration', message.guild.iconURL)
 									.setDescription('Replaced existing account with the following information...')
 									.addField('Handle', `\`${handle}\`${Constants.spacerEmoji}`, true)
-									.addField('Platform', `${Profile.getplatformEmoji(platform)}`, true)
-									.setFooter('This handle is now your active handle.');
+									.addField('Platform', `${Profile.getplatformEmoji(platform)}`, true);
 
 								// display output
-								return message.channel.send({ embed: embed });
+								message.channel.send({ embed: embed });
 							}
 
 							// cancel the action
 							if (collected.first().content.toLowerCase() === 'c') {
-								return message.channel.send('Cancelling action.');
+								message.channel.send('Cancelling action.');
 							}
+							return message.channel.stopTyping();
 						})
 						// user did not respond
 						.catch(() => {
 							// display output
-							return message.channel.send('There was no collected message that passed the filter within the time limit!');
+							message.channel.send('There was no collected message that passed the filter within the time limit!');
 						});
 					});
-					// stop typing
-					return message.channel.stopTyping();
 				} else {
+					// let the user know we're working
+					message.channel.startTyping();
+
 					// create new profile
 					profile = new Profile();
 
@@ -211,6 +204,7 @@ export default class Me extends Command {
 					message.channel.send({ embed: embed });
 					return message.channel.stopTyping();
 				}
+				break;
 
 			case 'toggle':
 				// check if valid profile
@@ -231,7 +225,7 @@ export default class Me extends Command {
 					// create list of handles for display
 					for (let x: number = 0; x < profile.handles.length; x++) {
 						handles += (x + 1) + `⃣  \`${profile.handles[x].tag}\`${Constants.spacerEmoji}\n`;
-						info += `\`${Profile.getplatformEmoji(profile.handles[x].platform)}\`\n`;
+						info += `${Profile.getplatformEmoji(profile.handles[x].platform)}\n`;
 					}
 
 					// build display output
@@ -280,7 +274,7 @@ export default class Me extends Command {
 					return message.channel.stopTyping();
 				} else {
 					// display output
-					message.channel.send('No profile attributes set.');
+					message.channel.send(`No profile attributes set.  Run \`.set <Platform> <Handle>\` to register an account to your profile.`);
 					return message.channel.stopTyping();
 				}
 
@@ -314,14 +308,9 @@ export default class Me extends Command {
 						.addField('Platform', info, true)
 						.setFooter(`Your current main handle is ${profile.handles[index].tag} on ${profile.handles[index].platform.toUpperCase()}.`);
 
-					// display output
-					message.channel.send({ embed: embed });
-					return message.channel.stopTyping();
-				} else {
-					// display output
-					message.channel.send('No profile attributes set.');
-					return message.channel.stopTyping();
-				}
+					return message.channel.send({ embed: embed });
+				} else
+					return message.channel.send(`No profile attributes set.  Run \`.set <Platform> <Handle>\` to register an account to your profile.`);
 		}
 	}
 }

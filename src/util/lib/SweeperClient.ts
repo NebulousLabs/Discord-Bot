@@ -50,4 +50,14 @@ export class SweeperClient extends Client {
 		await this.setDefaultSetting('prefix', '.');
 		this.emit('continue');
 	}
+
+	@once('clientReady')
+	private async _onClientReady(): Promise<void> {
+		await this.user.setAvatar('./img/avatar.jpeg');
+	}
+
+	@once('disconnect')
+	private async _onDisconnect(): Promise<void> {
+		process.exit(100);
+	}
 }

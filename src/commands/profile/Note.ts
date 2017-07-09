@@ -13,9 +13,9 @@ export default class Note extends Command {
 			desc: 'Set a note for a user',
 			usage: '<prefix>note <Argument>?',
 			info: 'Argument information below...\u000d\u000d' +
-			'note set <User>\u000d' +
-			'note history <User>\u000d' +
-			'note delete <User> <NoteID>\u000d',
+			'note set <User>             : Sets a note for specified user\u000d' +
+			'note history <User>         : Displays note history for specified user\u000d' +
+			'note delete <User> <NoteID> : Deletes specific note from specified user',
 			group: 'profile'
 		});
 		this.database = new Database(credentials);

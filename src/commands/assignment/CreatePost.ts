@@ -8,6 +8,7 @@ export default class CreatePost extends Command {
 			name: 'create',
 			desc: 'Create Role Reaction Post',
 			usage: '<prefix>create',
+			info: 'Create the message that users will react to in order to assign platform roles.',
 			group: 'assignment',
 			guildOnly: true,
 			roles: ['Moderators']
@@ -21,13 +22,13 @@ export default class CreatePost extends Command {
 		const embed: RichEmbed = new RichEmbed()
 			.setColor(Constants.embedColor)
 			.setTitle(`Role Assignment`)
-			.setDescription(`Please react to this post with your main console.\n\n`);
+			.setDescription(`Please react with each of the platforms you will be playing Destiny on.`);
 
 		const reactionMessage: Message = <Message> await message.channel.send({ embed });
 
-		await reactionMessage.react(Constants.blizzEmjoi);
-		await reactionMessage.react(Constants.psEmoji);
-		await reactionMessage.react(Constants.xbEmoji);
+		await reactionMessage.react(Constants.blizzEmjoi.replace('<', '').replace('>', ''));
+		await reactionMessage.react(Constants.psEmoji.replace('<', '').replace('>', ''));
+		await reactionMessage.react(Constants.xbEmoji.replace('<', '').replace('>', ''));
 
 		let guildStorage: GuildStorage = this.client.storage.guilds.get(message.guild.id);
 		guildStorage.set('Role Reaction Message', reactionMessage.id.toString());

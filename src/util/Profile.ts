@@ -1,3 +1,4 @@
+import Constants from './Constants';
 import Handle from './Handle';
 
 export default class Profile {
@@ -16,9 +17,11 @@ export default class Profile {
 			case 'pc':
 				return 0xEF3333;
 
+			case 'ps':
 			case 'psn':
 				return 0x003791;
 
+			case 'xb':
 			case 'xbl':
 				return 0x107C10;
 		}
@@ -27,13 +30,16 @@ export default class Profile {
 	public static getplatformEmoji(platform: string): string {
 		switch (platform.toLowerCase()) {
 			case 'pc':
-				return '<:pc:308996881508466688>';
+				return Constants.blizzEmjoi;
 
+			case 'ps':
 			case 'psn':
-				return '<:ps:308996881328111616>';
+				return Constants.psEmoji;
 
+			case 'xb':
 			case 'xbl':
-				return '<:xb:308996882204721152>';
+			case 'xbox':
+				return Constants.xbEmoji;
 		}
 	}
 }

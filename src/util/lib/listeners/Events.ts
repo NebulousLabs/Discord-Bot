@@ -34,7 +34,7 @@ export class Events {
 		roles[2] = reaction.message.guild.roles.find('name', 'Xbox');
 
 		await reaction.message.guild.fetchMember(user).then((u: GuildMember) => {
-			return reactionAuthor = u;
+			reactionAuthor = u;
 		}).catch((err: any) => {
 			console.log(`User could not be found.`);
 		});
@@ -71,7 +71,7 @@ export class Events {
 		roles[2] = reaction.message.guild.roles.find('name', 'Xbox');
 
 		await reaction.message.guild.fetchMember(user).then((u: GuildMember) => {
-			return reactionAuthor = u;
+			reactionAuthor = u;
 		}).catch((err: any) => {
 			console.log(`User could not be found.`);
 		});

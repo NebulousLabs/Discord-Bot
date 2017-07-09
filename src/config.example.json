@@ -2,6 +2,6 @@
 	"token": " bot token ",
 	"owner": [" owner id "],
 	"name": "Sweeper Bot",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"status": "Try .help"
 }
