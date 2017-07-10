@@ -17,7 +17,7 @@ export default class Me extends Command {
 			'*Running the command without an argument returns current profile information.\u000d\u000d' +
 			'*In order to set an alternate account, run an additional set command and Sweeper will ' +
 			'prompt you to either add an account, replace an existing account, or cancel the current action.\u000d\u000d' +
-			'*Current avilable platforms:\u000d\u000d' +
+			'*Current avilable platforms\u000d\u000d' +
 			'For PC                  : PC\u000d' +
 			'For Playstation         : PS or PSN\u000d' +
 			'For Xbox                : XB or XBL\u000d',
@@ -70,7 +70,16 @@ export default class Me extends Command {
 				if (error)
 					return message.channel.send(errorMessage);
 
-				if (/pc|ps|psn/i.test(args[1])) {
+				if (/pc/i.test(args[1])) {
+					if (Constants.pcRegExp.test(args[2])) {
+						handle = args[2];
+						platform = args[1].toLowerCase();
+					} else {
+						error = true;
+						errorMessage += 'Please specify a valid BattleTag. ';
+					}
+				}
+				if (/ps|psn/i.test(args[1])) {
 					if (Constants.psRegExp.test(args[2])) {
 						handle = args[2];
 						platform = args[1].toLowerCase();
@@ -79,7 +88,7 @@ export default class Me extends Command {
 						errorMessage += 'Please specify a valid PSN handle. ';
 					}
 				}
-				if (/xbl|xbox/i.test(args[1])) {
+				if (/xb|xbl|xbox/i.test(args[1])) {
 					if (Constants.xbRegExp.test(message.content)) {
 						handle = message.content.match(Constants.xbRegExp)[1];
 						platform = args[1].toLowerCase();
@@ -170,7 +179,6 @@ export default class Me extends Command {
 							if (collected.first().content.toLowerCase() === 'c') {
 								message.channel.send('Cancelling action.');
 							}
-							return message.channel.stopTyping();
 						})
 						// user did not respond
 						.catch(() => {
@@ -178,6 +186,7 @@ export default class Me extends Command {
 							message.channel.send('There was no collected message that passed the filter within the time limit!');
 						});
 					});
+					return message.channel.stopTyping();
 				} else {
 					// let the user know we're working
 					message.channel.startTyping();
@@ -204,9 +213,11 @@ export default class Me extends Command {
 					message.channel.send({ embed: embed });
 					return message.channel.stopTyping();
 				}
-				break;
 
 			case 'toggle':
+				// let the user know we're working
+				message.channel.startTyping();
+
 				// check if valid profile
 				if (profile) {
 					let index: number = 0;
@@ -279,6 +290,9 @@ export default class Me extends Command {
 				}
 
 			default:
+				// let the user know we're working
+				message.channel.startTyping();
+
 				// check if valid profile
 				if (args[0]) {
 					message.channel.send('Invalid argument. See help for this command.');
@@ -308,9 +322,12 @@ export default class Me extends Command {
 						.addField('Platform', info, true)
 						.setFooter(`Your current main handle is ${profile.handles[index].tag} on ${profile.handles[index].platform.toUpperCase()}.`);
 
-					return message.channel.send({ embed: embed });
-				} else
-					return message.channel.send(`No profile attributes set.  Run \`.set <Platform> <Handle>\` to register an account to your profile.`);
+					message.channel.send({ embed: embed });
+					return message.channel.stopTyping();
+				} else {
+					message.channel.send(`No profile attributes set.  Run \`.me set <Platform> <Handle>\` to register an account to your profile.`);
+					return message.channel.stopTyping();
+				}
 		}
 	}
 }

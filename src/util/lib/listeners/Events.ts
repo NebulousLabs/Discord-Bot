@@ -20,75 +20,66 @@ export class Events {
 	}
 
 	@on('messageReactionAdd')
-	private async _onReaction(reaction: MessageReaction, user: User): Promise<void> {
-		if (user.id === Constants.id)
+	private async _onReaction(reaction: MessageReaction, user: User): Promise<any> {
+		if (user.id === this._client.user.id)
 			return;
 
-		let guildStorage: GuildStorage = this._client.storage.guilds.get(reaction.message.guild.id);
+		if (user.bot)
+			return reaction.remove(user);
+
+		const reactionAuthor: GuildMember = await reaction.message.guild.fetchMember(user);
+		let guildStorage: GuildStorage = await this._client.storage.guilds.get(reaction.message.guild.id);
 		let messageId: string = await guildStorage.get('Role Reaction Message');
 		let roles: Array<Role> = new Array();
-		let reactionAuthor: GuildMember;
 
 		roles[0] = reaction.message.guild.roles.find('name', 'PC');
 		roles[1] = reaction.message.guild.roles.find('name', 'Playstation');
 		roles[2] = reaction.message.guild.roles.find('name', 'Xbox');
 
-		await reaction.message.guild.fetchMember(user).then((u: GuildMember) => {
-			reactionAuthor = u;
-		}).catch((err: any) => {
-			console.log(`User could not be found.`);
-		});
-
 		if (reaction.message.id === messageId) {
 			switch (reaction.emoji.name) {
 				case 'blizz':
-					await reactionAuthor.addRole(roles[0]);
-					break;
+					if (reactionAuthor.roles.has(roles[0].id)) return reaction.remove(user);
+					else return await reactionAuthor.addRole(roles[0]);
 
 				case 'ps':
-					await reactionAuthor.addRole(roles[1]);
-					break;
+					if (reactionAuthor.roles.has(roles[1].id)) return reaction.remove(user);
+					else return await reactionAuthor.addRole(roles[1]);
 
 				case 'xb':
-					await reactionAuthor.addRole(roles[2]);
-					break;
+					if (reactionAuthor.roles.has(roles[2].id)) return reaction.remove(user);
+					else return await reactionAuthor.addRole(roles[2]);
 			}
 		}
 	}
 
 	@on('messageReactionRemove')
-	private async _onReactionRemove(reaction: MessageReaction, user: User): Promise<void> {
-		if (user.id === Constants.id)
+	private async _onReactionRemove(reaction: MessageReaction, user: User): Promise<any> {
+		if (user.id === this._client.user.id)
 			return;
 
-		let guildStorage: GuildStorage = this._client.storage.guilds.get(reaction.message.guild.id);
+		if (user.bot)
+			return reaction.remove(user);
+
+		const reactionAuthor: GuildMember = await reaction.message.guild.fetchMember(user);
+		let guildStorage: GuildStorage = await this._client.storage.guilds.get(reaction.message.guild.id);
 		let messageId: string = await guildStorage.get('Role Reaction Message');
 		let roles: Array<Role> = new Array();
-		let reactionAuthor: GuildMember;
 
 		roles[0] = reaction.message.guild.roles.find('name', 'PC');
 		roles[1] = reaction.message.guild.roles.find('name', 'Playstation');
 		roles[2] = reaction.message.guild.roles.find('name', 'Xbox');
 
-		await reaction.message.guild.fetchMember(user).then((u: GuildMember) => {
-			reactionAuthor = u;
-		}).catch((err: any) => {
-			console.log(`User could not be found.`);
-		});
-
 		if (reaction.message.id === messageId) {
 			switch (reaction.emoji.name) {
 				case 'blizz':
-					await reactionAuthor.removeRole(roles[0]);
-					break;
+					return await reactionAuthor.removeRole(roles[0]);
 
 				case 'ps':
-					await reactionAuthor.removeRole(roles[1]);
-					break;
+					return await reactionAuthor.removeRole(roles[1]);
 
 				case 'xb':
-					await reactionAuthor.removeRole(roles[2]);
-					break;
+					return await reactionAuthor.removeRole(roles[2]);
 			}
 		}
 	}

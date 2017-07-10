@@ -78,7 +78,7 @@ export default class HandleSearch extends Command {
 
 					// build output for tags and info
 					profile.handles.forEach((el: Handle) => {
-						tags += `${el.tag + Constants.spacerEmoji}\n`;
+						tags += `\`${el.tag}\`${Constants.spacerEmoji}\n`;
 						info += `${Profile.getplatformEmoji(el.platform)}\n`;
 					});
 

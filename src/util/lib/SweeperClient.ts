@@ -1,6 +1,7 @@
 import { Client, ListenerUtil, LogLevel } from 'yamdbf';
 import { TextChannel, RichEmbed, Message, Guild, GuildMember, VoiceChannel } from 'discord.js';
 import { Events } from './listeners/Events';
+import { RoleManager } from './assignment/RoleManager';
 import Database from '../../database/Database';
 
 const config: any = require('../../config.json');
@@ -11,6 +12,7 @@ export class SweeperClient extends Client {
 	// properties
 	public config: any;
 	public events: any;
+	public roleManager: RoleManager;
 	public database: Database;
 
 	// constructor
@@ -42,6 +44,7 @@ export class SweeperClient extends Client {
 
 		this.config = config;
 		this.events = new Events(this);
+		this.roleManager = new RoleManager(this);
 		this.database = new Database(credentials);
 	}
 
@@ -53,7 +56,8 @@ export class SweeperClient extends Client {
 
 	@once('clientReady')
 	private async _onClientReady(): Promise<void> {
-		await this.user.setAvatar('./img/avatar.jpeg');
+		// await this.user.setAvatar('./img/avatar.jpeg');
+		await this.roleManager.init();
 	}
 
 	@once('disconnect')
