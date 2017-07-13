@@ -7,22 +7,28 @@ export default class NotesCommands extends Command {
 		this.model = new NotesModel(connection).get();
 	}
 
-	public create(userid: string, author: string, note: string): Promise<any> {
+	public create(serverid: string, modid: string, userid: string, note: string): Promise<any> {
 		return this.model.create(
-			{ userid, author, note }
+			{ serverid, modid, userid, note }
 		);
 	}
 
-	public get(userid: string): Promise<any> {
+	public get(serverid: string, userid: string): Promise<any> {
 		return this.model.findAll({
-			where: { userid },
+			where: { serverid, userid },
 			raw: true
 		});
 	}
 
-	public delete(id: string): Promise<any> {
+	public delete(id: number): Promise<any> {
 		return this.model.destroy({
 			where: { id }
+		});
+	}
+
+	public reset(serverid: string, userid: string): Promise<any> {
+		return this.model.destroy({
+			where: { serverid, userid }
 		});
 	}
 }
