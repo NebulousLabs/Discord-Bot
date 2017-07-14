@@ -55,7 +55,7 @@ export class SweeperClient extends Client {
 	}
 
 	@once('clientReady')
-	private async _onClientReady(): Promise<void> {
+	private async _onceClientReady(): Promise<void> {
 		// await this.user.setAvatar('./img/avatar.jpeg');
 		await this.roleManager.init();
 	}

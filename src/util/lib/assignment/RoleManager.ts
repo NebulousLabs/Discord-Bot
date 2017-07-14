@@ -1,6 +1,7 @@
 import { Collection, Guild, Message, MessageReaction, RichEmbed, Role, TextChannel, User } from 'discord.js';
 import { GuildStorage, ListenerUtil } from 'yamdbf';
 import { SweeperClient } from '../SweeperClient';
+import * as Schedule from 'node-schedule';
 import Constants from '../../Constants';
 
 const { on, registerListeners } = ListenerUtil;
@@ -21,9 +22,14 @@ export class RoleManager
 		let messageId: string = await guildStorage.get('Role Reaction Message');
 		const channel: TextChannel = <TextChannel> this.client.channels.get(Constants.assignmentChannelId);
 		let message: Message;
-		await channel.fetchMessage(messageId);
+		if (messageId)
+			await channel.fetchMessage(messageId);
+		else
+			return console.log(`Could not locate reaction message.`);
 
-		try { message = await channel.fetchMessage(messageId); }
-		catch (err) { console.log(`Could not locate reaction message.`); }
+		await Schedule.scheduleJob('* */12 * * *', async function() {
+			try { message = await channel.fetchMessage(messageId); }
+			catch (err) { return console.log(`Could not locate reaction message.`); }
+		});
 	}
 }
