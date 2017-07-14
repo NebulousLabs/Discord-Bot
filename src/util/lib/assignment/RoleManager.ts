@@ -22,14 +22,13 @@ export class RoleManager
 		let messageId: string = await guildStorage.get('Role Reaction Message');
 		const channel: TextChannel = <TextChannel> this.client.channels.get(Constants.assignmentChannelId);
 		let message: Message;
-		if (messageId)
-			await channel.fetchMessage(messageId);
-		else
-			return console.log(`Could not locate reaction message.`);
 
-		await Schedule.scheduleJob('* */12 * * *', async function() {
-			try { message = await channel.fetchMessage(messageId); }
-			catch (err) { return console.log(`Could not locate reaction message.`); }
-		});
+		if (messageId)
+			await Schedule.scheduleJob('* */12 * * *', async function() {
+				try { message = await channel.fetchMessage(messageId); }
+				catch (err) { console.log(`Could not locate reaction message.`); }
+			});
+		else
+			console.log(`Could not locate reaction message.`);
 	}
 }

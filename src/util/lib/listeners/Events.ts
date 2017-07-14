@@ -24,7 +24,7 @@ export class Events {
 		if (user.id === this._client.user.id)
 			return;
 
-		if (user.bot)
+		if (user.bot && user.id !== this._client.user.id)
 			return reaction.remove(user);
 
 		const reactionAuthor: GuildMember = await reaction.message.guild.fetchMember(user);
