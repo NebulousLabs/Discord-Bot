@@ -1,8 +1,11 @@
-import { Command } from 'yamdbf';
+import { Command, GuildStorage } from 'yamdbf';
 import { Collection, GuildMember, Message, RichEmbed, Role, User } from 'discord.js';
 import Database from '../../database/Database';
+import * as moment from 'moment';
+import * as fuzzy from 'fuzzy';
 
 const credentials = require('../../database.json');
+const idRegex: RegExp = /^(?:<@!?)?(\d+)>?$/;
 
 export default class Note extends Command {
 	private database: Database;
@@ -13,10 +16,10 @@ export default class Note extends Command {
 			aliases: ['n'],
 			desc: 'Add a note for a user',
 			usage: '<prefix>note <Argument>',
-			info: 'Argument information below...\u000d\u000d' +
-			'add <User> <Note>  : Adds a note for user\u000d' +
-			'history <User>     : Displays note history for user\u000d' +
-			'delete <User> <ID> : Deletes specific note for user\u000d' +
+			info: 'Argument information below...\n\n' +
+			'add <User> <Note>  : Adds a note for user\n' +
+			'history <User>     : Displays note history for user\n' +
+			'delete <User> <ID> : Deletes specific note for user\n' +
 			'reset <User>       : Deletes all notes for user',
 			group: 'profile',
 			guildOnly: true,
@@ -35,23 +38,65 @@ export default class Note extends Command {
 		let author: GuildMember;
 		author = message.member;
 
+		// no user specified
+		if (!args[1])
+			return message.channel.send('Please provide a user to search for.');
+
+		// if there was an attempt, args[1] was too short
+		if (args[1] && args[1].length < 3)
+			return message.channel.send('Please provide more letters for your search.');
+
 		// start typing
 		message.channel.startTyping();
 
 		// output variable declaration
 		const embed: RichEmbed = new RichEmbed();
 
-		let user: User,
-			mentions = message.mentions.users.array();
+		// grab the storage
+		const guildStorage: GuildStorage = this.client.storage.guilds.get(message.guild.id);
+		let user: User;
 
-		if (!mentions.length) {
-			message.channel.send('You must specify a user.');
-			return message.channel.stopTyping();
-		} else if (mentions.length > 1) {
-			message.channel.send('Please specify only one user.');
-			return message.channel.stopTyping();
+		// if there was an attempt listing a user
+		if (args[1]) {
+
+			// if that attempt was a mention, get very first one
+			if (message.mentions.users.size === 1) {
+				user = await message.client.fetchUser(message.mentions.users.first().id);
+
+			// if no mentions, plaintext
+			} else {
+				// Check if it's a user ID first
+				if (idRegex.test(args[1])) {
+					try { user = await message.client.fetchUser(args[1].match(idRegex)[1]); }
+					catch (err) { console.log(`Could not locate user from ID argument.`); }
+
+				// Otherwise do a name search
+				} else {
+					// map users
+					const users: Array<User> = message.guild.members.map((member: GuildMember) => member.user);
+
+					// search for user
+					let options: any = { extract: (el: User) => { return el.username; } };
+					let results: any = fuzzy.filter(args[1].toString(), users, options);
+
+					// user found
+					if (results.length === 1) {
+						// create user variables
+						user = results[0].original;
+					} else {
+						// be more specfic
+						if (results.length === 0)
+							message.channel.send(`**${results.length}** users found. Please be more specific.`);
+						else
+							message.channel.send(`**${results.length}** users found: \`${results.map((el: any) => { return el.original.username; }).join('\`, \`')}\`. Please be more specific. You may need to use a User Mention or use the User ID.`);
+
+						return message.channel.stopTyping();
+					}
+				}
+			}
 		} else {
-			user = mentions[0];
+			message.channel.send(`No users found. Please specify a user by User Mention, User ID, or Display Name.`);
+			return message.channel.stopTyping();
 		}
 
 		switch (args[0]) {
@@ -66,7 +111,9 @@ export default class Note extends Command {
 							} else {
 								let notes: string = '';
 								results.forEach((value: any, index: number) => {
-									notes += `${index + 1}. ${value.note} (<@${value.modid}>) [${value.createdAt}]\u000d`;
+									let noteDate: string = '';
+									noteDate = moment(value.createdAt).format('lll');
+									notes += `${index + 1}. ${value.note} (<@${value.modid}>) [${noteDate}]\n`;
 								});
 
 								embed.addField(`Notes for ${user.username}:`, notes, true);
@@ -260,4 +307,5 @@ export default class Note extends Command {
 		}
 		return text.slice(0, -1);
 	}
+
 }
