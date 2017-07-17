@@ -1,6 +1,7 @@
 import { Command, GuildStorage } from 'yamdbf';
 import { Collection, GuildMember, Message, RichEmbed, Role, User } from 'discord.js';
 import Database from '../../database/Database';
+import Constants from '../../util/Constants';
 import * as moment from 'moment';
 import * as fuzzy from 'fuzzy';
 
@@ -17,18 +18,20 @@ export default class Note extends Command {
 			desc: 'Add a note for a user',
 			usage: '<prefix>note <Argument>',
 			info: 'Argument information below...\n\n' +
-			'add <User> <Note>  : Adds a note for user\n' +
-			'history <User>     : Displays note history for user\n' +
-			'delete <User> <ID> : Deletes specific note for user\n' +
-			'reset <User>       : Deletes all notes for user',
+			'add <User> <Note>    : Adds a note for user\n' +
+			'history <User> <ID>? : Displays note history for user. ID optional\n' +
+			'delete <User> <ID>   : Deletes specific note for user\n' +
+			'reset <User>         : Deletes all notes for user',
 			group: 'profile',
 			guildOnly: true,
 			roles: ['The Vanguard', 'Discord Chat Mods', 'Mod Assistant']
 		});
-		this.database = new Database(credentials);
 	}
 
 	public async action(message: Message, args: Array<any>): Promise<any> {
+		// Create DB connection
+		this.database = new Database(credentials);
+
 		// Set Mod Roles
 		let modRoles: Array<Role> = new Array();
 		modRoles[0] = message.guild.roles.find('name', 'The Vanguard');
@@ -46,15 +49,12 @@ export default class Note extends Command {
 		if (args[1] && args[1].length < 3)
 			return message.channel.send('Please provide more letters for your search.');
 
-		// start typing
-		message.channel.startTyping();
-
-		// output variable declaration
-		const embed: RichEmbed = new RichEmbed();
-
 		// grab the storage
 		const guildStorage: GuildStorage = this.client.storage.guilds.get(message.guild.id);
 		let user: User;
+
+		// output variable declaration
+		const embed: RichEmbed = new RichEmbed();
 
 		// if there was an attempt listing a user
 		if (args[1]) {
@@ -68,7 +68,7 @@ export default class Note extends Command {
 				// Check if it's a user ID first
 				if (idRegex.test(args[1])) {
 					try { user = await message.client.fetchUser(args[1].match(idRegex)[1]); }
-					catch (err) { console.log(`Could not locate user from ID argument.`); }
+					catch (err) { return message.channel.send(`Could not locate user **${args[1]}** from ID argument.`); }
 
 				// Otherwise do a name search
 				} else {
@@ -86,46 +86,88 @@ export default class Note extends Command {
 					} else {
 						// be more specfic
 						if (results.length === 0)
-							message.channel.send(`**${results.length}** users found. Please be more specific.`);
+							return message.channel.send(`**${results.length}** users found. Please be more specific.`);
 						else
-							message.channel.send(`**${results.length}** users found: \`${results.map((el: any) => { return el.original.username; }).join('\`, \`')}\`. Please be more specific. You may need to use a User Mention or use the User ID.`);
-
-						return message.channel.stopTyping();
+							return message.channel.send(`**${results.length}** users found: \`${results.map((el: any) => { return el.original.username; }).join('\`, \`')}\`. Please be more specific. You may need to use a User Mention or use the User ID.`);
 					}
 				}
 			}
 		} else {
-			message.channel.send(`No users found. Please specify a user by User Mention, User ID, or Display Name.`);
-			return message.channel.stopTyping();
+			return message.channel.send(`No users found. Please specify a user by User Mention, User ID, or Display Name.`);
 		}
+
+		// start typing
+		message.channel.startTyping();
 
 		switch (args[0]) {
 			case 'h':
 			case 'history':
 				if (author.roles.has(modRoles[0].id) || author.roles.has(modRoles[1].id) || author.roles.has(modRoles[2].id)) {
-					this.database.commands.notes.get(message.guild.id, user.id)
-						.then(results => {
-							if (!results.length) {
-								message.channel.send(`There are no notes for <@${user.id}>.`);
-								return message.channel.stopTyping();
-							} else {
-								let notes: string = '';
-								results.forEach((value: any, index: number) => {
-									let noteDate: string = '';
-									noteDate = moment(value.createdAt).format('lll');
-									notes += `${index + 1}. ${value.note} (<@${value.modid}>) [${noteDate}]\n`;
-								});
+					// If an ID is specified, get that exact note
+					if (args[2] && !isNaN(args[2])) {
+						this.database.commands.notes.getOne(args[2], message.guild.id, user.id)
+							.then(results => {
+								if (!results.length) {
+									message.channel.send(`Unable to find Note #${args[2]} for <@${user.id}>.`);
+									return message.channel.stopTyping();
+								} else {
+									embed.setColor(Constants.embedColor);
+									embed.setTitle(`Notes for ${user.username}:`);
 
-								embed.addField(`Notes for ${user.username}:`, notes, true);
-								message.channel.send({ embed: embed });
+									results.forEach((value: any, index: number) => {
+										let noteDate: string = moment(value.createdAt).format('lll');
+										let noteText = value.note;
+										let length = 950;
+										let trimmedNote = noteText.length > length ?
+															noteText.substring(0, length - 3) + '...' :
+															noteText;
+
+										embed.addField(`#${value.id} - ${noteDate}`, `${trimmedNote}\n\n-<@${value.modid}>`, false);
+									});
+
+									message.channel.send({ embed: embed });
+									return message.channel.stopTyping();
+								}
+							})
+							.catch(error => {
+								console.error(error);
+								message.channel.send(`There was an error while fetching the notes for <@${user.id}>.`);
 								return message.channel.stopTyping();
-							}
-						})
-						.catch(error => {
-							console.error(error);
-							message.channel.send(`There was an error while fetching the notes for <@${user.id}>.`);
-							return message.channel.stopTyping();
-						});
+							});
+
+					} else {
+						// If no ID specified, pull history as normal.
+						this.database.commands.notes.get(message.guild.id, user.id)
+							.then(results => {
+								if (!results.length) {
+									message.channel.send(`There are no notes for <@${user.id}>.`);
+									return message.channel.stopTyping();
+
+								} else {
+									embed.setColor(Constants.embedColor);
+									embed.setTitle(`Notes for ${user.username}:`);
+
+									results.forEach((value: any, index: number) => {
+										let noteDate: string = moment(value.createdAt).format('lll');
+										let noteText = value.note;
+										let length = 150;
+										let trimmedNote = noteText.length > length ?
+															noteText.substring(0, length - 3) + '...' :
+															noteText;
+										noteDate = moment(value.createdAt).format('lll');
+										embed.addField(`${value.id} - ${noteDate}`, `${value.note}\n\n-<@${value.modid}>`, false);
+									});
+
+									message.channel.send({ embed: embed });
+									return message.channel.stopTyping();
+								}
+							})
+							.catch(error => {
+								console.error(error);
+								message.channel.send(`There was an error while fetching the notes for <@${user.id}>.`);
+								return message.channel.stopTyping();
+							});
+					}
 					break;
 				} else {
 					message.channel.send(`Sorry, but you do not have the role(s) necessary to access this command. Roles required: \`The Vanguard\` or \`Discord Chat Mods\` or \`Mod Assistant\`.`);
@@ -169,38 +211,49 @@ export default class Note extends Command {
 
 					// Check if user has any notes
 					if (isNaN(args[2])) {
-						message.channel.send(`Invalid note specified.`);
+						message.channel.send(`Invalid note specified. Please specify the ID of the note to delete.`);
 						return message.channel.stopTyping();
 					}
 
-					this.database.commands.notes.get(message.guild.id, user.id)
+					this.database.commands.notes.getOne(args[2], message.guild.id, user.id)
 						.then(results => {
 							if (!results.length) {
-								message.channel.send(`There are no notes for <@${user.id}>.`);
+								message.channel.send(`Unable to find Note #${args[2]} for <@${user.id}>. The user may not have any notes or you may not have specified a note within range.`);
 								return message.channel.stopTyping();
 							} else {
-								let noteIndex: number = Number(args[2]);
-								if (results.length < noteIndex) {
-									message.channel.send(`Please specify a note within range. Run \`<prefix>note history <user>\` to get the NoteID.`);
-									return message.channel.stopTyping();
-								}
 
 								// send confirmation message
-								message.channel.send(`Are you sure you want to delete the note for <@${user.id}> (__y__es | __n__o).`).then(() => {
+								embed.setColor(Constants.embedColor);
+								embed.setTitle(`Are you sure you want to delete this note for ${user.username} (__y__es | __n__o)?`);
+
+								results.forEach((value: any, index: number) => {
+									let noteDate: string = moment(value.createdAt).format('lll');
+									let noteText = value.note;
+									let length = 950;
+									let trimmedNote = noteText.length > length ?
+														noteText.substring(0, length - 3) + '...' :
+														noteText;
+
+									embed.addField(`#${value.id} - ${noteDate}`, `${trimmedNote}\n\n-<@${value.modid}>`, false);
+								});
+
+								embed.setFooter(`Respond with (Yes | No) | Will auto cancel in 60 seconds.`);
+
+								message.channel.send({ embed: embed }).then(() => {
 									// send awaitMessage
-									message.channel.awaitMessages(setFilter, {max: 1, time: 20000})
+									message.channel.awaitMessages(setFilter, {max: 1, time: 60000})
 										// user responded
 										.then((collected: Collection<string, Message>) => {
 											// yes, delete it
 											if (collected.first().content.charAt(0).toLowerCase() === 'y') {
-												this.database.commands.notes.delete(results[noteIndex - 1].id)
+												this.database.commands.notes.delete(args[2], message.guild.id, user.id)
 													.then(result => {
-														message.channel.send(`Deleted note #${noteIndex} for <@${user.id}>.`);
+														message.channel.send(`Deleted note #${args[2]} for <@${user.id}>.`);
 														return message.channel.stopTyping();
 													})
 													.catch(error => {
 														console.error(error);
-														message.channel.send(`There was an error while deleting the note for <@${user.id}>.`);
+														message.channel.send(`There was an error while deleting the note for <@${user.id}>. Please try again.`);
 														return message.channel.stopTyping();
 													});
 											}
@@ -215,7 +268,7 @@ export default class Note extends Command {
 										// user did not respond
 										.catch(() => {
 											// display output
-											message.channel.send('There was no collected message that passed the filter within the time limit!');
+											message.channel.send('No response received after time limit. Please respond quicker.');
 											return message.channel.stopTyping();
 										});
 								});
@@ -223,7 +276,7 @@ export default class Note extends Command {
 						})
 						.catch(error => {
 							console.error(error);
-							message.channel.send(`There was an error while processing a note deletion request for <@${user.id}>.`);
+							message.channel.send(`There was an error while processing a note deletion request for <@${user.id}>. Please try again.`);
 							return message.channel.stopTyping();
 						});
 						break;
@@ -249,9 +302,25 @@ export default class Note extends Command {
 								return message.channel.stopTyping();
 							} else {
 								// send confirmation message
-								message.channel.send(`Are you sure you want to delete all notes for <@${user.id}> (__y__es | __n__o).`).then(() => {
+								embed.setColor(Constants.embedColor);
+								embed.setTitle(`Are you sure you want to delete the notes for ${user.username} (__y__es | __n__o)?`);
+
+								results.forEach((value: any, index: number) => {
+									let noteDate: string = moment(value.createdAt).format('lll');
+									let noteText = value.note;
+									let length = 150;
+									let trimmedNote = noteText.length > length ?
+														noteText.substring(0, length - 3) + '...' :
+														noteText;
+
+									embed.addField(`#${value.id} - ${noteDate}`, `${trimmedNote}\n\n-<@${value.modid}>`, false);
+								});
+
+								embed.setFooter(`Respond with (Yes | No) | Will auto cancel in 60 seconds.`);
+
+								message.channel.send({ embed: embed }).then(() => {
 									// send awaitMessage
-									message.channel.awaitMessages(setFilter, {max: 1, time: 20000})
+									message.channel.awaitMessages(setFilter, {max: 1, time: 60000})
 										// user responded
 										.then((collected: Collection<string, Message>) => {
 											// yes, delete it
@@ -263,7 +332,7 @@ export default class Note extends Command {
 													})
 													.catch(error => {
 														console.error(error);
-														message.channel.send(`There was an error while deleting the notes for <@${user.id}>.`);
+														message.channel.send(`There was an error while deleting the notes for <@${user.id}>. Please try again.`);
 														return message.channel.stopTyping();
 													});
 											}
@@ -278,7 +347,7 @@ export default class Note extends Command {
 										// user did not respond
 										.catch(() => {
 											// display output
-											message.channel.send('There was no collected message that passed the filter within the time limit!');
+											message.channel.send('No response received after time limit. Please respond quicker.');
 											return message.channel.stopTyping();
 										});
 								});
@@ -286,7 +355,7 @@ export default class Note extends Command {
 						})
 						.catch(error => {
 							console.error(error);
-							message.channel.send(`There was an error while processing a note deletion request for <@${user.id}>.`);
+							message.channel.send(`There was an error while processing a note deletion request for <@${user.id}>. Please try again.`);
 							return message.channel.stopTyping();
 						});
 						break;
