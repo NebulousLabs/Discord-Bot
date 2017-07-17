@@ -55,12 +55,6 @@ export class Events {
 
 	@on('messageReactionRemove')
 	private async _onReactionRemove(reaction: MessageReaction, user: User): Promise<any> {
-		if (user.id === this._client.user.id)
-			return;
-
-		if (user.bot)
-			return reaction.remove(user);
-
 		const reactionAuthor: GuildMember = await reaction.message.guild.fetchMember(user);
 		let guildStorage: GuildStorage = await this._client.storage.guilds.get(reaction.message.guild.id);
 		let messageId: string = await guildStorage.get('Role Reaction Message');
