@@ -18,6 +18,7 @@ export type BotConstants = {
 	psEmoji: string;
 	xbEmoji: string;
 	removeEmoji: string;
+	D2Emoji: string;
 };
 
 // tslint:disable-next-line:variable-name
@@ -51,15 +52,17 @@ Constants.embedColor = '0xff8c00';
 // Constants.xbEmoji = '<:xb:328342096564191242>';
 
 // misc emoji, dev
-Constants.spacerEmoji = '<:spacer:309335739882274827>';
-Constants.blizzEmjoi = '<:blizz:328342096551608320>';
-Constants.psEmoji = '<:ps:328342095892971530>';
-Constants.xbEmoji = '<:xb:328342096564191242>';
+// Constants.spacerEmoji = '<:spacer:309335739882274827>';
+// Constants.blizzEmjoi = '<:blizz:328342096551608320>';
+// Constants.psEmoji = '<:ps:328342095892971530>';
+// Constants.xbEmoji = '<:xb:328342096564191242>';
+// Constants.D2Emoji = '<:D2:336634217712582656>';
 
 // misc emoji, prod
-// Constants.spacerEmoji = '<:spacer:328352361569583105>';
-// Constants.blizzEmjoi = '<:blizz:328322843227979778>';
-// Constants.psEmoji = '<:ps:328322843198881792>';
-// Constants.xbEmoji = '<:xb:328322843798405133>';
+Constants.spacerEmoji = '<:spacer:328352361569583105>';
+Constants.blizzEmjoi = '<:blizz:328322843227979778>';
+Constants.psEmoji = '<:ps:328322843198881792>';
+Constants.xbEmoji = '<:xb:328322843798405133>';
+Constants.D2Emoji = '<:D2:336634217712582656>';
 
 export default Constants;

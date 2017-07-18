@@ -30,12 +30,15 @@ export class Events {
 		const reactionAuthor: GuildMember = await reaction.message.guild.fetchMember(user);
 		let guildStorage: GuildStorage = await this._client.storage.guilds.get(reaction.message.guild.id);
 		let messageId: string = await guildStorage.get('Role Reaction Message');
+		let spoilersMessageId: string = await guildStorage.get('Spoiler Reaction Message');
 		let roles: Array<Role> = new Array();
 
 		roles[0] = reaction.message.guild.roles.find('name', 'PC');
 		roles[1] = reaction.message.guild.roles.find('name', 'Playstation');
 		roles[2] = reaction.message.guild.roles.find('name', 'Xbox');
+		roles[3] = reaction.message.guild.roles.find('name', 'Spoilers Enabled');
 
+		// Platform Message
 		if (reaction.message.id === messageId) {
 			switch (reaction.emoji.name) {
 				case 'blizz':
@@ -51,6 +54,15 @@ export class Events {
 					else return await reactionAuthor.addRole(roles[2]);
 			}
 		}
+
+		// Spoiler Message
+		if (reaction.message.id === spoilersMessageId) {
+			switch (reaction.emoji.name) {
+				case 'D2':
+					if (reactionAuthor.roles.has(roles[3].id)) return reaction.remove(user);
+					else return await reactionAuthor.addRole(roles[3]);
+			}
+		}
 	}
 
 	@on('messageReactionRemove')
@@ -58,12 +70,15 @@ export class Events {
 		const reactionAuthor: GuildMember = await reaction.message.guild.fetchMember(user);
 		let guildStorage: GuildStorage = await this._client.storage.guilds.get(reaction.message.guild.id);
 		let messageId: string = await guildStorage.get('Role Reaction Message');
+		let spoilersMessageId: string = await guildStorage.get('Spoiler Reaction Message');
 		let roles: Array<Role> = new Array();
 
 		roles[0] = reaction.message.guild.roles.find('name', 'PC');
 		roles[1] = reaction.message.guild.roles.find('name', 'Playstation');
 		roles[2] = reaction.message.guild.roles.find('name', 'Xbox');
+		roles[3] = reaction.message.guild.roles.find('name', 'Spoilers Enabled');
 
+		// Platform Message
 		if (reaction.message.id === messageId) {
 			switch (reaction.emoji.name) {
 				case 'blizz':
@@ -74,6 +89,14 @@ export class Events {
 
 				case 'xb':
 					return await reactionAuthor.removeRole(roles[2]);
+			}
+		}
+
+		// Spoiler Message
+		if (reaction.message.id === spoilersMessageId) {
+			switch (reaction.emoji.name) {
+				case 'D2':
+					return await reactionAuthor.removeRole(roles[3]);
 			}
 		}
 	}

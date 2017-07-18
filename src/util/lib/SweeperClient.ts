@@ -1,4 +1,4 @@
-import { Client, ListenerUtil, LogLevel } from 'yamdbf';
+import { Client, ListenerUtil } from 'yamdbf';
 import { TextChannel, RichEmbed, Message, Guild, GuildMember, VoiceChannel } from 'discord.js';
 import { Events } from './listeners/Events';
 import { RoleManager } from './assignment/RoleManager';
@@ -18,10 +18,8 @@ export class SweeperClient extends Client {
 	// constructor
 	public constructor() {
 		super({
-			name: config.name,
 			token: config.token,
 			owner: config.owner,
-			version: config.version,
 			statusText: config.status,
 			unknownCommandError: false,
 			commandsDir: __dirname + '/../../commands',
@@ -38,8 +36,7 @@ export class SweeperClient extends Client {
 			],
 			readyText: 'Ready\u0007',
 			ratelimit: '10/1m',
-			pause: true,
-			logLevel: LogLevel.INFO
+			pause: true
 		});
 
 		this.config = config;
