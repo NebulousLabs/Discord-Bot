@@ -1,17 +1,21 @@
 {
   "name": "sweeper-bot",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "General purpose bot for The official r/DTG Discord server.",
   "main": "sweeper.js",
   "author": "katagatame_ <katagatame@users.noreply.github.com>",
   "contributors": [
     {
-      "name": "Weylin",
-      "email": "weylin@users.noreply.github.com"
+      "name": "D0cR3d, Alpha Robot",
+      "email": "Mike@Layer7.Solutions"
     },
     {
       "name": "Jacob Callahan",
       "email": "jacob.callahan05@gmail.com"
+    },
+    {
+      "name": "Weylin",
+      "email": "weylin@users.noreply.github.com"
     }
   ],
   "license": "MIT",
