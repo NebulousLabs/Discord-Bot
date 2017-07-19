@@ -24,10 +24,11 @@ export class RoleManager {
 		// Platform roles
 		if (messageId && channel) {
 			try {
-				await this.reCacheMessage(channel, messageId);
+				let _this: RoleManager = this;
 
+				await _this.reCacheMessage(channel, messageId);
 				await Schedule.scheduleJob('* */12 * * *', async function() {
-					await this.reCacheMessage(channel, messageId);
+					await _this.reCacheMessage(channel, messageId);
 				});
 			}
 			catch (err) { console.log(`Could not locate reaction message.`); }
@@ -38,10 +39,11 @@ export class RoleManager {
 		// Spoilers role
 		if (spoilersMessageId && channel) {
 			try {
-				await this.reCacheMessage(channel, spoilersMessageId);
+				let _this: RoleManager = this;
 
+				await _this.reCacheMessage(channel, spoilersMessageId);
 				await Schedule.scheduleJob('* */12 * * *', async function() {
-					await this.reCacheMessage(channel, spoilersMessageId);
+					await _this.reCacheMessage(channel, spoilersMessageId);
 				});
 			}
 			catch (err) { console.log(`Could not locate spoilers message.`); }
