@@ -11,7 +11,8 @@ export default class CreatePost extends Command {
 			info: 'Creates message tht users will react to in order to assign roles. ' +
 			'Argument information below...\n\n' +
 			'platform : Creates platform assignment post.\n' +
-			'spoiler  : Creates spoiler channel access post\n',
+			'spoiler  : Creates spoiler channel access post\n' +
+			'faction  : Creates faction wars post\n',
 			group: 'assignment',
 			guildOnly: true,
 			roles: ['The Vanguard', 'Discord Chat Mods']
@@ -51,6 +52,21 @@ export default class CreatePost extends Command {
 					await reactionMessage.react(Constants.D2Emoji.replace('<', '').replace('>', ''));
 
 					guildStorage.set('Spoiler Reaction Message', reactionMessage.id.toString());
+					break;
+				}
+
+			case 'faction': {
+					embed.setColor(Constants.embedColor);
+					embed.setTitle(`Which is the best faction?`);
+					embed.setDescription(`React below to get the role and represent your favorite faction. Like in Destiny, you can only pledge to One (1) faction at a time.`);
+
+					const reactionMessage: Message = <Message> await message.channel.send({ embed });
+
+					await reactionMessage.react(Constants.DOEmoji.replace('<', '').replace('>', ''));
+					await reactionMessage.react(Constants.FWCEmoji.replace('<', '').replace('>', ''));
+					await reactionMessage.react(Constants.NMEmoji.replace('<', '').replace('>', ''));
+
+					guildStorage.set('Faction Reaction Message', reactionMessage.id.toString());
 					break;
 				}
 		}

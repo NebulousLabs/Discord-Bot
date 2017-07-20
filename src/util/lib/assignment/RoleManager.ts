@@ -16,25 +16,26 @@ export class RoleManager {
 
 	public async init(): Promise<void> {
 		let guildStorage: GuildStorage = await this.client.storage.guilds.get(Constants.serverId);
-		let messageId: string = await guildStorage.get('Role Reaction Message');
+		let platformMessageId: string = await guildStorage.get('Role Reaction Message');
 		let spoilersMessageId: string = await guildStorage.get('Spoiler Reaction Message');
+		let factionMessageId: string = await guildStorage.get('Faction Reaction Message');
 		const channel: TextChannel = <TextChannel> this.client.channels.get(Constants.assignmentChannelId);
 		let message: Message;
 
 		// Platform roles
-		if (messageId && channel) {
+		if (platformMessageId && channel) {
 			try {
 				let _this: RoleManager = this;
 
-				await _this.reCacheMessage(channel, messageId);
+				await _this.reCacheMessage(channel, platformMessageId);
 				await Schedule.scheduleJob('* */12 * * *', async function() {
-					await _this.reCacheMessage(channel, messageId);
+					await _this.reCacheMessage(channel, platformMessageId);
 				});
 			}
-			catch (err) { console.log(`Could not locate reaction message.`); }
+			catch (err) { console.log(`Could not locate platform message.`); }
 		}
 		else
-			console.log(`Could not locate channel or reaction message.`);
+			console.log(`Could not locate channel or platform message.`);
 
 		// Spoilers role
 		if (spoilersMessageId && channel) {
@@ -50,6 +51,21 @@ export class RoleManager {
 		}
 		else
 			console.log(`Could not locate channel or spoilers message.`);
+
+		// Faction Wars
+		if (factionMessageId && channel) {
+			try {
+				let _this: RoleManager = this;
+
+				await _this.reCacheMessage(channel, factionMessageId);
+				await Schedule.scheduleJob('* */12 * * *', async function() {
+					await _this.reCacheMessage(channel, factionMessageId);
+				});
+			}
+			catch (err) { console.log(`Could not locate faction message.`); }
+		}
+		else
+			console.log(`Could not locate channel or faction message.`);
 	}
 
 	public async reCacheMessage(channel: TextChannel, id: string): Promise<void> {
