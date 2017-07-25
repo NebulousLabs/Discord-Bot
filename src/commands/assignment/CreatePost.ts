@@ -8,7 +8,7 @@ export default class CreatePost extends Command {
 			name: 'create',
 			desc: 'Create Role Reaction Post',
 			usage: '<prefix>create <Argument>',
-			info: 'Creates message tht users will react to in order to assign roles. ' +
+			info: 'Creates message that users will react to in order to assign roles. ' +
 			'Argument information below...\n\n' +
 			'platform : Creates platform assignment post.\n' +
 			'spoiler  : Creates spoiler channel access post\n' +

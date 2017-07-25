@@ -54,8 +54,11 @@ export default class Database extends Observer {
 			logging: this.logging,
 			pool: {
 				max: 5,
-				min: 0,
+				min: 1,
 				idle: 10000
+			},
+			dialectOptions: {
+				keepAlive: true
 			}
 		});
 

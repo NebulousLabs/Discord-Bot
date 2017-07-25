@@ -2,6 +2,7 @@ import { Client, ListenerUtil } from 'yamdbf';
 import { TextChannel, RichEmbed, Message, Guild, GuildMember, VoiceChannel } from 'discord.js';
 import { Events } from './listeners/Events';
 import { RoleManager } from './assignment/RoleManager';
+import { ModLoader } from '../../lib/mod/ModLoader';
 import Database from '../../database/Database';
 
 const config: any = require('../../config.json');
@@ -14,6 +15,7 @@ export class SweeperClient extends Client {
 	public events: any;
 	public roleManager: RoleManager;
 	public database: Database;
+	public mod: ModLoader;
 
 	// constructor
 	public constructor() {
@@ -52,8 +54,11 @@ export class SweeperClient extends Client {
 	}
 
 	@once('clientReady')
-	private async _onceClientReady(): Promise<void> {
-		// await this.user.setAvatar('./img/avatar.jpeg');
+	private async _onClientReady(): Promise<void>
+	{
+		this.mod = new ModLoader(this);
+		await this.mod.init();
+
 		await this.roleManager.init();
 	}
 

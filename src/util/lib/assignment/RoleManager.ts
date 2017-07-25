@@ -76,6 +76,6 @@ export class RoleManager {
 			});
 			return;
 		}
-		catch (err) { console.log(`Could not locate reaction message.`); return; }
+		catch (err) { return; }
 	}
 }

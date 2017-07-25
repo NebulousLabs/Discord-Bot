@@ -1,8 +1,10 @@
 import { GuildStorage, ListenerUtil } from 'yamdbf';
 import { TextChannel, RichEmbed, Message, MessageReaction, Guild, GuildMember, Role, User, VoiceChannel } from 'discord.js';
 import { SweeperClient } from '../SweeperClient';
+import { MuteManager } from '../../../lib/mod/managers/MuteManager';
 import Constants from '../../Constants';
 
+const config: any = require('../../../config.json');
 const { on, registerListeners } = ListenerUtil;
 
 export class Events {
@@ -88,6 +90,7 @@ export class Events {
 					await reactionAuthor.removeRoles([roles[5], roles[6]]);
 					// and also remove their reactions
 					reaction.message.reactions.forEach(async (re: MessageReaction) => {
+						await re.fetchUsers();
 						if (re.emoji.name === 'do')
 							return;
 						await re.remove(user);
@@ -107,6 +110,7 @@ export class Events {
 					await reactionAuthor.removeRoles([roles[4], roles[6]]);
 					// and also remove their reactions
 					reaction.message.reactions.forEach(async (re: MessageReaction) => {
+						await re.fetchUsers();
 						if (re.emoji.name === 'fwc')
 							return;
 						await re.remove(user);
@@ -126,6 +130,7 @@ export class Events {
 					await reactionAuthor.removeRoles([roles[4], roles[5]]);
 					// and also remove their reactions
 					reaction.message.reactions.forEach(async (re: MessageReaction) => {
+						await re.fetchUsers();
 						if (re.emoji.name === 'nm')
 							return;
 						await re.remove(user);
@@ -193,5 +198,27 @@ export class Events {
 					return await reactionAuthor.removeRole(roles[6]);
 			}
 		}
+	}
+
+	@on('guildMemberRemove')
+	private async _onGuildMemberRemove(member: GuildMember): Promise<void> {
+		const guildStorage: GuildStorage = this._client.storage.guilds.get(member.guild.id);
+
+		if (!await this._client.mod.managers.mute.isMuted(member)) return;
+
+		const user: User = member.user;
+		this._client.mod.managers.mute.setEvasionFlag(member);
+	}
+
+	@on('guildMemberAdd')
+	private async _onGuildMemberAdd(member: GuildMember): Promise<void> {
+		const guildStorage: GuildStorage = this._client.storage.guilds.get(member.guild.id);
+
+		if (!await this._client.mod.managers.mute.isMuted(member)) return;
+		if (!await this._client.mod.managers.mute.isEvasionFlagged(member)) return;
+
+		const mutedRole: Role = member.guild.roles.find('name', 'Muted');
+		await member.setRoles([mutedRole]);
+		this._client.mod.managers.mute.clearEvasionFlag(member);
 	}
 }

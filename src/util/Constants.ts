@@ -2,6 +2,8 @@ export type BotConstants = {
 	// ID
 	assignmentChannelId: string;
 	serverId: string;
+	modChannelId: string;
+	logChannelId: string;
 
 	// RegExp
 	platformRegExp: RegExp;
@@ -11,6 +13,7 @@ export type BotConstants = {
 
 	// Embed color
 	embedColor: string;
+	muteEmbedColor: string;
 
 	// Misc emoji
 	spacerEmoji: string;
@@ -31,12 +34,16 @@ export type BotConstants = {
 const Constants: BotConstants = <any> {};
 
 // IDs, Dev
-Constants.assignmentChannelId = '333685669602000896';
-Constants.serverId = '305133671776649216';
+// Constants.assignmentChannelId = '333685669602000896';
+// Constants.serverId = '305133671776649216';
+// Constants.modChannelId = '334461385713123328';
+// Constants.logChannelId = '334461385713123328';
 
 // IDs, Prod
-// Constants.assignmentChannelId = '224197509738790922';
-// Constants.serverId = '157728722999443456';
+Constants.assignmentChannelId = '224197509738790922';
+Constants.serverId = '157728722999443456';
+Constants.modChannelId = '255099898897104908';
+Constants.logChannelId = '322490463770640385';
 
 // RegExp
 Constants.platformRegExp = new RegExp('(\\bpc\\b)|(\\bpsn\\b)|(\\bps\\b)|(\\bxbl\\b)|(\\bxb\\b)|(\\bxbox\\b)', 'i');
@@ -46,6 +53,7 @@ Constants.xbRegExp = new RegExp('(?:.me\\sset\\sxb|.me\\sset\\sxbl|.me\\sset\\sx
 
 // Embed color
 Constants.embedColor = '0xff8c00';
+Constants.muteEmbedColor = '0xffcc00';
 
 // Misc emoji, prod
 Constants.spacerEmoji = '<:spacer:328352361569583105>';
