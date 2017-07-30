@@ -1,5 +1,3 @@
-// Note: ModManager and and a few related aspects have come from https://github.com/zajrik/modbot
-
 import { Command, GuildStorage, Time, Logger, logger } from 'yamdbf';
 import { Collection, GuildMember, Message, RichEmbed, Role, TextChannel, User } from 'discord.js';
 import Constants from '../../util/Constants';
@@ -13,16 +11,11 @@ export default class Mute extends Command<SweeperClient> {
 
 	public constructor() {
 		super({
-			name: 'mute',
-			aliases: ['m'],
-			desc: 'Mute a user',
-			usage: '<prefix>mute <User> <Time>? <Note>?',
-			info: 'If no time or note specified default values will be used. ' +
-			'Valid times include (M)in, (H)our, (D)ay. Examples:\n\n' +
-			'1m or 1min   : 1 Minute\n' +
-			'2h or 2hours : 2 hours\n' +
-			'3d or 3day   : 3 Days\n\n' +
-			'To unmute someone see <prefix>unmute',
+			name: 'warn',
+			aliases: ['w'],
+			desc: 'Issue a warning to a user.',
+			usage: '<prefix>mute <User> <Note>?',
+			info: 'If no note specified default value will be used.',
 			group: 'modtools',
 			guildOnly: true,
 			roles: ['The Vanguard', 'Discord Chat Mods', 'Mod Assistant']
@@ -42,7 +35,7 @@ export default class Mute extends Command<SweeperClient> {
 
 		// if there was an attempt, args[0] was too short
 		if (args[0] && args[0].length < 3)
-			return message.channel.send('Please provide 3 or more letters for your search. For help see \`<prefix>help mute\`');
+			return message.channel.send('Please provide 3 or more letters for your search. See help for details.');
 
 		// if there was an attempt listing a user
 		if (args[0]) {
@@ -85,63 +78,43 @@ export default class Mute extends Command<SweeperClient> {
 		}
 
 		if (user) {
-			// Get milliseconds of mute length, otherwise set default
-			let muteTimeMS: number;
-			let muteTimeHUMN: string;
-			let noteIndex: number;
-			if (args[1]) {
-				muteTimeMS = Time.parseShorthand(args[1]);
-				muteTimeHUMN = args[1];
-				noteIndex = 2;
-			}
-			if (!muteTimeMS) {
-				muteTimeMS = 1200000;
-				muteTimeHUMN = '20m';
-				noteIndex = 1;
-			}
-
 			// Set note info
 			let note: string = '';
-			note = this.parseNote(args, noteIndex);
+			note = this.parseNote(args);
 			if (note.length === 0) { note = 'Please be kind to each other and read our rules in #rules-and-info.'; }
-
-			const mutedUser: GuildMember = await message.guild.fetchMember(user);
-
-			if (mutedUser.roles.has(message.guild.roles.get(await guildStorage.settings.get('mutedrole')).id)) {
-				message.channel.send('User is already muted.');
-				return message.delete();
-			}
 
 			if (user.id === message.author.id || user.id === message.guild.ownerID || user.bot) {
 				message.channel.send('You may not use this command on that user.');
 				return message.delete();
 			}
 
-			this.client.mod.actions.mute(mutedUser, issuer, message.guild, muteTimeHUMN, note)
+			const gmUser: GuildMember = await message.guild.fetchMember(user);
+
+			this.client.mod.actions.warn(gmUser, issuer, message.guild, note)
 				.then(result => {
-					this.client.mod.actions.setMuteDuration(mutedUser, message.guild, muteTimeMS);
 					message.delete();
-					this.logger.log('CMD Mute', `Muted user: '${mutedUser.user.tag}' in '${message.guild.name}'`);
 					try {
-						mutedUser.send(`You have been muted on **${message.guild.name}** for **${muteTimeHUMN}**.\n\n**A message from the mods:**\n\n"${note}"`);
+						gmUser.send(`You have been warned on **${message.guild.name}**.\n\n**A message from the mods:**\n\n"${note}"`);
+						this.logger.log('CMD Warn', `Warned user: '${gmUser.user.tag}' in '${message.guild.name}'`);
 					} catch (err) {
 						const modChannel: TextChannel = <TextChannel> message.guild.channels.get(Constants.modChannelId);
-						modChannel.send(`There was an error informing ${mutedUser.user.tag} of their mute. Their DMs may be disabled.\n\n**Error:**\n${err}`);
+						modChannel.send(`There was an error informing ${gmUser.user.tag} of their mute. Their DMs may be disabled.\n\n**Error:**\n${err}`);
+						this.logger.log('CMD Warn', `Unable to warn user: '${gmUser.user.tag}' in '${message.guild.name}'`);
 					}
 				})
 				.catch(error => {
 					console.error(error);
-					message.channel.send(`There was an error while creating mute for <@${user.id}>. Please try again.`);
-					this.logger.error('CMD Mute', `Error muting: '${mutedUser.user.tag}' in '${message.guild.name}'`);
+					message.channel.send(`There was an error while warning <@${user.id}>. Please try again.`);
+					this.logger.error('CMD Warn', `Error warning: '${gmUser.user.tag}' in '${message.guild.name}'`);
 				});
 
 		} else { return message.channel.send('Unable to fetchMember for the user. Is the user still in the server?'); }
 
 	}
 
-	private parseNote(args: Array<any>, noteIndex: number): string {
+	private parseNote(args: Array<any>): string {
 		let text: string = '';
-		for (let index = noteIndex; index < args.length; index++) {
+		for (let index: number = 1; index < args.length; index++) {
 			text += `${args[index].trim()} `;
 		}
 		return text.slice(0, -1);
