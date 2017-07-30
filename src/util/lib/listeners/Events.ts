@@ -201,8 +201,8 @@ export class Events {
 	}
 
 	@on('guildMemberRemove')
-	private async _onGuildMemberRemove(member: GuildMember): Promise<void> {
-		const guildStorage: GuildStorage = this._client.storage.guilds.get(member.guild.id);
+	private async _onGuildMemberRemove(member: GuildMember, joined: boolean = false): Promise<void> {
+		this.logMember(member, joined);
 
 		if (!await this._client.mod.managers.mute.isMuted(member)) return;
 
@@ -211,8 +211,8 @@ export class Events {
 	}
 
 	@on('guildMemberAdd')
-	private async _onGuildMemberAdd(member: GuildMember): Promise<void> {
-		const guildStorage: GuildStorage = this._client.storage.guilds.get(member.guild.id);
+	private async _onGuildMemberAdd(member: GuildMember, joined: boolean = true): Promise<void> {
+		this.logMember(member, joined);
 
 		if (!await this._client.mod.managers.mute.isMuted(member)) return;
 		if (!await this._client.mod.managers.mute.isEvasionFlagged(member)) return;
@@ -220,5 +220,18 @@ export class Events {
 		const mutedRole: Role = member.guild.roles.find('name', 'Muted');
 		await member.setRoles([mutedRole]);
 		this._client.mod.managers.mute.clearEvasionFlag(member);
+	}
+
+	private logMember(member: GuildMember, joined: boolean): void
+	{
+		if (!member.guild.channels.exists('name', 'members-log')) return;
+		const type: 'join' | 'leave' = joined ? 'join' : 'leave';
+		const memberLog: TextChannel = <TextChannel> member.guild.channels.find('name', 'members-log');
+		const embed: RichEmbed = new RichEmbed()
+			.setColor(joined ? 8450847 : 16039746)
+			.setAuthor(`${member.user.tag} (${member.id})`, member.user.avatarURL)
+			.setFooter(joined ? 'User joined' : 'User left' , '')
+			.setTimestamp();
+		memberLog.send({ embed });
 	}
 }
