@@ -1,5 +1,5 @@
-import { Command, GuildStorage, Time, Logger, logger } from 'yamdbf';
-import { Collection, GuildMember, Message, RichEmbed, Role, TextChannel, User } from 'discord.js';
+import { Command, GuildStorage, Time, Logger, logger, Message } from 'yamdbf';
+import { Collection, GuildMember, RichEmbed, Role, TextChannel, User } from 'discord.js';
 import Constants from '../../util/Constants';
 import * as fuzzy from 'fuzzy';
 import { SweeperClient } from '../../util/lib/SweeperClient';
@@ -14,8 +14,8 @@ export default class Mute extends Command<SweeperClient> {
 			name: 'warn',
 			aliases: ['w'],
 			desc: 'Issue a warning to a user.',
-			usage: '<prefix>mute <User> <Note>?',
-			info: 'If no note specified default value will be used.',
+			usage: '<prefix>warn <User> <Reason>?',
+			info: 'If no reason specified default value will be used.',
 			group: 'modtools',
 			guildOnly: true,
 			roles: ['The Vanguard', 'Discord Chat Mods', 'Mod Assistant']
@@ -90,26 +90,47 @@ export default class Mute extends Command<SweeperClient> {
 
 			const gmUser: GuildMember = await message.guild.fetchMember(user);
 
-			this.client.mod.actions.warn(gmUser, issuer, message.guild, note)
-				.then(result => {
-					message.delete();
-					try {
-						gmUser.send(`You have been warned on **${message.guild.name}**.\n\n**A message from the mods:**\n\n"${note}"`);
+			// Delete calling message immediately only if sent from non-mod channel
+			if (message.channel.id !== Constants.modChannelId) {
+				message.delete();
+			}
+
+			// Log warning to database & logs channel
+			try {
+				this.client.mod.actions.warn(gmUser, issuer, message.guild, note);
+			} catch (err) {
+				const modChannel: TextChannel = <TextChannel> message.guild.channels.get(Constants.modChannelId);
+				modChannel.send(`There was an error logging to the database/log channel for ${gmUser.user.tag}'s warning. Please try again.\n\n**Error:**\n${err}`);
+				return this.logger.log('CMD Warn', `Unable to warn user: '${gmUser.user.tag}' in '${message.guild.name}'. Error logging to DB/Modlogs channel.`);
+			}
+
+			try {
+				await gmUser.send(`You have been warned on **${message.guild.name}**.\n\n**A message from the mods:**\n\n"${note}"`)
+					.then((res) => {
+						// Inform in chat that the warn was success, wait a few sec then delete that success msg
 						this.logger.log('CMD Warn', `Warned user: '${gmUser.user.tag}' in '${message.guild.name}'`);
-					} catch (err) {
+					})
+					.catch((err) => {
 						const modChannel: TextChannel = <TextChannel> message.guild.channels.get(Constants.modChannelId);
-						modChannel.send(`There was an error informing ${gmUser.user.tag} of their mute. Their DMs may be disabled.\n\n**Error:**\n${err}`);
+						modChannel.send(`There was an error informing ${gmUser.user.tag} of their warning. Their DMs may be disabled.\n\n**Error:**\n${err}`);
 						this.logger.log('CMD Warn', `Unable to warn user: '${gmUser.user.tag}' in '${message.guild.name}'`);
-					}
-				})
-				.catch(error => {
-					console.error(error);
-					message.channel.send(`There was an error while warning <@${user.id}>. Please try again.`);
-					this.logger.error('CMD Warn', `Error warning: '${gmUser.user.tag}' in '${message.guild.name}'`);
-				});
+						throw new Error(err);
+					});
 
-		} else { return message.channel.send('Unable to fetchMember for the user. Is the user still in the server?'); }
+				let msgSuccess: Message;
+				msgSuccess = <Message> await message.channel.send('That action was successful.');
+				if (msgSuccess && (message.channel.id !== Constants.modChannelId)) {
+					await new Promise((r: any) => setTimeout(r, 5000));
+					return msgSuccess.delete();
+				}
 
+			} catch (err) {
+				return;
+			}
+
+		} else {
+			return message.channel.send('Unable to fetchMember for the user. Is the user still in the server?');
+		}
 	}
 
 	private parseNote(args: Array<any>): string {

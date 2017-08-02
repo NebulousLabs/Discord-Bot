@@ -27,6 +27,7 @@ export default class Clear extends Command<SweeperClient> {
 			return message.channel.send('You must enter 2 or more messages to remove.');
 
 		const totalQuantity: number = quantity;
+		message.delete();
 
 		while (quantity > 100) {
 			quantity -= 100;
