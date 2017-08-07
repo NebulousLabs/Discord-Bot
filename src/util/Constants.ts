@@ -15,6 +15,7 @@ export type BotConstants = {
 	embedColor: string;
 	muteEmbedColor: string;
 	warnEmbedColor: string;
+	banEmbedColor: string;
 
 	// Misc emoji
 	spacerEmoji: string;
@@ -56,6 +57,7 @@ Constants.xbRegExp = new RegExp('(?:.me\\sset\\sxb|.me\\sset\\sxbl|.me\\sset\\sx
 Constants.embedColor = '0xFF8C00';
 Constants.muteEmbedColor = '0xFFCC00';
 Constants.warnEmbedColor = '0xFFEF00';
+Constants.banEmbedColor = '0xE50000';
 
 // Misc emoji, prod
 Constants.spacerEmoji = '<:spacer:328352361569583105>';

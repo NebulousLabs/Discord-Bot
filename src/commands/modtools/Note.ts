@@ -105,7 +105,7 @@ export default class Note extends Command {
 				if (author.roles.has(modRoles[0].id) || author.roles.has(modRoles[1].id) || author.roles.has(modRoles[2].id)) {
 					// If an ID is specified, get that exact note
 					if (args[2] && !isNaN(args[2])) {
-						this.database.commands.notes.getOne(args[2], message.guild.id, user.id)
+						this.database.commands.note.getOneNote(args[2], message.guild.id, user.id)
 							.then(results => {
 								if (!results.length) {
 									message.channel.send(`Unable to find Note #${args[2]} for <@${user.id}>.`);
@@ -137,7 +137,7 @@ export default class Note extends Command {
 
 					} else {
 						// If no ID specified, pull history as normal.
-						this.database.commands.notes.get(message.guild.id, user.id)
+						this.database.commands.note.getNote(message.guild.id, user.id)
 							.then(results => {
 								if (!results.length) {
 									message.channel.send(`There are no notes for <@${user.id}>.`);
@@ -183,7 +183,7 @@ export default class Note extends Command {
 						message.channel.send(`Notes must not be empty. Please specify note text.`);
 						return message.channel.stopTyping();
 					} else {
-						this.database.commands.notes.create(message.guild.id, message.author.id, user.id, note)
+						this.database.commands.note.createNote(message.guild.id, message.author.id, user.id, note)
 							.then(result => {
 								message.channel.send(`Successfully stored note for <@${user.id}>.`);
 								return message.channel.stopTyping();
@@ -215,7 +215,7 @@ export default class Note extends Command {
 						return message.channel.stopTyping();
 					}
 
-					this.database.commands.notes.getOne(args[2], message.guild.id, user.id)
+					this.database.commands.note.getOneNote(args[2], message.guild.id, user.id)
 						.then(results => {
 							if (!results.length) {
 								message.channel.send(`Unable to find Note #${args[2]} for <@${user.id}>. The user may not have any notes or you may not have specified a note within range.`);
@@ -246,7 +246,7 @@ export default class Note extends Command {
 										.then((collected: Collection<string, Message>) => {
 											// yes, delete it
 											if (collected.first().content.charAt(0).toLowerCase() === 'y') {
-												this.database.commands.notes.delete(args[2], message.guild.id, user.id)
+												this.database.commands.note.deleteNote(args[2], message.guild.id, user.id)
 													.then(result => {
 														message.channel.send(`Deleted note #${args[2]} for <@${user.id}>.`);
 														return message.channel.stopTyping();
@@ -295,7 +295,7 @@ export default class Note extends Command {
 					};
 
 					// Check if user has any notes
-					this.database.commands.notes.get(message.guild.id, user.id)
+					this.database.commands.note.getNote(message.guild.id, user.id)
 						.then(results => {
 							if (!results.length) {
 								message.channel.send(`There are no notes for <@${user.id}>.`);
@@ -325,7 +325,7 @@ export default class Note extends Command {
 										.then((collected: Collection<string, Message>) => {
 											// yes, delete it
 											if (collected.first().content.charAt(0).toLowerCase() === 'y') {
-												this.database.commands.notes.reset(message.guild.id, user.id)
+												this.database.commands.note.resetNote(message.guild.id, user.id)
 													.then(result => {
 														message.channel.send(`Deleted all notes for <@${user.id}>.`);
 														return message.channel.stopTyping();
