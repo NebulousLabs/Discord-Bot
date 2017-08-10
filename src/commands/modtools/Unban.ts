@@ -38,7 +38,7 @@ export default class Mute extends Command<SweeperClient> {
 
 		// if there was an attempt, args[0] was too short
 		if (args[0] && args[0].length < 3)
-			return message.channel.send('Please provide 3 or more letters for your search. For help see \`<prefix>help mute\`');
+			return message.channel.send('Please provide 3 or more letters for your search. For help see help command.');
 
 		// if there was an attempt listing a user
 		if (args[0]) {
@@ -82,14 +82,22 @@ export default class Mute extends Command<SweeperClient> {
 			if (note.length === 0) { note = 'Please be kind to each other and read our rules in #rules-and-info.'; }
 
 			// Confirm unban action
-			let embed: RichEmbed;
+			let embed: RichEmbed = new RichEmbed();
 			embed = await this.client.mod.actions.getHistory(user, message.guild);
 			// embed.setColor(Constants.banEmbedColor);
 			embed.setDescription(`**Unan Reason:** ${note}`);
 
-			const [result]: [PromptResult] = <[PromptResult]> await prompt(message,
-				'Are you sure you want to remove the ban? (__y__es | __n__o)',
+			const [result, ask, confirmation]: [PromptResult, Message, Message] = <[PromptResult, Message, Message]> await prompt(message,
+				'Are you sure you want to issue this action? (__y__es | __n__o)',
 				/^(?:yes|y)$/i, /^(?:no|n)$/i, { embed });
+
+			// If message sent from a non-mod channel then delete the mod messages
+			if (ask.channel.id !== Constants.modChannelId) {
+				// Delete the prompt messages
+				ask.delete();
+				confirmation.delete();
+			}
+
 			if (result === PromptResult.TIMEOUT) return message.channel.send('Command timed out, aborting action.');
 			if (result === PromptResult.FAILURE) return message.channel.send('Okay, aborting action.');
 

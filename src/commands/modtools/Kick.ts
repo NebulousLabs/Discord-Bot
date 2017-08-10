@@ -15,13 +15,12 @@ export default class Mute extends Command<SweeperClient> {
 
 	public constructor() {
 		super({
-			name: 'ban',
-			aliases: ['b'],
-			desc: 'Ban a user',
-			usage: '<prefix>ban <User> <Reason>?',
+			name: 'kick',
+			aliases: ['k'],
+			desc: 'Kick a user from the server',
+			usage: '<prefix>kick <User> <Reason>?',
 			info: 'If no reason specified default values will be used. ' +
-			'The <Reason> is both sent to the user and to our logs.\n\n' +
-			'To unban someone see <prefix>unban',
+			'The <Reason> is both sent to the user and to our logs.',
 			group: 'modtools',
 			guildOnly: true,
 			roles: ['The Vanguard', 'Discord Chat Mods']
@@ -38,7 +37,7 @@ export default class Mute extends Command<SweeperClient> {
 
 		// if there was an attempt, args[0] was too short
 		if (args[0] && args[0].length < 3)
-			return message.channel.send('Please provide 3 or more letters for your search. For help see help command.');
+			return message.channel.send('Please provide 3 or more letters for your search. For help see \`<prefix>help mute\`');
 
 		// if there was an attempt listing a user
 		if (args[0]) {
@@ -86,21 +85,7 @@ export default class Mute extends Command<SweeperClient> {
 				return message.delete();
 			}
 
-			let banned: boolean = await message.guild.fetchBans().then(bans => {
-				let users = bans.filter(r => r === user);
-				if (users.first()) {
-					message.channel.send('User is already banned.');
-					message.delete();
-					return Promise.resolve(true);
-				} else {
-					return Promise.resolve(false);
-				}
-			});
-
-			if (banned) { return; }
-
 			// Set default info
-			const actionlength: string = '0';
 			let note: string = '';
 			note = this.parseNote(args);
 			if (note.length === 0) { note = 'Please be kind to each other and read our rules in #rules-and-info.'; }
@@ -111,14 +96,14 @@ export default class Mute extends Command<SweeperClient> {
 				// Delete calling message immediately
 				message.delete();
 
-				// Confirm ban action
-				embed.setColor(Constants.banEmbedColor);
+				// Confirm action
+				embed.setColor(Constants.kickEmbedColor);
 				embed.setDescription(`_<This info is redacted. To see full info use in the mod channel>_`);
 			} else {
 				// Show full info since it was sent from mod channel
 				embed = await this.client.mod.actions.getHistory(user, message.guild);
-				embed.setColor(Constants.banEmbedColor);
-				embed.setDescription(`**Ban Reason:** ${note}`);
+				embed.setColor(Constants.kickEmbedColor);
+				embed.setDescription(`**Kick Reason:** ${note}`);
 			}
 
 			const [result, ask, confirmation]: [PromptResult, Message, Message] = <[PromptResult, Message, Message]> await prompt(message,
@@ -135,43 +120,44 @@ export default class Mute extends Command<SweeperClient> {
 			if (result === PromptResult.TIMEOUT) return message.channel.send('Command timed out, aborting action.');
 			if (result === PromptResult.FAILURE) return message.channel.send('Okay, aborting action.');
 
-			// If mod confirmed ban, then perform ban action
+			// If mod confirmed action, then perform action
 			try {
-				await user.send(`You have been banned on **${message.guild.name}**.\n\n**A message from the mods:**\n\n"${note}"`)
+				const gmUser: GuildMember = await message.guild.fetchMember(user);
+				await user.send(`You have been kicked from **${message.guild.name}**.\n\n**A message from the mods:**\n\n"${note}"`)
 					.then((res) => {
 						// Inform in chat that the warn was success, wait a few sec then delete that success msg
-						this.logger.log('CMD Ban', `Informed user of ban: '${user.tag}' in '${message.guild.name}'`);
+						this.logger.log('CMD Kick', `Informed user of action: '${user.tag}' in '${message.guild.name}'`);
 					})
 					.catch((err) => {
 						const modChannel: TextChannel = <TextChannel> message.guild.channels.get(Constants.modChannelId);
-						modChannel.send(`There was an error informing ${user.tag} of their ban. Their DMs may be disabled or they may not share a server with the bot.\n\n**Error:**\n${err}`);
-						return this.logger.log('CMD Ban', `Unable to inform user of ban: '${user.tag}' in '${message.guild.name}'`);
+						modChannel.send(`There was an error informing ${user.tag} of their kick. Their DMs may be disabled or they may not share a server with the bot.\n\n**Error:**\n${err}`);
+						return this.logger.log('CMD Kick', `Unable to inform user of action: '${user.tag}' in '${message.guild.name}'`);
 					});
 
 				// If message sent in the mod channel, then give full details, otherwise be vague
-				let banning: Message;
+				let action: Message;
 				if (message.channel.id === Constants.modChannelId) {
-					banning = <Message> await message.channel.send(`Banning ${user.tag}...`);
+					action = <Message> await message.channel.send(`kicking ${user.tag}...`);
 				} else {
-					banning = <Message> await message.channel.send(`Attempting action...`);
+					action = <Message> await message.channel.send(`Attempting action...`);
 				}
 
-				this.client.mod.actions.ban(user, moderator, message.guild, actionlength, note);
-				this.logger.log('CMD Ban', `Banned user: '${user.tag}' from '${message.guild.name}'`);
+				this.client.mod.actions.kick(gmUser, moderator, message.guild, note);
+				this.logger.log('CMD Kick', `Kicked user: '${user.tag}' from '${message.guild.name}'`);
 
 				// If message sent in the mod channel, then give full details, otherwise be vague
 				if (message.channel.id === Constants.modChannelId) {
-					banning.edit(`Successfully banned ${user.tag}.`);
+					action.edit(`Successfully kicked ${user.tag}.`);
 				} else {
-					banning.edit(`That action was successful.`);
+					action.edit(`That action was successful.`);
 					await new Promise((r: any) => setTimeout(r, 5000));
-					banning.delete();
+					action.delete();
 				}
 
 			} catch (err) {
 				const modChannel: TextChannel = <TextChannel> message.guild.channels.get(Constants.modChannelId);
-				modChannel.send(`There was an error in ${user.tag}'s banning. Please try again.\n\n**Error:**\n${err}`);
-				return this.logger.log('CMD Ban', `Unable to ban user: '${user.tag}' from '${message.guild.name}'. Error logging to DB/Modlogs channel.`);
+				modChannel.send(`There was an error in ${user.tag}'s kicking. Please try again.\n\n**Error:**\n${err}`);
+				return this.logger.log('CMD Kick', `Unable to kick user: '${user.tag}' from '${message.guild.name}'. Error logging to DB/Modlogs channel.`);
 			}
 
 		} else {

@@ -35,7 +35,7 @@ export default class Mute extends Command<SweeperClient> {
 
 		// if there was an attempt, args[0] was too short
 		if (args[0] && args[0].length < 3)
-			return message.channel.send('Please provide 3 or more letters for your search. For help see \`<prefix>help mute\`');
+			return message.channel.send('Please provide 3 or more letters for your search. For help see help command.');
 
 		// if there was an attempt listing a user
 		if (args[0]) {

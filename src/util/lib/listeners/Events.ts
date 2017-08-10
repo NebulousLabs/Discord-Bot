@@ -234,4 +234,10 @@ export class Events {
 			.setTimestamp();
 		memberLog.send({ embed });
 	}
+
+	@on('message')
+	private async onMessage(message: Message): Promise<void>
+	{
+		// Saved for future use
+	}
 }

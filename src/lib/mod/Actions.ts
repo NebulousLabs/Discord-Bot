@@ -65,9 +65,21 @@ export class Actions
 
 	// Kick Actions
 	// Kick a user from a guild
-	public async kick(member: GuildMember, guild: Guild, reason: string): Promise<GuildMember>
+	public async kick(gmUser: GuildMember, moderator: GuildMember, guild: Guild, note: string): Promise<GuildMember>
 	{
-		return await member.kick(reason);
+		const logChannel: TextChannel = <TextChannel> guild.channels.get(Constants.logChannelId);
+		const embed: RichEmbed = new RichEmbed()
+			.setColor(Constants.kickEmbedColor)
+			.setAuthor(moderator.user.tag, moderator.user.avatarURL)
+			.setDescription(`**Member:** ${gmUser.user.tag} (${gmUser.user.id})\n`
+				+ `**Action:** Kick\n`
+				+ `**Reason:** ${note}`)
+			.setTimestamp();
+		logChannel.send({ embed: embed });
+
+		this._client.database.commands.ban.addKick(guild.id, moderator.id, gmUser.user.id, note);
+
+		return await gmUser.kick(note);
 	}
 
 	// Ban Actions

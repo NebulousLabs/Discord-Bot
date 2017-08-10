@@ -111,4 +111,11 @@ export class BanCommands extends Command {
 		return this.connection.query('SELECT \"ActionType\" as \"Type\", count(\"ActionType\") as \"Count\" FROM \"ModActions\" WHERE \"ServerID\" = :sid AND \"UserID\" = :uid GROUP BY \"Type\"',
 			{ replacements: { sid: serverid, uid: userid }, type: sequelize.QueryTypes.SELECT });
 	}
+
+	// Creats a database entry for a kick addition
+	public addKick(serverid: string, modid: string, userid: string, note: string): Promise<any> {
+		return this.model.create(
+			{ serverid, modid, userid, actiontype: 'Kick', note }
+		);
+	}
 }
