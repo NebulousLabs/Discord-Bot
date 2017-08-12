@@ -103,7 +103,7 @@ export default class Mute extends Command<SweeperClient> {
 
 			// If mod confirmed ban, then perform ban action
 			try {
-				await user.send(`Your ban has been removed on **${message.guild.name}**.\n\n**A message from the mods:**\n\n"${unbanMsg}"\n\nYou may rejoin with this link: https://discord.gg/XDfY2bV`)
+				await user.send(`Your ban has been removed on **${message.guild.name}**.\n\n**A message from the mods:**\n\n"${unbanMsg}"\n\nYou may rejoin with this link: ${Constants.serverInvite}`)
 					.then((res) => {
 						// Inform in chat that the warn was success, wait a few sec then delete that success msg
 						this.logger.log('CMD Unban', `Informed user of ban removal: '${user.tag}' in '${message.guild.name}'`);

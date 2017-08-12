@@ -1,3 +1,5 @@
+const config: any = require('../config.json');
+
 export type BotConstants = {
 	// ID
 	assignmentChannelId: string;
@@ -31,22 +33,18 @@ export type BotConstants = {
 	DOEmoji: string;
 	FWCEmoji: string;
 	NMEmoji: string;
+
+	serverInvite: string;
 };
 
 // tslint:disable-next-line:variable-name
 const Constants: BotConstants = <any> {};
 
-// IDs, Dev
-// Constants.assignmentChannelId = '333685669602000896';
-// Constants.serverId = '305133671776649216';
-// Constants.modChannelId = '334461385713123328';
-// Constants.logChannelId = '334461385713123328';
-
-// IDs, Prod
-Constants.assignmentChannelId = '224197509738790922';
-Constants.serverId = '157728722999443456';
-Constants.modChannelId = '255099898897104908';
-Constants.logChannelId = '322490463770640385';
+// IDs
+Constants.assignmentChannelId = config.ServerData.assignmentChannelId;
+Constants.serverId = config.ServerData.serverId;
+Constants.modChannelId = config.ServerData.modChannelId;
+Constants.logChannelId = config.ServerData.logChannelId;
 
 // RegExp
 Constants.platformRegExp = new RegExp('(\\bpc\\b)|(\\bpsn\\b)|(\\bps\\b)|(\\bxbl\\b)|(\\bxb\\b)|(\\bxbox\\b)', 'i');
@@ -73,5 +71,7 @@ Constants.D2Emoji = '<:D2:336634217712582656>';
 Constants.DOEmoji = '<:do:247889245333618688>';
 Constants.FWCEmoji = '<:fwc:247889245337944064>';
 Constants.NMEmoji = '<:nm:247889245421699082>';
+
+Constants.serverInvite = 'https://discord.gg/XDfY2bV';
 
 export default Constants;
