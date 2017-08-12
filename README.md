@@ -14,6 +14,8 @@ He handles **role assignments**, **stat pulls**, **community leaderboards**, **c
 <br /><br /><br /><br /><br /><br />
 
 # Useful Links
+- [Contributing Document](https://github.com/r-DestinyTheGame/Sweeper-Bot/blob/master/docs/CONTRIBUTING.md)
+- [Contributor Code of Conduct](https://github.com/r-DestinyTheGame/Sweeper-Bot/blob/master/docs/CODE_OF_CONDUCT.md)
 - [Sweeper Bot Wiki](https://github.com/r-DestinyTheGame/Sweeper-Bot/wiki)
 - [Sweeper Bot RoadMap](https://github.com/r-DestinyTheGame/Sweeper-Bot/projects/1)
 - [Sweeper Bot Issue Tracker](https://github.com/r-DestinyTheGame/Sweeper-Bot/issues/)
