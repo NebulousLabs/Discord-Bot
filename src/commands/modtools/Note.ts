@@ -18,10 +18,11 @@ export default class Note extends Command {
 			desc: 'Add a note for a user',
 			usage: '<prefix>note <Argument>',
 			info: 'Argument information below...\n\n' +
-			'add <User> <Note>    : Adds a note for user\n' +
-			'history <User> <ID>? : Displays note history for user. ID optional\n' +
-			'delete <User> <ID>   : Deletes specific note for user\n' +
-			'reset <User>         : Deletes all notes for user',
+			'add <User> <Note>        : Adds a note for user\n' +
+			'edit <User> <ID> <Note>  : Edits a note for user\n' +
+			'history <User> <ID>?     : Displays note history for user. ID optional\n' +
+			'delete <User> <ID>       : Deletes specific note for user\n' +
+			'reset <User>             : Deletes all notes for user',
 			group: 'modtools',
 			guildOnly: true,
 			roles: ['The Vanguard', 'Discord Chat Mods', 'Mod Assistant']
@@ -200,6 +201,44 @@ export default class Note extends Command {
 					return message.channel.stopTyping();
 				}
 
+			case 'e':
+			case 'edit':
+				if (author.roles.has(modRoles[0].id) || author.roles.has(modRoles[1].id) || author.roles.has(modRoles[2].id)) {
+					let noteText: string = '';
+					noteText = this.parseNote(args, 3);
+					if (noteText.length === 0) {
+						message.channel.send(`Notes must not be empty. Please specify note text.`);
+						return message.channel.stopTyping();
+					} else {
+						// Check if user has any notes
+						if (isNaN(args[2])) {
+							message.channel.send(`Invalid note specified. Please specify the ID of the note to edit.`);
+							return message.channel.stopTyping();
+						}
+
+						this.database.commands.note.getOneNote(args[2], message.guild.id, user.id)
+							.then(results => {
+								if (!results.length) {
+									message.channel.send(`Unable to find Note #${args[2]} for <@${user.id}>. The user may not have any notes or you may not have specified a note within range.`);
+									return message.channel.stopTyping();
+								} else {
+									// Updates the note
+									this.database.commands.note.updateNote(args[2], message.guild.id, user.id, noteText)
+										.then(result => {
+											message.channel.send(`Edited note #${args[2]} for <@${user.id}>.`);
+											return message.channel.stopTyping();
+										})
+										.catch(error => {
+											console.error(error);
+											message.channel.send(`There was an error while editing the note for <@${user.id}>. Please try again.`);
+											return message.channel.stopTyping();
+										});
+								}
+							});
+					}
+				}
+				break;
+
 			case 'd':
 			case 'delete':
 				if (author.roles.has(modRoles[0].id) || author.roles.has(modRoles[1].id)) {
@@ -369,9 +408,9 @@ export default class Note extends Command {
 		}
 	}
 
-	private parseNote(args: Array<any>): string {
+	private parseNote(args: Array<any>, startIndex = 2): string {
 		let text: string = '';
-		for (let index = 2; index < args.length; index++) {
+		for (let index = startIndex; index < args.length; index++) {
 			text += `${args[index].trim()} `;
 		}
 		return text.slice(0, -1);

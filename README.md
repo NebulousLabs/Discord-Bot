@@ -8,7 +8,7 @@
 
 He handles **role assignments**, **stat pulls**, **community leaderboards**, **community tools**, **giveaways**, **automatic voice channel creation**, and various other server and mod tools.
 
-*If you happen to run accross an error, or something just doesn't seem right, please report this incident to our [Issue Tracker](https://github.com/r-DestinyTheGame/Sweeper-Bot/issues/).*
+*If you happen to run across an error, or something just doesn't seem right, please report this incident to our [Issue Tracker](https://github.com/r-DestinyTheGame/Sweeper-Bot/issues/).*
 
 
 <br /><br /><br /><br /><br /><br />

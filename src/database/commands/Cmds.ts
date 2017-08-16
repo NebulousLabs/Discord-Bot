@@ -59,6 +59,13 @@ export class NoteCommands extends Command {
 		});
 	}
 
+	public updateNote(noteid: number, serverid: string, userid: string, note: string): Promise<any> {
+		return this.model.update(
+			{ note: note },
+			{ where: { id: noteid, serverid, userid } }
+		);
+	}
+
 	public deleteNote(id: number, serverid: string, userid: string): Promise<any> {
 		return this.model.destroy({
 			where: { id, serverid, userid }
