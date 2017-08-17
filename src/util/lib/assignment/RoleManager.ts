@@ -15,6 +15,7 @@ export class RoleManager {
 	}
 
 	public async init(): Promise<void> {
+		console.log('init rolemanager')
 		let guildStorage: GuildStorage = await this.client.storage.guilds.get(Constants.serverId);
 		let platformMessageId: string = await guildStorage.get('Role Reaction Message');
 		let spoilersMessageId: string = await guildStorage.get('Spoiler Reaction Message');

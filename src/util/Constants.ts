@@ -1,5 +1,8 @@
 const config: any = require('../config.json');
-
+export type SiaRole = {
+	emoji: string;
+	name: string;
+}
 export type BotConstants = {
 	// ID
 	assignmentChannelId: string;
@@ -34,11 +37,13 @@ export type BotConstants = {
 	FWCEmoji: string;
 	NMEmoji: string;
 
+	SiaRoles: SiaRole[];
 	serverInvite: string;
 };
 
+
 // tslint:disable-next-line:variable-name
-const Constants: BotConstants = <any> {};
+export const Constants: BotConstants = <any> {};
 
 // IDs
 Constants.assignmentChannelId = config.ServerData.assignmentChannelId;
@@ -71,6 +76,26 @@ Constants.D2Emoji = '<:D2:336634217712582656>';
 Constants.DOEmoji = '<:do:247889245333618688>';
 Constants.FWCEmoji = '<:fwc:247889245337944064>';
 Constants.NMEmoji = '<:nm:247889245421699082>';
+
+Constants.SiaRoles = [
+	{name: 'Contributors', emoji: '<:nm:247889245421699082>'},
+	{name: 'Developers', emoji: '<:nm:247889245421699082>'},
+	{name: 'Renting', emoji: '<:nm:247889245421699082>'},
+	{name: 'Hosting', emoji: '<:nm:247889245421699082>'},
+	{name: 'Mining', emoji: '<:nm:247889245421699082>'},
+	{name: 'Altcoins', emoji: '<:nm:247889245421699082>'},
+	{name: 'Trading', emoji: '<:nm:247889245421699082>'},
+	{name: 'Bounties', emoji: '<:nm:247889245421699082>'},
+	{name: 'Design', emoji: '<:nm:247889245421699082>'},
+	{name: 'Marketing', emoji: '<:nm:247889245421699082>'},
+	{name: 'Siafunds', emoji: '<:nm:247889245421699082>'},
+	{name: 'Twitter Feed', emoji: '<:nm:247889245421699082>'},
+	{name: 'Forum Feed', emoji: '<:nm:247889245421699082>'},
+	{name: 'Bitcoin Talk Feed', emoji: '<:nm:247889245421699082>'},
+	{name: 'Reddit Feed', emoji: '<:nm:247889245421699082>'},
+	{name: 'NSFW', emoji: '<:nm:247889245421699082>'},
+];
+
 
 Constants.serverInvite = 'https://discord.gg/XDfY2bV';
 
