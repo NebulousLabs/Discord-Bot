@@ -39,6 +39,7 @@ export type BotConstants = {
 	NMEmoji: string;
 
 	SiaRoles: SiaRole[];
+	PostText: string;
 	serverInvite: string;
 
 	reportError: (err:any)=>void;
@@ -125,5 +126,47 @@ Constants.reportError = function(err) {
 	console.log('DANGER WILL ROBINSON');
 	console.log(err);
 }
+
+Constants.PostText = `
+**Renting** :hdd: 
+
+**Hosting** :SiaHost: 
+
+**Mining** :SiaMine: 
+
+**Obelisk** :obelisk: 
+
+---
+
+**Contributors** :SiaMedal: 
+
+**Developers** :SiaDev: 
+
+**Bounties** :SiaBounty: 
+
+**Design** :SiaDesign: 
+
+---
+
+**Trading** :SiaTrade: 
+
+**Altcoins** :crypto: 
+
+**Blockchain Tech** :SiaChain: 
+
+**Siafunds** :sia: 
+
+---
+
+**Twitter Feed** :twitter: 
+
+**Forum Feed** :SiaEnvelope: 
+
+**Bitcoin Talk Feed** :bitcoin: 
+
+**Reddit Feed** :reddit:
+
+---
+`;
 
 export default Constants;
