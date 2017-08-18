@@ -125,7 +125,7 @@ export class Events {
 	private fetchRoles(reaction: MessageReaction): { [key:string]:Role} {
 		let roles: { [key:string]:Role} = {};
 		for (let role of Constants.SiaRoles) {
-			roles[role.name] = reaction.message.guild.roles.find('name', role.name);
+			roles[role.emoji.split(':')[1]] = reaction.message.guild.roles.find('name', role.name.toLowerCase());
 		}
 		return roles;
 	}
