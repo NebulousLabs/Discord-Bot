@@ -26,7 +26,7 @@ export default class CreatePost extends Command {
 		switch (args[0]) {
 			case 'sia_role': {
 					embed.setColor(Constants.embedColor);
-					embed.setDescription(Constants.PostText);
+					embed.setFooter(Constants.PostText);
 
 					// let emj = new Emoji(this.client)
 					const reactionMessage: Message = <Message> await message.channel.send({ embed });
