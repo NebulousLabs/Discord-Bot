@@ -29,11 +29,12 @@ export default class CreatePost extends Command {
 					embed.setTitle(`Which role will you ?`);
 					embed.setDescription(`React below to get the role at a time.`);
 
+
 					const reactionMessage: Message = <Message> await message.channel.send({ embed });
-					await Constants.SiaRoles.forEach((role: SiaRole) => {
-						reactionMessage.react(role.emoji.replace('<', '').replace('>', ''));
-					});
 					
+					for (let role of Constants.SiaRoles) {
+						await reactionMessage.react(role.emoji.replace('<', '').replace('>', ''));
+					}
 
 					guildStorage.set('Role Reaction Message', reactionMessage.id.toString());
 					break;
