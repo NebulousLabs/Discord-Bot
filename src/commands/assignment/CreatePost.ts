@@ -1,5 +1,5 @@
 import { Command, GuildStorage } from 'yamdbf';
-import { GuildMember, Message, RichEmbed, TextChannel, User } from 'discord.js';
+import { GuildMember, Message, RichEmbed, TextChannel, User, Emoji } from 'discord.js';
 import { Constants, SiaRole } from '../../util/Constants';
 
 export default class CreatePost extends Command {
@@ -29,7 +29,7 @@ export default class CreatePost extends Command {
 					embed.setTitle(`Which role will you sia?`);
 					embed.setDescription(`React below to get the role at a time.`);
 
-
+					// let emj = new Emoji(this.client)
 					const reactionMessage: Message = <Message> await message.channel.send({ embed });
 					
 					for (let role of Constants.SiaRoles) {
