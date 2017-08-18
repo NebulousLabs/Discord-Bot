@@ -1,8 +1,8 @@
 {
-	"token": "MzQ3NjAxMDE5NDg1ODE0Nzg3.DHeYqw.K8hSbTAgAtKNv7rzhpmC5uqtLKM",
-	"owner": ["347601019485814787"],
-	"name": "SiaBot",
-	"version": "0.1.1",
+	"token": "MzQ3OTEwOTE1NDE0Mjk0NTI4.DHfQzg.JMn_GT0EwZlPVJjOEdxADbkxAM0",
+	"owner": ["347910915414294528"],
+	"name": "Sia",
+	"version": "0.1.4",
 	"status": "Try .help",
 	"ServerData": {
 		"assignmentChannelId": "347006617830555649",
