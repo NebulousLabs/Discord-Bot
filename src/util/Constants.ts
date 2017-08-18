@@ -1,6 +1,7 @@
 const config: any = require('../config.json');
 export type SiaRole = {
 	emoji: string;
+	display_name: string;
 	name: string;
 }
 export type BotConstants = {
@@ -80,23 +81,37 @@ Constants.FWCEmoji = '<:fwc:247889245337944064>';
 Constants.NMEmoji = '<:nm:247889245421699082>';
 
 Constants.SiaRoles = [
-	{name: 'Contributors', emoji: '<medal>'},
-	{name: 'Developers', emoji: '<keyboard>'},
-	{name: 'Renting', emoji: '<:hdd:347884377822330890>'},
-	{name: 'Hosting', emoji: '<:desktop:>'},
-	{name: 'Mining', emoji: '<:hammer_pick:>'},
-	{name: 'Obelisk', emoji: '<:obelisk:347884215859150860>'},
-	{name: 'Altcoins', emoji: '<:crypto:347880295183155201>'},
-	{name: 'Trading', emoji: '<:chart_with_upwards_trend:>'},
-	{name: 'Bounties', emoji: '<:moneybag:>'},
-	{name: 'Design', emoji: '<:paintbrush:>'},
-	{name: 'Marketing', emoji: '<:ear:>'},
-	{name: 'Siafunds', emoji: '<:sia:344448389024579585>'},
-	{name: 'Twitter Feed', emoji: '<:twitter:347879938545680384>'},
-	{name: 'Forum Feed', emoji: '<:envelope_with_arrow:>'},
-	{name: 'Bitcoin Talk Feed', emoji: '<:bitcoin:347879601730748426>'},
-	{name: 'Reddit Feed', emoji: '<:reddit:347880473738870787>'},
-	{name: 'NSFW', emoji: '<:wolf:>'},
+	{
+		display_name: 'Contributors', 
+		emoji: '<:sia_medal:348147007623397376>',
+		name: 'contributors',
+	},
+	{
+		display_name: 'Developers', 
+		emoji: '<keyboard>',
+		name: 'developers',
+	},
+
+	{
+		display_name: 'Renting', 
+		emoji: '<:hdd:347884377822330890>',
+		name: 'renting',
+	},
+
+	{display_name: 'Hosting', emoji: '<:desktop:>', name: 'hosting'},
+	{display_name: 'Mining', emoji: '<:hammer_pick:>', name: 'mining'},
+	{display_name: 'Obelisk', emoji: '<:obelisk:347884215859150860>', name: 'obelisk'},
+	{display_name: 'Altcoins', emoji: '<:crypto:347880295183155201>', name: 'altcoins'},
+	{display_name: 'Trading', emoji: '<:chart_with_upwards_trend:>', name: 'trading'},
+	{display_name: 'Bounties', emoji: '<:moneybag:>', name: 'bounties'},
+	{display_name: 'Design', emoji: '<:paintbrush:>', name: 'design'},
+	{display_name: 'Marketing', emoji: '<:ear:>', name: 'marketing'},
+	{display_name: 'Siafunds', emoji: '<:sia:344448389024579585>', name: 'siafunds'},
+	{display_name: 'Twitter Feed', emoji: '<:twitter:347879938545680384>', name: 'twitter'},
+	{display_name: 'Forum Feed', emoji: '<:envelope_with_arrow:>', name: 'forum'},
+	{display_name: 'Bitcoin Talk Feed', emoji: '<:bitcoin:347879601730748426>', name: 'bitcoin talk'},
+	{display_name: 'Reddit Feed', emoji: '<:reddit:347880473738870787>', name: 'reddit'},
+	{display_name: 'NSFW', emoji: '<:wolf:>', name: 'nsfw'},
 ];
 
 
