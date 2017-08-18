@@ -33,7 +33,10 @@ export default class CreatePost extends Command {
 					const reactionMessage: Message = <Message> await message.channel.send({ embed });
 					
 					for (let role of Constants.SiaRoles) {
-						await reactionMessage.react(role.emoji.replace('<', '').replace('>', ''));
+						await reactionMessage.react(role.emoji.replace('<', '').replace('>', '')).then(null, function(reason) {
+							console.log(reason);
+							console.log(role.emoji);
+						});
 					}
 
 					guildStorage.set('Role Reaction Message', reactionMessage.id.toString());
