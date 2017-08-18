@@ -25,11 +25,10 @@ export default class CreatePost extends Command {
 
 		switch (args[0]) {
 			case 'sia_role': {
-					embed.setColor(Constants.embedColor);
-					embed.setFooter(Constants.PostText);
+					let text = Constants.PostText;
 
 					// let emj = new Emoji(this.client)
-					const reactionMessage: Message = <Message> await message.channel.send({ embed });
+					const reactionMessage: Message = <Message> await message.channel.send(text);
 					
 					for (let role of Constants.SiaRoles) {
 						await reactionMessage.react(role.emoji.replace('<', '').replace('>', '')).then(null, function(reason) {
