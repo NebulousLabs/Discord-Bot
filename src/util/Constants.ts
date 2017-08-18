@@ -42,12 +42,12 @@ export type BotConstants = {
 	PostText: string;
 	serverInvite: string;
 
-	reportError: (err:any)=>void;
+	reportError: (err: any) => void;
 };
 
 
 // tslint:disable-next-line:variable-name
-export const Constants: BotConstants = <any> {};
+export const Constants: BotConstants = <any>{};
 
 // IDs
 Constants.assignmentChannelId = config.ServerData.assignmentChannelId;
@@ -84,51 +84,51 @@ Constants.NMEmoji = '<:nm:247889245421699082>';
 Constants.SiaRoles = [
 
 	{
-		display_name: 'Renting', 
+		display_name: 'Renting',
 		emoji: '<:hdd:347884377822330890>',
 		name: 'renting',
 	},
 
-	{display_name: 'Hosting', emoji: '<:SiaHost:348149962061774858>', name: 'hosting'},
-	{display_name: 'Mining', emoji: '<:SiaMine:348150875149303808>', name: 'mining'},
-	{display_name: 'Obelisk', emoji: '<:obelisk:347884215859150860>', name: 'obelisk'},
+	{ display_name: 'Hosting', emoji: '<:SiaHost:348149962061774858>', name: 'hosting' },
+	{ display_name: 'Mining', emoji: '<:SiaMine:348150875149303808>', name: 'mining' },
+	{ display_name: 'Obelisk', emoji: '<:obelisk:347884215859150860>', name: 'obelisk' },
 
 	{
-		display_name: 'Contributors', 
+		display_name: 'Contributors',
 		emoji: '<:SiaMedal:348147007623397376>',
 		name: 'contributors',
 	},
 	{
-		display_name: 'Developers', 
+		display_name: 'Developers',
 		emoji: '<:SiaDev:348157143465328641>',
 		name: 'developers',
 	},
 
-	{display_name: 'Bounties', emoji: '<:SiaBounty:348152613277138945>', name: 'bounties'},
-	{display_name: 'Design', emoji: '<:SiaDesign:348153430998777858>', name: 'design'},
+	{ display_name: 'Bounties', emoji: '<:SiaBounty:348152613277138945>', name: 'bounties' },
+	{ display_name: 'Design', emoji: '<:SiaDesign:348153430998777858>', name: 'design' },
 
-	{display_name: 'Trading', emoji: '<:SiaTrade:348149332450607105>', name: 'trading'},
-	{display_name: 'Altcoins', emoji: '<:crypto:347880295183155201>', name: 'altcoins'},
-	{display_name: 'Blockchain Tech', emoji: '<:SiaChain:348151725686784000>', name: 'blockchain'},
-	{display_name: 'Siafunds', emoji: '<:sia:344448389024579585>', name: 'siafunds'},
+	{ display_name: 'Trading', emoji: '<:SiaTrade:348149332450607105>', name: 'trading' },
+	{ display_name: 'Altcoins', emoji: '<:crypto:347880295183155201>', name: 'altcoins' },
+	{ display_name: 'Blockchain Tech', emoji: '<:SiaChain:348151725686784000>', name: 'blockchain' },
+	{ display_name: 'Siafunds', emoji: '<:sia:344448389024579585>', name: 'siafunds' },
 
-	{display_name: 'Twitter Feed', emoji: '<:twitter:347879938545680384>', name: 'twitter'},
-	{display_name: 'Forum Feed', emoji: '<:SiaEnvelope:348154353850384394>', name: 'forum'},
-	{display_name: 'Bitcoin Talk Feed', emoji: '<:bitcoin:347879601730748426>', name: 'bitcoin talk'},
-	{display_name: 'Reddit Feed', emoji: '<:reddit:347880473738870787>', name: 'reddit'},
-	
+	{ display_name: 'Twitter Feed', emoji: '<:twitter:347879938545680384>', name: 'twitter' },
+	{ display_name: 'Forum Feed', emoji: '<:SiaEnvelope:348154353850384394>', name: 'forum' },
+	{ display_name: 'Bitcoin Talk Feed', emoji: '<:bitcoin:347879601730748426>', name: 'bitcoin talk' },
+	{ display_name: 'Reddit Feed', emoji: '<:reddit:347880473738870787>', name: 'reddit' },
+
 ];
 
 
 Constants.serverInvite = 'https://discord.gg/XDfY2bV';
 
-Constants.reportError = function(err) {
+Constants.reportError = function (err) {
 	console.log('DANGER WILL ROBINSON');
 	console.log(err);
 }
 
 Constants.PostText = `
-**Renting** <:hdd:>
+**Renting** <:hdd:347884377822330890>
 
 **Hosting** :SiaHost: 
 
