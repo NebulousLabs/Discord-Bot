@@ -81,6 +81,17 @@ Constants.FWCEmoji = '<:fwc:247889245337944064>';
 Constants.NMEmoji = '<:nm:247889245421699082>';
 
 Constants.SiaRoles = [
+
+	{
+		display_name: 'Renting', 
+		emoji: '<:hdd:347884377822330890>',
+		name: 'renting',
+	},
+
+	{display_name: 'Hosting', emoji: '<:sia_host:348149962061774858>', name: 'hosting'},
+	{display_name: 'Mining', emoji: '<:sia_mine:348150875149303808>', name: 'mining'},
+	{display_name: 'Obelisk', emoji: '<:obelisk:347884215859150860>', name: 'obelisk'},
+
 	{
 		display_name: 'Contributors', 
 		emoji: '<:sia_medal:348147007623397376>',
@@ -92,26 +103,22 @@ Constants.SiaRoles = [
 		name: 'developers',
 	},
 
-	{
-		display_name: 'Renting', 
-		emoji: '<:hdd:347884377822330890>',
-		name: 'renting',
-	},
+	{display_name: 'Bounties', emoji: '<:sia_bounty:348152613277138945>', name: 'bounties'},
+	{display_name: 'Design', emoji: '<:sia_design:348153430998777858>', name: 'design'},
 
-	{display_name: 'Hosting', emoji: '<:sia_host:348149962061774858>', name: 'hosting'},
-	{display_name: 'Mining', emoji: '<:sia_mine:348150875149303808>', name: 'mining'},
-	{display_name: 'Obelisk', emoji: '<:obelisk:347884215859150860>', name: 'obelisk'},
-	{display_name: 'Altcoins', emoji: '<:crypto:347880295183155201>', name: 'altcoins'},
+
+	
 	{display_name: 'Trading', emoji: '<:sia_trade:348149332450607105>', name: 'trading'},
-	{display_name: 'Bounties', emoji: '<:moneybag:>', name: 'bounties'},
-	{display_name: 'Design', emoji: '<:paintbrush:>', name: 'design'},
-	{display_name: 'Marketing', emoji: '<:ear:>', name: 'marketing'},
+	{display_name: 'Altcoins', emoji: '<:crypto:347880295183155201>', name: 'altcoins'},
+	{display_name: 'Blockchain Tech', emoji: '<:sia_chain:348151725686784000>', name: 'blockchain'},
 	{display_name: 'Siafunds', emoji: '<:sia:344448389024579585>', name: 'siafunds'},
+
+	
 	{display_name: 'Twitter Feed', emoji: '<:twitter:347879938545680384>', name: 'twitter'},
 	{display_name: 'Forum Feed', emoji: '<:envelope_with_arrow:>', name: 'forum'},
 	{display_name: 'Bitcoin Talk Feed', emoji: '<:bitcoin:347879601730748426>', name: 'bitcoin talk'},
 	{display_name: 'Reddit Feed', emoji: '<:reddit:347880473738870787>', name: 'reddit'},
-	{display_name: 'NSFW', emoji: '<:wolf:>', name: 'nsfw'},
+	
 ];
 
 
