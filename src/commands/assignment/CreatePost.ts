@@ -12,7 +12,7 @@ export default class CreatePost extends Command {
 			'Argument information below...\n\n' +
 			'sia_role  : Creates sia role post\n',
 			group: 'assignment',
-			roles: ['sia core team', 'moderators']
+			roles: ['admin']
 		});
 	}
 
