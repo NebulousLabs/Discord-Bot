@@ -78,7 +78,7 @@ Constants.FWCEmoji = '<:fwc:247889245337944064>';
 Constants.NMEmoji = '<:nm:247889245421699082>';
 
 Constants.SiaRoles = [
-	{name: 'Contributors', emoji: '<:medal:'},
+	{name: 'Contributors', emoji: '<:medal:520ae4acfffdaebc3b15af5dabd5173c>'},
 	{name: 'Developers', emoji: '<:keyboard:>'},
 	{name: 'Renting', emoji: '<:hdd:>'},
 	{name: 'Hosting', emoji: '<:desktop:>'},
