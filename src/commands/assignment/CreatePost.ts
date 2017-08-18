@@ -13,7 +13,7 @@ export default class CreatePost extends Command {
 			'sia_role  : Creates sia role post\n',
 			group: 'assignment',
 			guildOnly: true,
-			roles: ['Developers']
+			roles: ['Developers', 'developers']
 		});
 	}
 
