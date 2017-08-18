@@ -39,6 +39,8 @@ export type BotConstants = {
 
 	SiaRoles: SiaRole[];
 	serverInvite: string;
+
+	reportError: (err:any)=>void;
 };
 
 
@@ -99,5 +101,10 @@ Constants.SiaRoles = [
 
 
 Constants.serverInvite = 'https://discord.gg/XDfY2bV';
+
+Constants.reportError = function(err) {
+	console.log('DANGER WILL ROBINSON');
+	console.log(err);
+}
 
 export default Constants;
