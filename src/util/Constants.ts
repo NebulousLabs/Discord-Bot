@@ -129,6 +129,7 @@ Constants.reportError = function (err) {
 
 Constants.PostText = `
 
+---
 **Renting** <:hdd:347884377822330890>
 
 **Hosting** <:SiaHost:348149962061774858> 
