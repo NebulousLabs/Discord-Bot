@@ -99,7 +99,7 @@ Constants.SiaRoles = [
 	},
 	{
 		display_name: 'Developers', 
-		emoji: '<keyboard>',
+		emoji: '<:SiaDev:348156284161359882>',
 		name: 'developers',
 	},
 
