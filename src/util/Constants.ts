@@ -100,7 +100,7 @@ Constants.SiaRoles = [
 	},
 	{
 		display_name: 'Developers', 
-		emoji: '<:SiaDev:348156284161359882>',
+		emoji: '<:SiaDev:348157143465328641>',
 		name: 'developers',
 	},
 
@@ -128,7 +128,7 @@ Constants.reportError = function(err) {
 }
 
 Constants.PostText = `
-**Renting** <:hdd:>
+**Renting** :hdd: 
 
 **Hosting** :SiaHost: 
 

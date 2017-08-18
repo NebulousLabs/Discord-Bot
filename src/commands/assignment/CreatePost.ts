@@ -26,8 +26,7 @@ export default class CreatePost extends Command {
 		switch (args[0]) {
 			case 'sia_role': {
 					embed.setColor(Constants.embedColor);
-					embed.setTitle(`Which role will you sia?`);
-					embed.setDescription(`React below to get the role at a time.\n` + Constants.PostText);
+					embed.setDescription(Constants.PostText);
 
 					// let emj = new Emoji(this.client)
 					const reactionMessage: Message = <Message> await message.channel.send({ embed });
