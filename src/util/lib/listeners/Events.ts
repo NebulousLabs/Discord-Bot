@@ -43,10 +43,15 @@ export class Events {
 		console.log(roleMessageId);
 		// Role Reaction Message
 		if (reaction.message.id === roleMessageId) {
+
 			let role_name = reaction.emoji.name;
+			console.log(role_name)
+			console.log(roles)
+
 			let role = roles[role_name];
+			console.log(role)
 			if (role) {
-				if (reactionAuthor.roles.has(role.id)) return reaction.remove(user);
+				if (reactionAuthor.roles.has(role.id)) return reaction.remove(user).then(null,Constants.reportError);
 				else return await reactionAuthor.addRole(role).then(null,Constants.reportError);
 			}
 			
