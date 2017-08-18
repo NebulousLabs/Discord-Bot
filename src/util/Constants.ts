@@ -130,41 +130,41 @@ Constants.reportError = function (err) {
 Constants.PostText = `
 **Renting** <:hdd:347884377822330890>
 
-**Hosting** :SiaHost: 
+**Hosting** <:SiaHost:348149962061774858> 
 
-**Mining** :SiaMine: 
+**Mining** <:SiaMine:348150875149303808>
 
-**Obelisk** :obelisk: 
-
----
-
-**Contributors** :SiaMedal: 
-
-**Developers** :SiaDev: 
-
-**Bounties** :SiaBounty: 
-
-**Design** :SiaDesign: 
+**Obelisk** <:obelisk:347884215859150860>
 
 ---
 
-**Trading** :SiaTrade: 
+**Contributors** <:SiaMedal:348147007623397376> 
 
-**Altcoins** :crypto: 
+**Developers** <:SiaDev:348157143465328641>
 
-**Blockchain Tech** :SiaChain: 
+**Bounties** <:SiaBounty:348152613277138945>
 
-**Siafunds** :sia: 
+**Design** <:SiaDesign:348153430998777858>
 
 ---
 
-**Twitter Feed** :twitter: 
+**Trading** <:SiaTrade:348149332450607105> 
 
-**Forum Feed** :SiaEnvelope: 
+**Altcoins** <:crypto:347880295183155201>
 
-**Bitcoin Talk Feed** :bitcoin: 
+**Blockchain Tech** <:SiaChain:348151725686784000>
 
-**Reddit Feed** :reddit:
+**Siafunds** <:sia:344448389024579585>
+
+---
+
+**Twitter Feed** <:twitter:347879938545680384>
+
+**Forum Feed** <:SiaEnvelope:348154353850384394>
+
+**Bitcoin Talk Feed** <:bitcoin:347879601730748426> 
+
+**Reddit Feed** <:reddit:347880473738870787>
 
 ---
 `;
