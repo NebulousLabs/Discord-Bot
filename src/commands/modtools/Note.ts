@@ -25,7 +25,7 @@ export default class Note extends Command {
 			'reset <User>             : Deletes all notes for user',
 			group: 'modtools',
 			guildOnly: true,
-			roles: ['The Vanguard', 'Discord Chat Mods', 'Mod Assistant']
+			roles: ['admin']
 		});
 	}
 
@@ -35,9 +35,7 @@ export default class Note extends Command {
 
 		// Set Mod Roles
 		let modRoles: Array<Role> = new Array();
-		modRoles[0] = message.guild.roles.find('name', 'The Vanguard');
-		modRoles[1] = message.guild.roles.find('name', 'Discord Chat Mods');
-		modRoles[2] = message.guild.roles.find('name', 'Mod Assistant');
+		modRoles[0] = message.guild.roles.find('name', 'admin');  // TODO
 
 		let author: GuildMember;
 		author = message.member;

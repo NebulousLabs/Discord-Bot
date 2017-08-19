@@ -23,7 +23,7 @@ export default class Mute extends Command<SweeperClient> {
 			'The <Reason> is both sent to the user and to our logs.',
 			group: 'modtools',
 			guildOnly: true,
-			roles: ['The Vanguard', 'Discord Chat Mods']
+			roles: ['admin']
 		});
 	}
 

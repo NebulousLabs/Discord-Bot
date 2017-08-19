@@ -24,7 +24,7 @@ export default class Mute extends Command<SweeperClient> {
 				'To ban someone see <prefix>ban',
 			group: 'modtools',
 			guildOnly: true,
-			roles: ['The Vanguard', 'Discord Chat Mods']
+			roles: ['admin']
 		});
 	}
 

@@ -25,7 +25,7 @@ export default class Mute extends Command<SweeperClient> {
 			'To unmute someone see <prefix>unmute',
 			group: 'modtools',
 			guildOnly: true,
-			roles: ['The Vanguard', 'Discord Chat Mods', 'Mod Assistant']
+			roles: ['admin']
 		});
 	}
 
