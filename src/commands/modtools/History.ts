@@ -21,7 +21,7 @@ export default class Mute extends Command<SweeperClient> {
 			usage: '<prefix>history <User>',
 			group: 'modtools',
 			guildOnly: true,
-			roles: ['The Vanguard', 'Discord Chat Mods', 'Mod Assistant']
+			roles: ['admin']
 		});
 	}
 

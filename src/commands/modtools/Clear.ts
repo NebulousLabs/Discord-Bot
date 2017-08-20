@@ -16,7 +16,7 @@ export default class Clear extends Command<SweeperClient> {
 			info: 'Can clear up to 14 days of recent messages.',
 			group: 'modtools',
 			guildOnly: true,
-			roles: ['The Vanguard', 'Discord Chat Mods']
+			roles: ['admin']
 		});
 	}
 

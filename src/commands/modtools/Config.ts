@@ -11,7 +11,7 @@ export default class Config extends Command {
 			'mute : Sets the role for Muted Users\n',
 			group: 'modtools',
 			guildOnly: true,
-			roles: ['The Vanguard', 'Discord Chat Mods']
+			roles: ['admin']
 		});
 	}
 
