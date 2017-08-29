@@ -4,7 +4,6 @@ import { SweeperClient } from '../SweeperClient';
 import { MuteManager } from '../../../lib/mod/managers/MuteManager';
 import Constants from '../../Constants';
 
-
 const config: any = require('../../../config.json');
 const { on, registerListeners } = ListenerUtil;
 
@@ -24,8 +23,7 @@ export class Events {
 
 	@on('messageReactionAdd')
 	private async _onReaction(reaction: MessageReaction, user: User): Promise<any> {
-		console.log('hai, reaction')
-		console.log(user)
+
 		if (user.id === this._client.user.id)
 			return;
 
@@ -38,26 +36,19 @@ export class Events {
 		let roleMessageId: string = await guildStorage.get('Role Reaction Message');
 
 		let roles = this.fetchRoles(reaction);
-		console.log('here');
-		console.log(reaction.message.id);
-		console.log(roleMessageId);
+
 		// Role Reaction Message
 		if (reaction.message.id === roleMessageId) {
 
-			let role_name = reaction.emoji.name;
-			console.log(role_name)
-			console.log(roles)
+			let roleName = reaction.emoji.name;
+			let role = roles[roleName];
 
-			let role = roles[role_name];
-			console.log(role)
 			if (role) {
-				if (reactionAuthor.roles.has(role.id)) return reaction.remove(user).then(null,Constants.reportError);
-				else return await reactionAuthor.addRole(role).then(null,Constants.reportError);
+				if (reactionAuthor.roles.has(role.id)) return reaction.remove(user).then(null, Constants.reportError);
+				else return await reactionAuthor.addRole(role).then(null, Constants.reportError);
 			}
-			
 		}
 
-		
 	}
 
 	@on('messageReactionRemove')
@@ -71,14 +62,12 @@ export class Events {
 
 		// Platform Message
 		if (reaction.message.id === roleMessageId) {
-			let role_name = reaction.emoji.name;
-			let role = roles[role_name];
+			let roleName = reaction.emoji.name;
+			let role = roles[roleName];
 			if (role) {
-				return await reactionAuthor.removeRole(role).then(null,Constants.reportError);;
+				return await reactionAuthor.removeRole(role).then(null, Constants.reportError);
 			}
 		}
-
-
 	}
 
 	@on('guildMemberRemove')
@@ -122,8 +111,8 @@ export class Events {
 		// Saved for future use
 	}
 
-	private fetchRoles(reaction: MessageReaction): { [key:string]:Role} {
-		let roles: { [key:string]:Role} = {};
+	private fetchRoles(reaction: MessageReaction): { [key: string ]: Role} {
+		let roles: { [key: string]: Role} = {};
 		for (let role of Constants.SiaRoles) {
 			roles[role.emoji.split(':')[1]] = reaction.message.guild.roles.find('name', role.name);
 		}

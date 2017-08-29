@@ -49,7 +49,6 @@ export class SweeperClient extends Client {
 
 	@once('pause')
 	private async _onPause(): Promise<void> {
-		console.log('pause');
 		await this.setDefaultSetting('prefix', '.');
 		this.emit('continue');
 	}
@@ -57,7 +56,6 @@ export class SweeperClient extends Client {
 	@once('clientReady')
 	private async _onClientReady(): Promise<void>
 	{
-		console.log('clientReady');
 		this.mod = new ModLoader(this);
 		await this.mod.init();
 
@@ -66,8 +64,6 @@ export class SweeperClient extends Client {
 
 	@once('disconnect')
 	private async _onDisconnect(evt: any ): Promise<void> {
-		console.log('disconnecty');
-		console.log(evt);
 		process.exit(100);
 	}
 }

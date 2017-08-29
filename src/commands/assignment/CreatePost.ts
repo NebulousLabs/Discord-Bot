@@ -29,7 +29,7 @@ export default class CreatePost extends Command {
 
 					// let emj = new Emoji(this.client)
 					const reactionMessage: Message = <Message> await message.channel.sendMessage(text);
-					
+
 					for (let role of Constants.SiaRoles) {
 						await reactionMessage.react(role.emoji.replace('<', '').replace('>', '')).then(null, function(reason) {
 							console.log(reason);
