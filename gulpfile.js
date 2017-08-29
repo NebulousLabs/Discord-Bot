@@ -51,4 +51,4 @@ gulp.task('serve', function () {
   // , env: { 'NODE_ENV': 'development' }
   , tasks: ['compile']
   })
-})
+});
