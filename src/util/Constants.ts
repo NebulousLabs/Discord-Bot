@@ -3,13 +3,15 @@ export type SiaRole = {
 	emoji: string;
 	display_name: string;
 	name: string;
-}
+};
+
 export type BotConstants = {
 	// ID
 	assignmentChannelId: string;
 	serverId: string;
 	modChannelId: string;
 	logChannelId: string;
+	defaultGuildId: string;
 
 	// RegExp
 	platformRegExp: RegExp;
@@ -41,13 +43,13 @@ export type BotConstants = {
 	SiaRoles: SiaRole[];
 	PostText: string;
 	serverInvite: string;
+	ExcludedRoles: string[];
 
 	reportError: (err: any) => void;
 };
 
-
 // tslint:disable-next-line:variable-name
-export const Constants: BotConstants = <any>{};
+export const Constants: BotConstants = <any> {};
 
 // IDs
 Constants.assignmentChannelId = config.ServerData.assignmentChannelId;
@@ -119,13 +121,24 @@ Constants.SiaRoles = [
 
 ];
 
+Constants.defaultGuildId = config.defaultGuildId || '';
+Constants.ExcludedRoles = [
+	'bad role',
+	'@everyone',
+	'admin',
+	'sia core team',
+	'village green',
+	'moderators',
+	'Siabot',
+	'RemindMeBot',
+];
 
 Constants.serverInvite = 'https://discord.gg/XDfY2bV';
 
 Constants.reportError = function (err) {
 	console.log('DANGER WILL ROBINSON');
 	console.log(err);
-}
+};
 
 Constants.PostText = `
 
@@ -133,7 +146,7 @@ Constants.PostText = `
 
 **Renting** <:hdd:347884377822330890>
 
-**Hosting** <:SiaHost:348149962061774858> 
+**Hosting** <:SiaHost:348149962061774858>
 
 **Mining** <:SiaMine:348150875149303808>
 
@@ -141,7 +154,7 @@ Constants.PostText = `
 
 ---
 
-**Contributors** <:SiaMedal:348147007623397376> 
+**Contributors** <:SiaMedal:348147007623397376>
 
 **Developers** <:SiaDev:348157143465328641>
 
@@ -151,7 +164,7 @@ Constants.PostText = `
 
 ---
 
-**Trading** <:SiaTrade:348149332450607105> 
+**Trading** <:SiaTrade:348149332450607105>
 
 **Altcoins** <:crypto:347880295183155201>
 
@@ -165,7 +178,7 @@ Constants.PostText = `
 
 **Forum Feed** <:SiaEnvelope:348154353850384394>
 
-**Bitcoin Talk Feed** <:bitcoin:347879601730748426> 
+**Bitcoin Talk Feed** <:bitcoin:347879601730748426>
 
 **Reddit Feed** <:reddit:347880473738870787>
 
