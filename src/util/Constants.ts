@@ -131,6 +131,9 @@ Constants.ExcludedRoles = [
 	'moderators',
 	'Siabot',
 	'RemindMeBot',
+	'luxor',
+	'reddit-mods',
+	'siabot-dev',
 ];
 
 Constants.serverInvite = 'https://discord.gg/XDfY2bV';
