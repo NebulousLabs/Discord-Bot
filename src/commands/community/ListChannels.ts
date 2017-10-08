@@ -4,7 +4,7 @@ import { SweeperClient } from '../../util/lib/SweeperClient';
 import Constants from '../../util/Constants';
 import * as _ from 'lodash';
 
-export default class ListChannels extends Command<SweeperClient, Client> {
+export default class ListChannels extends Command<SweeperClient> {
 	public guildId: string;
 
 	public constructor()	{
@@ -40,16 +40,13 @@ export default class ListChannels extends Command<SweeperClient, Client> {
 		const roles = guild.roles;
 		let roleMessage: string = 'Here are the channels you may join:\u000d\u000d';
 
-		roles.forEach(role => {
+		roles.forEach((role: Role) => {
 			if (!_.includes(Constants.ExcludedRoles, role.name)) {
 				roleMessage += `${role.name}\u000d`;
 			}
 		});
 
 		roleMessage += 'type \'.chan add <channel name>\' to join the channel';
-		if (message.guild) {
-			await message.channel.send('DMing you a list of roles');
-		}
 
 		let dm = await message.author.createDM();
 
@@ -99,8 +96,9 @@ export default class ListChannels extends Command<SweeperClient, Client> {
 		const guild = this.client.guilds.get(this.guildId);
 		const roles = guild.roles;
 		let availableRoles: Role[] = [];
-		roles.forEach(role => {
-			if (!_.includes(Constants.ExcludedRoles, role.name)) {
+		roles.forEach((role: Role) => {
+      let available = !_.includes(Constants.ExcludedRoles, role.name) || _.includes(Constants.GreyRoles, role.name);
+			if (available) {
 				availableRoles.push(role);
 			}
 		});

@@ -44,6 +44,7 @@ export type BotConstants = {
 	PostText: string;
 	serverInvite: string;
 	ExcludedRoles: string[];
+  GreyRoles: string[];
 
 	reportError: (err: any) => void;
 };
@@ -131,6 +132,14 @@ Constants.ExcludedRoles = [
 	'moderators',
 	'Siabot',
 	'RemindMeBot',
+  'reddit mods',
+  'nsfw',
+  'luxor',
+  'siabot-dev',
+];
+
+Constants.GreyRoles = [
+  'nsfw',
 ];
 
 Constants.serverInvite = 'https://discord.gg/XDfY2bV';

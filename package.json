@@ -1,7 +1,7 @@
 {
-  "name": "sweeper-bot",
+  "name": "sia-bot",
   "version": "0.1.0",
-  "description": "General purpose bot for The official r/DTG Discord server.",
+  "description": "General purpose bot for The official SiaCoin Discord server.",
   "main": "sweeper.js",
   "author": "katagatame_ <katagatame@users.noreply.github.com>",
   "contributors": [
@@ -11,16 +11,16 @@
     }
   ],
   "license": "MIT",
-  "homepage": "https://github.com/r-DestinyTheGame/Sweeper-Bot#readme",
+  "homepage": "https://github.com/NebulousLabs/Discord-Bot#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/r-DestinyTheGame/Sweeper-Bot"
+    "url": "https://github.com/NebulousLabs/Discord-Bot"
   },
   "bugs": {
-    "url": "https://github.com/r-DestinyTheGame/Sweeper-Bot/issues"
+    "url": "https://github.com/NebulousLabs/Discord-Bot/issues"
   },
   "keywords": [
-    "destiny",
+    "siacoin",
     "discord",
     "discordapp"
   ],
@@ -31,6 +31,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "node-schedule": "^1.2.3",
+    "npm": "^5.2.0",
     "pg": "7.1.2",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
