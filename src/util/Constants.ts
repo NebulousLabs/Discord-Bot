@@ -136,6 +136,7 @@ Constants.ExcludedRoles = [
   'nsfw',
   'luxor',
   'siabot-dev',
+  'obelisk core team',
 ];
 
 Constants.GreyRoles = [
