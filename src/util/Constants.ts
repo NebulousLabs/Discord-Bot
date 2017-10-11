@@ -124,14 +124,14 @@ Constants.SiaRoles = [
 
 Constants.defaultGuildId = config.defaultGuildId || '';
 Constants.ExcludedRoles = [
-	'bad role',
-	'@everyone',
-	'admin',
-	'sia core team',
-	'village green',
-	'moderators',
-	'Siabot',
-	'RemindMeBot',
+  'bad role',
+  '@everyone',
+  'admin',
+  'sia core team',
+  'village green',
+  'moderators',
+  'Siabot',
+  'RemindMeBot',
   'reddit mods',
   'nsfw',
   'luxor',

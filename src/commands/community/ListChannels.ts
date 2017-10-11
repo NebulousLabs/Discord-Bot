@@ -23,16 +23,24 @@ export default class ListChannels extends Command<SweeperClient> {
 
 	public async action(message: Message, args: Array<string>): Promise<any> {
 		this.guildId = message.guild ? message.guild.id : Constants.defaultGuildId;
-		// no user specified
+		let ret: Promise<any>;
+    // no user specified
 		if (!args[0]) {
-			return this.sendRoleList(message);
+			ret = this.sendRoleList(message);
 		}
 
 		// if there was an attempt, args[0] was too short
-		if (args[0] && args[0] === 'add')
-			return this.addChannel(message, args.slice(1).join(' '));
-		if (args[0] && args[0] === 'del')
-			return this.delChannel(message, args.slice(1).join(' '));
+		if (args[0] && args[0] === 'add') {
+			ret = this.addChannel(message, args.slice(1).join(' '));
+    } else if (args[0] && args[0] === 'del') {
+			ret = this.delChannel(message, args.slice(1).join(' '));
+    }
+
+    if (message.channel.type === 'text') {
+      message.delete().catch( err => console.log('error removing message', err));
+    }
+
+    return ret;
 	}
 
 	private async sendRoleList(message: Message): Promise<any> {
